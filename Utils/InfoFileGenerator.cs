@@ -19,7 +19,7 @@ namespace BuildingFramework.Reskin.API
         {
             string result = "";
 
-            List<string> supported = new List<string>();
+            List<string> completed = new List<string>();
 
             Type[] types = Assembly.GetExecutingAssembly().GetTypes();
             foreach (Type type in types)
@@ -34,7 +34,10 @@ namespace BuildingFramework.Reskin.API
 
                     BuildingSkin s = Activator.CreateInstance(type) as BuildingSkin;
 
-                    supported.Add(s.UniqueName);
+                    completed.Add(s.UniqueName);
+
+                    if (type.GetCustomAttribute<NotSupportedAttribute>() != null)
+                        result += $"[Not Supported]{Environment.NewLine}";
 
                     result += $"{new String(SeperatorChar, TitleSeperatorCount)} {s.FriendlyName} {new String(SeperatorChar, TitleSeperatorCount)}";
                     result += Environment.NewLine;
@@ -91,7 +94,7 @@ namespace BuildingFramework.Reskin.API
 
             foreach(Building b in GameState.inst.internalPrefabs)
             {
-                if (!supported.Contains(b.UniqueName))
+                if (!completed.Contains(b.UniqueName))
                     result += $"[Not Supported]" + Environment.NewLine + 
                         $"{new String(SeperatorChar, TitleSeperatorCount)} {b.FriendlyName} {new String(SeperatorChar, TitleSeperatorCount)}" +
                         Environment.NewLine +
