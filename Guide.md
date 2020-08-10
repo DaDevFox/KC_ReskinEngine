@@ -60,8 +60,8 @@ Entries usually contain multiple elements, which can include:
 
 # Step by Step Guide
 ## 0 | Prerequisites
-1. The framework must be used through a mod, using code, mods are written in the language C# (.NET Framework 4.5), using the UnityEngine libraries. A tutorial for getting setup making mods is covered in the basic modding tutorial [here](https://docs.google.com/document/d/1hRrV92_n9zuYxuB-7yCaiftzFsGEsoRRkMnTbaaKRqM/edit) 
-2. You will need some kind of code editor (I recommend Visual Studio 2017 or Visual Studio Code)
+1. The framework must be used through a mod, using code, mods are written in the language C# (.NET Framework 4.5), using the UnityEngine libraries. A tutorial for getting setup making mods is covered in the basic modding tutorial [here](https://docs.google.com/document/d/1hRrV92_n9zuYxuB-7yCaiftzFsGEsoRRkMnTbaaKRqM/edit) .
+2. You will need some kind of code editor (I recommend Visual Studio 2017 or Visual Studio Code).
 3. You will need the [Unity Editor](https://store.unity.com/#plans-individual). it is free if you choose Unity personal, but not for businesses or if you want the pro version. 
 
 
@@ -360,9 +360,6 @@ Models:
 	keepUpgrade2:         Instance | The second upgrade for the keep
 	keepUpgrade3:         Instance | The third upgrade for the keep
 	keepUpgrade4:         Instance | The fourth upgrade for the keep
-	------------
-	banner1:              Instance | The left banner for the keep
-	banner2:              Instance | The right banner for the keep
 
 -- Wooden Castle Block --
 Name: Wooden Castle Block
@@ -390,6 +387,7 @@ Models:
 	---------
 	doorPrefab:           Instance | The door that appears on a castleblock when it connects to other castleblocks
 
+[Not Supported]
 -- Wooden Gate --
 Name: Wooden Gate
 UniqueName: woodengate
@@ -397,6 +395,7 @@ Models:
 	gate:                 Instance | The main model of the gate, excluding the porticulus
 	porticulus:           Instance | The part of the gate that moves up and down to show opening/closing
 
+[Not Supported]
 -- Stone Gate --
 Name: Stone Gate
 UniqueName: gate
@@ -413,6 +412,7 @@ Models:
 	stairsDown:            Modular | stairs facing -z
 	stairsLeft:            Modular | stairs facing -x
 
+[Not Supported]
 -- Archer Tower --
 Name: Archer Tower
 UniqueName: archer
@@ -420,6 +420,7 @@ Models:
 	baseModel:            Instance | The main model of the Archer Tower
 	veteranModel:         Instance | An embelishment added to the archer tower when it achieves the veteran status
 
+[Not Supported]
 -- Ballista Tower --
 Name: Ballista Tower
 UniqueName: ballista

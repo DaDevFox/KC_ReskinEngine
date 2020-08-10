@@ -12,11 +12,26 @@ namespace BuildingFramework.Reskin.API
 
     #region Attributes
 
+    /// <summary>
+    /// Signifies a skin that shouldn't be used
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class HiddenAttribute : Attribute
     {
     }
 
+    /// <summary>
+    /// Signifies a Skin that isn't supported on the engine side at the current time
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class, Inherited = true)]
+    public class NotSupportedAttribute : Attribute
+    {
+
+    }
+
+    /// <summary>
+    /// Signifies a field in a skin that is a model and contains data about its type and description
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field, Inherited = true)]
     public class ModelAttribute : Attribute
     {

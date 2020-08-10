@@ -134,6 +134,7 @@ namespace BuildingFramework.Reskin.API
 
     //  Gate Base
     [Hidden]
+    [NotSupported]
     public class GateBuildingSkinBase : BuildingSkin
     {
         [Model(description = "The main model of the gate, excluding the porticulus")]
@@ -209,6 +210,7 @@ namespace BuildingFramework.Reskin.API
     #region Towers
 
     //Archer Tower
+    [NotSupported]
     public class ArcherTowerBuildingSkin : BuildingSkin
     {
         public override string FriendlyName => "Archer Tower";
@@ -241,6 +243,7 @@ namespace BuildingFramework.Reskin.API
     }
 
     //Ballista Tower
+    [NotSupported]
     public class BallistaTowerBuildingSkin : BuildingSkin
     {
         public override string FriendlyName => "Ballista Tower";

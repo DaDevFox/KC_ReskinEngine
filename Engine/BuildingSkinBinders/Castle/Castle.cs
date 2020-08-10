@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace BuildingFramework.Reskin.Engine
 {
+    #region Keep
+
     public class KeepSkinBinder : BuildingSkinBinder
     {
         public override string UniqueName => "keep";
@@ -75,58 +77,19 @@ namespace BuildingFramework.Reskin.Engine
                     model = GameObject.Instantiate(keepUpgrade4, b.transform)
                 };
             }
-
-
-            Engine.helper.Log("keep base bound");
         }
 
         public override void BindToBuildingInstance(Building b)
         {
-            base.BindToBuildingInstance(b);
-
-            Keep keep = b.GetComponent<Keep>();
-            Upgradeable upgradeable = keep.GetComponent<Upgradeable>();
-
-            // Upgrades
-            if (keepUpgrade1)
-            {
-                GameObject.Destroy(upgradeable.upgrades[0].model);
-                upgradeable.upgrades[0] = new Upgrade()
-                {
-                    model = GameObject.Instantiate(keepUpgrade1, b.transform)
-                };
-                Engine.helper.Log("1");
-            }
-            if (keepUpgrade2)
-            {
-                GameObject.Destroy(upgradeable.upgrades[1].model);
-                upgradeable.upgrades[1] = new Upgrade()
-                {
-                    model = GameObject.Instantiate(keepUpgrade2, b.transform)
-                };
-                Engine.helper.Log("2");
-            }
-            if (keepUpgrade3)
-            {
-                GameObject.Destroy(upgradeable.upgrades[2].model);
-                upgradeable.upgrades[2] = new Upgrade()
-                {
-                    model = GameObject.Instantiate(keepUpgrade3, b.transform)
-                };
-                Engine.helper.Log("3");
-            }
-            if (keepUpgrade4)
-            {
-                GameObject.Destroy(upgradeable.upgrades[3].model);
-                upgradeable.upgrades[3] = new Upgrade()
-                {
-                    model = GameObject.Instantiate(keepUpgrade4, b.transform)
-                };
-                Engine.helper.Log("4");
-            }
+            this.BindToBuildingInstance(b);
 
             Engine.helper.Log("keep instance bound");
         }
 
     }
+
+    #endregion
+
+
+
 }
