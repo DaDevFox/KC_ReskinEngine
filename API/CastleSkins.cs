@@ -134,7 +134,6 @@ namespace ReskinEngine.API
 
     //  Gate Base
     [Hidden]
-    [NotSupported]
     public class GateBuildingSkinBase : BuildingSkin
     {
         [Model(description = "The main model of the gate, excluding the porticulus")]

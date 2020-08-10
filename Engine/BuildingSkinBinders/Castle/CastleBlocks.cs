@@ -9,6 +9,7 @@ namespace ReskinEngine.Engine
 {
     #region Castle Blocks
 
+    // Base
     public class CastleBlockSkinBinderBase : BuildingSkinBinder
     {
         public override string UniqueName => "";
@@ -72,11 +73,13 @@ namespace ReskinEngine.Engine
         }
     }
 
+    // Stone
     public class StoneCastleBlockSkinBinder : CastleBlockSkinBinderBase
     {
         public override string UniqueName => "castleblock";
     }
 
+    // Wood
     public class WoodCastleBlockSkinBinder : CastleBlockSkinBinderBase
     {
         public override string UniqueName => "woodcastleblock";
@@ -132,5 +135,68 @@ namespace ReskinEngine.Engine
 
     #endregion
 
+    #region Gates
+
+    // Base
+    public class GateSkinBinderBase : BuildingSkinBinder
+    {
+        public override string UniqueName => "";
+
+        public GameObject _gate;
+        public GameObject _porticulus;
+
+        public override SkinBinder Create(GameObject obj)
+        {
+            var inst = new GateSkinBinderBase();
+
+            if (obj.transform.Find("gate"))
+                inst._gate = obj.transform.Find("gate").gameObject;
+
+            if (obj.transform.Find("porticulus"))
+                inst._porticulus = obj.transform.Find("porticulus").gameObject;
+
+            return inst;
+        }
+
+        public override void BindToBuildingBase(Building building)
+        {
+            
+
+            GameObject gateObj = building.transform.Find("Offset/Gate").gameObject;
+            GameObject portculusObj = building.transform.Find("Offset/Portculus").gameObject;
+            
+            if (_gate)
+            {
+                gateObj.GetComponent<MeshFilter>().mesh = null;
+                GameObject.Instantiate(_gate, gateObj.transform);
+            }
+
+            if(_porticulus)
+            {
+                porticulus.GetComponent<MeshFilter>().mesh = null;
+                GameObject.Instantiate(_porticulus, portculusObj.transform);
+            }
+        }
+
+        public override void BindToBuildingInstance(Building building)
+        {
+            this.BindToBuildingBase(building);
+        }
+    }
+
+    // Wood
+    public class WoodenGateSkinBinder : GateSkinBinderBase
+    {
+        public override string UniqueName => "woodengate";
+    }
+
+    // Stone
+    public class StoneGateSkinBinder : GateSkinBinderBase
+    {
+        public override string UniqueName => "gate";
+    }
+
+
+    #endregion
 
 }
