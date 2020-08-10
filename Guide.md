@@ -348,7 +348,7 @@ In order to register skins to the framework, they need to be added to a `ReskinP
 
 Building Index
 ===========================
-
+```
  -- Castle --
 --------------
 
@@ -781,4 +781,4 @@ UniqueName: well
 -- Windmill --
 Name: Windmill
 UniqueName: windmill
-
+```
