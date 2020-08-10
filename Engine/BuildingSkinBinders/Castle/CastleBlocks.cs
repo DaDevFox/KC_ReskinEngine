@@ -171,7 +171,7 @@ namespace ReskinEngine.Engine
 
             if(_porticulus)
             {
-                porticulus.GetComponent<MeshFilter>().mesh = null;
+                _porticulus.GetComponent<MeshFilter>().mesh = null;
                 GameObject.Instantiate(_porticulus, portculusObj.transform);
             }
         }
