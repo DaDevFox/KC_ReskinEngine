@@ -399,7 +399,6 @@ Models:
 	---------
 	doorPrefab:           Instance | The door that appears on a castleblock when it connects to other castleblocks
 
-[Not Supported]
 -- Wooden Gate --
 Name: Wooden Gate
 UniqueName: woodengate
@@ -407,7 +406,6 @@ Models:
 	gate:                 Instance | The main model of the gate, excluding the porticulus
 	porticulus:           Instance | The part of the gate that moves up and down to show opening/closing
 
-[Not Supported]
 -- Stone Gate --
 Name: Stone Gate
 UniqueName: gate

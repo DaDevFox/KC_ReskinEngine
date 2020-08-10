@@ -160,8 +160,6 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
-            
-
             GameObject gateObj = building.transform.Find("Offset/Gate").gameObject;
             GameObject portculusObj = building.transform.Find("Offset/Portculus").gameObject;
             
