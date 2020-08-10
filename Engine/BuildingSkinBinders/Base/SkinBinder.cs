@@ -66,6 +66,11 @@ namespace BuildingFramework.Reskin.Engine
             return instance;
         }
 
+        /// <summary>
+        /// Using the GameObject packaged by the API-side, this method create a new SkinBinder with the fields that correspond to the GameObjects children assigned
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public abstract SkinBinder Create(GameObject obj);
 
 
@@ -101,7 +106,7 @@ namespace BuildingFramework.Reskin.Engine
         }
 
         /// <summary>
-        /// Use this to bind the skin to all buildings with the given unique name
+        /// Use this to bind the skin to the base building that will be duplicated every time a building is placed with the given unique name
         /// </summary>
         /// <param name="building"></param>
         public virtual void BindToBuildingBase(Building building)
