@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using BuildingFramework.Examples.Reskin;
 
-namespace BuildingFramework.Reskin.API
+namespace ReskinEngine.API
 {
     /// <summary>
     /// Class that holds a set of building reskins categorized under a single collection. 
@@ -54,7 +53,7 @@ namespace BuildingFramework.Reskin.API
         {
             Transform target;
 
-            KCModHelper helper = Mod.helper;
+            //KCModHelper helper = Mod.helper;
 
             if (World.inst.transform.Find(ReskinWorldLocation) == null)
             {
@@ -70,7 +69,7 @@ namespace BuildingFramework.Reskin.API
             foreach(Skin skin in skins.Values)
                 skin.Package(target);
 
-            helper.Log(InfoFileGenerator.Generate());
+            //helper.Log(InfoFileGenerator.Generate());
         }
 
 

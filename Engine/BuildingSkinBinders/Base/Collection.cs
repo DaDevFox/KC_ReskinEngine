@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildingFramework.Reskin.Engine
+namespace ReskinEngine.Engine
 {
     public class Collection : IEnumerable
     {

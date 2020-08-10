@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Harmony;
 
-namespace BuildingFramework.Reskin.Engine
+namespace ReskinEngine.Engine
 {
     public class SkinBinderPool
     {

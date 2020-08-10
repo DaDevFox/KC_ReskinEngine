@@ -7,7 +7,7 @@ using System.Reflection;
 using Harmony;
 using UnityEngine;
 
-namespace BuildingFramework.Reskin.Engine
+namespace ReskinEngine.Engine
 {
     public class Engine
     {

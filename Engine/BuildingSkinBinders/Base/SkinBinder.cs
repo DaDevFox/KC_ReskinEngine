@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Harmony;
 
-namespace BuildingFramework.Reskin.Engine
+namespace ReskinEngine.Engine
 {
     public abstract class SkinBinder
     {

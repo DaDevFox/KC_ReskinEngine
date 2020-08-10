@@ -227,17 +227,29 @@ To begin, you'll need to have your models set and ready to go, for this I recomm
 
 Once you have that done, you'll need to export that into an AssetBundle, this process is already covered in the Kingdoms and Castles [Mod Tutorial](https://modtutorial.kingdomsandcastles.com/) so I won't go into too much detail over it. 
 
-Once you have your AssetBundle, set up a C# project if you haven't done already. If you're using Visual Studio, which I highly recommend, start a C# .NET Framework Class Library project and make sure to set the .NET version to 4.5.
+Once you have your AssetBundle, set up a C# project if you haven't done already. If you're using Visual Studio, which I highly recommend, start a C# .NET Framework Class Library project and make sure to set the .NET version to 4.5. 
 
-Bring the AssetBundle files into your project so that they're in the 4 folders they were built into by the KCToolkit project; `win32`, `win64`, `osx`, and `linux`, which of course correspond to the 4 major operating systems KC is released on. 
+> This too is covered in the mod tutorial, but in a nutshell you click `File >> New >> Project >> Class Library (.NET Framework) [you may have to search that]` and then fill out the information for project name etc, and hit create. 
 
-> Note that when Unity builds the AssetBundles, it puts all the AssetBundles in the entire project into those 4 folders, `win32`, `win64`, `osx`, and `linux`. Inside of those folders you should see a few files, one for the operating system, called the same thing as the folder, a .manifest file for pretty much everything, and a varying amount of files named: `NameOfAssetBundle_(some random jibberish)` not all of them are needed, the only ones you need are the jibberish files pertaining to your AssetBundle and the one called the name of the operating system, so in the `osx` folder, look for a file called `osx`. 
+We now need to bring 2 things into the mod:
+1. The Reskin Engine API, this is a little bit of code that allows your mod to communicate with the Reskin Engine (which is a seperate mod)
+2. Your models (in the form of a Unity AssetBundle)
+
+Using the Reskin Engine API, we will tell the Reskin Engine to use your models in place of certain buildings and/or visual elements of the game
+
+First we have to bring in the Reskin Engine API files which you can download [here](https://github.com/DaDevFox/KCReskinEngine/tree/master/API). I recommend putting those in their own folder to organize your mod structure. 
+
+Bring the AssetBundle files into your project so that they're in the 4 folders they were built into by the KCToolkit project; `win32`, `win64`, `osx`, and `linux`, which of course correspond to the 4 major operating systems KC is released on. These also I'd recommend putting in their own folder, so you should have 1 for the API, 1 for the AssetBundle and your code will be in the mod root.
+
+> Note that when Unity builds the AssetBundles, it puts all the AssetBundles in the entire project into those 4 folders, `win32`, `win64`, `osx`, and `linux`. Inside of those folders you should see a few files, one for the operating system, called the same thing as the folder, a .manifest and .meta file for pretty much everything, and a varying amount of files named: `NameOfAssetBundle_(some random jibberish)` not all of them are needed, the only ones you need are the jibberish files pertaining to your AssetBundle and the one called the name of the operating system, so in the `osx` folder, look for a file called `osx` and the files with the name of your AssetBundle, then go back and bring in the .manifest files for any of the files you brought into your mod. 
 
 At this point I strongly recommend you read through the example mod in the mod tuturial (above) and have all the basic elements down. 
 
 Now you should set up the basic parts of your mod, I have some sample code below that you can just use as a reference if you need to; I will be following along with this code for the rest of the guide. 
 
 ```cs
+using ReskinEngine.API
+
 public class MyMod : MonoBehaviour
 {
     //This will be used to log messages if we need to. 

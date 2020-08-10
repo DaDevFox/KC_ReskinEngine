@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace BuildingFramework.Reskin.API
+namespace ReskinEngine.API
 {
     public class InfoFileGenerator
     {
