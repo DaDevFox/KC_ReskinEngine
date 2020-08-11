@@ -26,6 +26,8 @@ namespace ReskinEngine.API
         {
             base.PackageInternal(target, _base);
 
+            
+
             if (keepUpgrade1)
                 GameObject.Instantiate(keepUpgrade1, _base.transform).name = "keepUpgrade1";
             if (keepUpgrade2)

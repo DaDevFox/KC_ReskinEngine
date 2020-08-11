@@ -12,6 +12,8 @@ namespace ReskinEngine.Engine
     public class Engine
     {
         public static KCModHelper helper;
+        public static bool debug = true;
+
 
         public static string ReskinWorldLocation { get; } = "ReskinContainer";
 
@@ -27,6 +29,7 @@ namespace ReskinEngine.Engine
 
         public static List<string> ActiveCollections { get; private set; }
 
+        #region Initialization
 
         public void Preload(KCModHelper helper)
         {
@@ -35,6 +38,13 @@ namespace ReskinEngine.Engine
             var harmony = HarmonyInstance.Create("harmony");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
+            if (debug)
+                Application.logMessageReceived += (condition, stack, type) => 
+                {
+                    if (type == LogType.Exception)
+                        helper.Log($"ex:{condition} => {stack}");
+                };
+
             helper.Log("Preload");
         }
 
@@ -42,6 +52,17 @@ namespace ReskinEngine.Engine
         {
             helper.Log("SceneLoaded");
         }
+
+        #endregion
+
+        #region Utilities
+
+        public static void dLog(object message)
+        {
+            if(debug)
+                helper.Log(message.ToString());
+        }
+
 
         /// <summary>
         /// Gets the original SkinBinder for a specified type identifier
@@ -86,6 +107,8 @@ namespace ReskinEngine.Engine
             return binders[0];
         }
 
+        #endregion
+
         #region Setup
 
         static void AfterSceneLoaded()
@@ -105,11 +128,15 @@ namespace ReskinEngine.Engine
 
             foreach(Type type in types)
             {
+                if (type.GetCustomAttribute<UnregisteredAttribute>() != null)
+                    continue;
+
                 if (type.IsSubclassOf(typeof(SkinBinder)) && !type.IsAbstract)
                 {
                     SkinBinder s = Activator.CreateInstance(type) as SkinBinder;
                     SkinLookup.Add(s.TypeIdentifier, s);
                 }
+                
             }
         }
 

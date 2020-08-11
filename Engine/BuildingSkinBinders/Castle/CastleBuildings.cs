@@ -34,12 +34,16 @@ namespace ReskinEngine.Engine
             if (obj.transform.Find("keepUpgrade4"))
                 inst.keepUpgrade4 = obj.transform.Find("keepUpgrade4").gameObject;
 
+            ApplyPersonPositions(inst, obj);
+
             return inst;
         }
 
-        public override void BindToBuildingBase(Building b)
+        public override void BindToBuildingBase(Building building)
         {
-            Keep keep = b.GetComponent<Keep>();
+            Engine.dLog("keep bind begun");
+
+            Keep keep = building.GetComponent<Keep>();
             Upgradeable upgradeable = keep.GetComponent<Upgradeable>();
 
             // Upgrades
@@ -48,7 +52,7 @@ namespace ReskinEngine.Engine
                 GameObject.Destroy(upgradeable.upgrades[0].model);
                 upgradeable.upgrades[0] = new Upgrade()
                 {
-                    model = GameObject.Instantiate(keepUpgrade1, b.transform)
+                    model = GameObject.Instantiate(keepUpgrade1, building.transform)
                 };
             }
             if (keepUpgrade2)
@@ -56,7 +60,7 @@ namespace ReskinEngine.Engine
                 GameObject.Destroy(upgradeable.upgrades[1].model);
                 upgradeable.upgrades[1] = new Upgrade()
                 {
-                    model = GameObject.Instantiate(keepUpgrade2, b.transform)
+                    model = GameObject.Instantiate(keepUpgrade2, building.transform)
                 };
             }
             if (keepUpgrade3)
@@ -64,7 +68,7 @@ namespace ReskinEngine.Engine
                 GameObject.Destroy(upgradeable.upgrades[2].model);
                 upgradeable.upgrades[2] = new Upgrade()
                 {
-                    model = GameObject.Instantiate(keepUpgrade3, b.transform)
+                    model = GameObject.Instantiate(keepUpgrade3, building.transform)
                 };
             }
             if (keepUpgrade4)
@@ -72,16 +76,16 @@ namespace ReskinEngine.Engine
                 GameObject.Destroy(upgradeable.upgrades[3].model);
                 upgradeable.upgrades[3] = new Upgrade()
                 {
-                    model = GameObject.Instantiate(keepUpgrade4, b.transform)
+                    model = GameObject.Instantiate(keepUpgrade4, building.transform)
                 };
             }
+
+            BindPersonPositions(building, this);
         }
 
         public override void BindToBuildingInstance(Building b)
         {
             this.BindToBuildingBase(b);
-
-            Engine.helper.Log("keep instance bound");
         }
 
     }
@@ -103,6 +107,8 @@ namespace ReskinEngine.Engine
             if (obj.transform.Find("baseModel"))
                 this.baseModel = obj.transform.Find("baseModel").gameObject;
 
+            ApplyPersonPositions(inst, obj);
+
             return inst;
         }
 
@@ -115,6 +121,8 @@ namespace ReskinEngine.Engine
                 mesh.mesh = null;
                 GameObject.Instantiate(baseModel, mesh.transform);
             }
+
+            BindPersonPositions(building, this);
         }
 
         public override void BindToBuildingInstance(Building building)
@@ -125,9 +133,8 @@ namespace ReskinEngine.Engine
 
     #endregion
 
+    #region Chamber Of War
 
-
-    // Chamber of War
     public class ChamberOfWarSkinBinder : BuildingSkinBinder
     {
         public override string UniqueName => "chamberofwar";
@@ -141,6 +148,8 @@ namespace ReskinEngine.Engine
             if (obj.transform.Find("baseModel"))
                 this.baseModel = obj.transform.Find("baseModel").gameObject;
 
+            ApplyPersonPositions(inst, obj);
+
             return inst;
         }
 
@@ -153,6 +162,8 @@ namespace ReskinEngine.Engine
                 mesh.mesh = null;
                 GameObject.Instantiate(baseModel, mesh.transform);
             }
+
+            BindPersonPositions(building, this);
         }
 
         public override void BindToBuildingInstance(Building building)
@@ -161,8 +172,14 @@ namespace ReskinEngine.Engine
         }
     }
 
+    #endregion
+
 
     // Great Hall
+
+
+
+
 
     // Barracks
 

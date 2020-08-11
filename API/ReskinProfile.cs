@@ -70,6 +70,7 @@ namespace ReskinEngine.API
             foreach(Skin skin in skins.Values)
                 skin.Package(target);
 
+
             //helper.Log(InfoFileGenerator.Generate());
         }
 

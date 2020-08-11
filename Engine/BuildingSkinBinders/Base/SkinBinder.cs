@@ -51,7 +51,7 @@ namespace ReskinEngine.Engine
 
             if(original == null)
             {
-                Engine.helper.Log($"No skin binder found for type identifier {skinType}");
+                Engine.dLog($"No skin binder found for type identifier {skinType}");
                 return null;
             }
 
@@ -96,6 +96,9 @@ namespace ReskinEngine.Engine
 
         public abstract string UniqueName { get; }
 
+        public Vector3[] peoplePositions;
+
+
         /// <summary>
         /// Do not override for BuildingSkinBinders
         /// </summary>
@@ -122,6 +125,44 @@ namespace ReskinEngine.Engine
         {
 
         }
+
+
+
+        /// <summary>
+        /// Helper function that applies peoplePositions from a GameObject to any BuildingSkinBinder; use in Create()
+        /// <para>Only neccessary for buildings with workers</para>
+        /// </summary>
+        /// <param name="binder"></param>
+        /// <param name="_base"></param>
+        protected void ApplyPersonPositions(BuildingSkinBinder binder, GameObject _base)
+        {
+            Transform container = _base.transform.Find("personPositions");
+            if (container)
+            {
+                List<Vector3> positions = new List<Vector3>();
+                for (int i = 0; i < container.transform.childCount; i++)
+                    positions.Add(container.GetChild(i).transform.position);
+
+                binder.peoplePositions = positions.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Helper function that binds personPositions from a BuildingSkinBinder to a building, preserving their original transforms but changing the positions
+        /// </summary>
+        /// <param name="building"></param>
+        /// <param name="binder"></param>
+        protected void BindPersonPositions(Building building, BuildingSkinBinder binder)
+        {
+            for (int i = 0; i < building.personPositions.Length; i++)
+            {
+                if (binder.peoplePositions.Length > i)
+                {
+                    building.personPositions[i].localPosition = binder.peoplePositions[i];
+                }
+            }
+        }
+
 
         [HarmonyPatch(typeof(World), "PlaceInternal")]
         static class OnPlacePatch

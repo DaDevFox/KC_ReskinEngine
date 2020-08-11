@@ -23,6 +23,8 @@ namespace ReskinEngine.Engine
             if (obj.transform.Find("veteranModel"))
                 inst.veteranModel = obj.transform.Find("veteranModel").gameObject;
 
+            ApplyPersonPositions(inst, obj);
+
             return inst;
         }
 
@@ -45,6 +47,8 @@ namespace ReskinEngine.Engine
                 m_2.mesh = null;
                 GameObject.Instantiate(this.veteranModel, veteranModel.transform);
             }
+
+            BindPersonPositions(building, this);
         }
 
 
@@ -105,6 +109,8 @@ namespace ReskinEngine.Engine
 
             if (obj.transform.Find("flag"))
                 inst.flag = obj.transform.Find("flag").gameObject;
+
+            ApplyPersonPositions(inst, obj);
 
             return inst;
         }
@@ -220,7 +226,7 @@ namespace ReskinEngine.Engine
                 GameObject.Instantiate(this.flag, flag.transform);
             }
 
-
+            BindPersonPositions(building, this);
 
         }
 

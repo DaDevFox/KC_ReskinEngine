@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+//using ReskinEngine.Examples.ExampleMod;
 
 namespace ReskinEngine.API
 {
@@ -72,6 +73,22 @@ namespace ReskinEngine.API
         public AnchorAttribute(string description) => this.description = description;
     }
 
+    /// <summary>
+    /// Use this on buildings with more than one person working position
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    public class PersonPositionsAttribute : Attribute
+    {
+        public int count;
+
+        public PersonPositionsAttribute()
+        {
+
+        }
+
+        public PersonPositionsAttribute(int count) => this.count = count;
+    }
+
 
 
     /// <summary>
@@ -137,8 +154,28 @@ namespace ReskinEngine.API
         /// Optional; the positions peasants stand at while working at the building; 
         /// If left null this field will be set to its default value; 
         /// </summary>
-        public Transform[] personPositions = null;
+        public Vector3[] personPositions = null;
 
+
+        protected override void PackageInternal(Transform target, GameObject _base)
+        {
+            base.PackageInternal(target, _base);
+
+
+            if (personPositions.Length > 0)
+            {
+                GameObject obj = new GameObject("personPositions");
+                obj.transform.SetParent(_base.transform);
+
+                for (int i = 0; i < personPositions.Length; i++)
+                {
+                    Vector3 personPosition = personPositions[i];
+                    GameObject position = new GameObject($"personPosition{i}");
+                    position.transform.SetParent(obj.transform);
+                    position.transform.position = personPosition;
+                }
+            }
+        }
 
     }
 

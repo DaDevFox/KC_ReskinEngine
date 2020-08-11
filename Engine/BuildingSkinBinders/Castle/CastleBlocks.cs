@@ -10,9 +10,10 @@ namespace ReskinEngine.Engine
     #region Castle Blocks
 
     // Base
+    [Unregistered]
     public class CastleBlockSkinBinderBase : BuildingSkinBinder
     {
-        public override string UniqueName => "";
+        public override string UniqueName => "castleblock";
 
         public GameObject Open;
         public GameObject Closed;
@@ -88,7 +89,7 @@ namespace ReskinEngine.Engine
     #endregion
 
     #region Castle Stairs
-
+    
     class CastleStairsSkinBinder : BuildingSkinBinder
     {
         public override string UniqueName => "castlestairs";
@@ -138,9 +139,10 @@ namespace ReskinEngine.Engine
     #region Gates
 
     // Base
+    [Unregistered]
     public class GateSkinBinderBase : BuildingSkinBinder
     {
-        public override string UniqueName => "";
+        public override string UniqueName => "gate";
 
         public GameObject _gate;
         public GameObject _porticulus;
