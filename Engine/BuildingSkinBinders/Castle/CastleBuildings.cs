@@ -39,8 +39,6 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building b)
         {
-            base.BindToBuildingBase(b);
-
             Keep keep = b.GetComponent<Keep>();
             Upgradeable upgradeable = keep.GetComponent<Upgradeable>();
 
@@ -81,7 +79,7 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingInstance(Building b)
         {
-            this.BindToBuildingInstance(b);
+            this.BindToBuildingBase(b);
 
             Engine.helper.Log("keep instance bound");
         }
@@ -90,6 +88,51 @@ namespace ReskinEngine.Engine
 
     #endregion
 
+    // Treasure Room
+    public class TreasureRoomSkinBinder : BuildingSkinBinder
+    {
+        public override string UniqueName => "throneroom";
+
+        public GameObject baseModel;
+
+        public override SkinBinder Create(GameObject obj)
+        {
+            var inst = new TreasureRoomSkinBinder();
+
+            if (obj.transform.Find("baseModel"))
+                this.baseModel = obj.transform.Find("baseModel").gameObject;
+
+            return inst;
+        }
+
+        public override void BindToBuildingBase(Building building)
+        {
+            MeshFilter mesh = building.transform.Find("Offset/throneroom").GetComponent<MeshFilter>();
+
+            if (baseModel)
+            {
+                mesh.mesh = null;
+                GameObject.Instantiate(baseModel, mesh.transform);
+            }
+        }
+
+        public override void BindToBuildingInstance(Building building)
+        {
+            this.BindToBuildingBase(building);
+        }
+    }
+
+
+
+
+
+    // Chamber of War
+
+    // Great Hall
+
+    // Barracks
+
+    // Archer School
 
 
 }

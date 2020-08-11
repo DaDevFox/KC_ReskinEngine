@@ -98,7 +98,7 @@ namespace ReskinEngine.API
     {
         public ReskinProfile ReskinProfile { get; internal set; }
         public int Identifier { get; internal set; }
-        public virtual string TypeIdentifier { get; }
+        internal virtual string TypeIdentifier { get; }
 
         /// <summary>
         /// Adds GameObject children to the target with specifications per skin as a method of communication between the client API and the Engine
@@ -128,10 +128,10 @@ namespace ReskinEngine.API
 
     public class BuildingSkin : Skin
     {
-        public virtual string FriendlyName { get; } = "No Name";
-        public virtual string UniqueName { get; } = "No UniqueName";
+        internal virtual string FriendlyName { get; } = "No Name";
+        internal virtual string UniqueName { get; } = "No UniqueName";
 
-        public override string TypeIdentifier => $"building_{UniqueName}";
+        internal sealed override string TypeIdentifier => $"building_{UniqueName}";
 
         /// <summary>
         /// Optional; the positions peasants stand at while working at the building; 

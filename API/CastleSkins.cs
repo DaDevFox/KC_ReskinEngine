@@ -10,8 +10,8 @@ namespace ReskinEngine.API
     ////Keep
     public class KeepBuildingSkin : BuildingSkin
     {
-        public override string FriendlyName => "Keep"; 
-        public override string UniqueName => "keep";
+        internal override string FriendlyName => "Keep";
+        internal override string UniqueName => "keep";
 
         [Model(description = "The base upgrade for the keep")]
         public GameObject keepUpgrade1;
@@ -37,6 +37,24 @@ namespace ReskinEngine.API
 
         }
     }
+
+    public class TreasureRoomBuildingSkin : BuildingSkin
+    {
+        internal override string FriendlyName => "Keep";
+        internal override string UniqueName => "keep";
+
+        [Model( description = "The base model of the treasure room", type = ModelAttribute.Type.Instance)]
+        public GameObject baseModel;
+
+        protected override void PackageInternal(Transform target, GameObject _base)
+        {
+            if (baseModel)
+                GameObject.Instantiate(baseModel, _base.transform).name = "baseModel";
+        }
+    }
+
+
+
 
     #endregion
 
@@ -119,17 +137,15 @@ namespace ReskinEngine.API
     //Wood Castle Block
     public class WoodCastleBlockBuildingSkin : CastleBlockBuildingSkinBase
     {
-        public override string FriendlyName => "Wooden Castle Block";
-        public override string UniqueName => "woodcastleblock";
-        public override string TypeIdentifier => base.TypeIdentifier;
+        internal override string FriendlyName => "Wooden Castle Block";
+        internal override string UniqueName => "woodcastleblock";
     }
 
     //Stone Castle Block
     public class StoneCastleBlockBuildingSkin : CastleBlockBuildingSkinBase
     {
-        public override string FriendlyName => "Stone Castle Block";
-        public override string UniqueName => "castleblock";
-        public override string TypeIdentifier => base.TypeIdentifier;
+        internal override string FriendlyName => "Stone Castle Block";
+        internal override string UniqueName => "castleblock";
     }
 
     #endregion
@@ -160,18 +176,18 @@ namespace ReskinEngine.API
     //Wooden Gate
     public class WoodenGateBuildingSkin : GateBuildingSkinBase
     {
-        public override string FriendlyName => "Wooden Gate";
-        public override string UniqueName => "woodengate";
-        public override string TypeIdentifier => base.TypeIdentifier;
+        internal override string FriendlyName => "Wooden Gate";
+        internal override string UniqueName => "woodengate";
+        internal override string TypeIdentifier => base.TypeIdentifier;
     }
 
     //Stone Gate
     public class StoneGateBuildingSkin : GateBuildingSkinBase
     {
-        public override string FriendlyName => "Stone Gate";
-        public override string UniqueName => "gate";
+        internal override string FriendlyName => "Stone Gate";
+        internal override string UniqueName => "gate";
 
-        public override string TypeIdentifier => base.TypeIdentifier;
+        internal override string TypeIdentifier => base.TypeIdentifier;
 
     }
 
@@ -182,10 +198,10 @@ namespace ReskinEngine.API
     //Castle Stairs
     public class CastleStairsBuildingSkin : BuildingSkin
     {
-        public override string FriendlyName => "Castle Stairs";
-        public override string UniqueName => "castlestairs";
+        internal override string FriendlyName => "Castle Stairs";
+        internal override string UniqueName => "castlestairs";
 
-        public override string TypeIdentifier => base.TypeIdentifier;
+        internal override string TypeIdentifier => base.TypeIdentifier;
 
 
         protected override void PackageInternal(Transform target, GameObject _base)
@@ -219,11 +235,11 @@ namespace ReskinEngine.API
     //Archer Tower
     public class ArcherTowerBuildingSkin : BuildingSkin
     {
-        public override string FriendlyName => "Archer Tower";
+        internal override string FriendlyName => "Archer Tower";
 
-        public override string UniqueName => "archer";
+        internal override string UniqueName => "archer";
 
-        public override string TypeIdentifier => base.TypeIdentifier;
+        internal override string TypeIdentifier => base.TypeIdentifier;
 
         protected override void PackageInternal(Transform target, GameObject _base)
         {
@@ -251,10 +267,10 @@ namespace ReskinEngine.API
     //Ballista Tower
     public class BallistaTowerBuildingSkin : BuildingSkin
     {
-        public override string FriendlyName => "Ballista Tower";
-        public override string UniqueName => "ballista";
+        internal override string FriendlyName => "Ballista Tower";
+        internal override string UniqueName => "ballista";
 
-        public override string TypeIdentifier => base.TypeIdentifier;
+        internal override string TypeIdentifier => base.TypeIdentifier;
 
 
         protected override void PackageInternal(Transform target, GameObject _base)
