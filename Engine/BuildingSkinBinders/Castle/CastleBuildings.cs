@@ -88,7 +88,8 @@ namespace ReskinEngine.Engine
 
     #endregion
 
-    // Treasure Room
+    #region Treasure Room
+
     public class TreasureRoomSkinBinder : BuildingSkinBinder
     {
         public override string UniqueName => "throneroom";
@@ -122,11 +123,44 @@ namespace ReskinEngine.Engine
         }
     }
 
-
+    #endregion
 
 
 
     // Chamber of War
+    public class ChamberOfWarSkinBinder : BuildingSkinBinder
+    {
+        public override string UniqueName => "chamberofwar";
+
+        public GameObject baseModel;
+
+        public override SkinBinder Create(GameObject obj)
+        {
+            var inst = new ChamberOfWarSkinBinder();
+
+            if (obj.transform.Find("baseModel"))
+                this.baseModel = obj.transform.Find("baseModel").gameObject;
+
+            return inst;
+        }
+
+        public override void BindToBuildingBase(Building building)
+        {
+            MeshFilter mesh = building.transform.Find("Offset/chamberofwar").GetComponent<MeshFilter>();
+
+            if (baseModel)
+            {
+                mesh.mesh = null;
+                GameObject.Instantiate(baseModel, mesh.transform);
+            }
+        }
+
+        public override void BindToBuildingInstance(Building building)
+        {
+            this.BindToBuildingBase(building);
+        }
+    }
+
 
     // Great Hall
 

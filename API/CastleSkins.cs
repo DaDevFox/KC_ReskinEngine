@@ -40,10 +40,26 @@ namespace ReskinEngine.API
 
     public class TreasureRoomBuildingSkin : BuildingSkin
     {
-        internal override string FriendlyName => "Keep";
-        internal override string UniqueName => "keep";
+        internal override string FriendlyName => "Treasure Room";
+        internal override string UniqueName => "throneroom";
 
         [Model( description = "The base model of the treasure room", type = ModelAttribute.Type.Instance)]
+        public GameObject baseModel;
+
+        protected override void PackageInternal(Transform target, GameObject _base)
+        {
+            if (baseModel)
+                GameObject.Instantiate(baseModel, _base.transform).name = "baseModel";
+        }
+    }
+
+
+    public class ChamberOfWarBuildingSkin : BuildingSkin
+    {
+        internal override string FriendlyName => "Chamber Of War";
+        internal override string UniqueName => "chamberofwar";
+
+        [Model(description = "The base model of the chamber of war room", type = ModelAttribute.Type.Instance)]
         public GameObject baseModel;
 
         protected override void PackageInternal(Transform target, GameObject _base)
@@ -178,7 +194,6 @@ namespace ReskinEngine.API
     {
         internal override string FriendlyName => "Wooden Gate";
         internal override string UniqueName => "woodengate";
-        internal override string TypeIdentifier => base.TypeIdentifier;
     }
 
     //Stone Gate
@@ -187,7 +202,6 @@ namespace ReskinEngine.API
         internal override string FriendlyName => "Stone Gate";
         internal override string UniqueName => "gate";
 
-        internal override string TypeIdentifier => base.TypeIdentifier;
 
     }
 
@@ -201,7 +215,6 @@ namespace ReskinEngine.API
         internal override string FriendlyName => "Castle Stairs";
         internal override string UniqueName => "castlestairs";
 
-        internal override string TypeIdentifier => base.TypeIdentifier;
 
 
         protected override void PackageInternal(Transform target, GameObject _base)
@@ -239,8 +252,6 @@ namespace ReskinEngine.API
 
         internal override string UniqueName => "archer";
 
-        internal override string TypeIdentifier => base.TypeIdentifier;
-
         protected override void PackageInternal(Transform target, GameObject _base)
         {
             base.PackageInternal(target, _base);
@@ -270,7 +281,6 @@ namespace ReskinEngine.API
         internal override string FriendlyName => "Ballista Tower";
         internal override string UniqueName => "ballista";
 
-        internal override string TypeIdentifier => base.TypeIdentifier;
 
 
         protected override void PackageInternal(Transform target, GameObject _base)
