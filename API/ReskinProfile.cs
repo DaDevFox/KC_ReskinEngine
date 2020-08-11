@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using ReskinEngine.Examples.ExampleMod;
+//using ReskinEngine.Examples.ExampleMod;
 
 namespace ReskinEngine.API
 {
@@ -54,7 +54,7 @@ namespace ReskinEngine.API
         {
             Transform target;
 
-            KCModHelper helper = Mod.helper;
+            //KCModHelper helper = Mod.helper;
 
             if (World.inst.transform.Find(ReskinWorldLocation) == null)
             {
@@ -70,7 +70,7 @@ namespace ReskinEngine.API
             foreach(Skin skin in skins.Values)
                 skin.Package(target);
 
-            helper.Log(InfoFileGenerator.Generate());
+            //helper.Log(InfoFileGenerator.Generate());
         }
 
 
