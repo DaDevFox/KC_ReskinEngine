@@ -1,4 +1,4 @@
-BuildingFramework Guide | Reskinning | Kingdoms and Castles Modding
+Kingdoms and Castles Reskin Engine Guide | Kingdoms and Castles Modding
 =
 Buildings in Kingdoms and Castles don't have a standard format that can be used to generically reskin any building in the game. Becuase of this, every building has different models and specifications to be built to. This makes reskinning buildings in KC more difficult than it needs to be, because of this, We've brought a framework for people with ranging levels of skill in either coding or art, so that someone less experienced in either shouldn't have to be deterred from reskinning anything!
 
@@ -373,6 +373,18 @@ Models:
 	keepUpgrade3:         Instance | The third upgrade for the keep
 	keepUpgrade4:         Instance | The fourth upgrade for the keep
 
+-- Treasure Room --
+Name: Treasure Room
+UniqueName: throneroom
+Models:
+	baseModel:            Instance | The base model of the treasure room
+
+-- Chamber Of War --
+Name: Chamber Of War
+UniqueName: chamberofwar
+Models:
+	baseModel:            Instance | The base model of the chamber of war room
+
 -- Wooden Castle Block --
 Name: Wooden Castle Block
 UniqueName: woodcastleblock
@@ -526,11 +538,6 @@ UniqueName: cemeteryDiamond
 -- Cemetery Caretaker --
 Name: Cemetery Caretaker
 UniqueName: cemeterykeeper
-
-[Not Supported]
--- Chamber of War --
-Name: Chamber of War
-UniqueName: chamberofwar
 
 [Not Supported]
 -- Charcoal Maker --
@@ -761,11 +768,6 @@ UniqueName: swineherd
 -- Tavern --
 Name: Tavern
 UniqueName: tavern
-
-[Not Supported]
--- Treasure Room --
-Name: Treasure Room
-UniqueName: throneroom
 
 [Not Supported]
 -- Town Square --
