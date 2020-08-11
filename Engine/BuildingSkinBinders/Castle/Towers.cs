@@ -25,59 +25,51 @@ namespace ReskinEngine.Engine
 
             return inst;
         }
+
+        public override void BindToBuildingBase(Building building)
+        {
+            GameObject baseModel = building.transform.Find("Offset/1x1x5_archer").gameObject;
+            GameObject veteranModel = building.transform.Find("Offset/archertower_veteran").gameObject;
+
+            MeshFilter m_1 = baseModel.GetComponent<MeshFilter>();
+            MeshFilter m_2 = veteranModel.GetComponent<MeshFilter>();
+
+            if (this.baseModel)
+            {
+                m_1.mesh = null;
+                GameObject.Instantiate(this.baseModel, baseModel.transform);
+            }
+
+            if (this.veteranModel)
+            {
+                m_2.mesh = null;
+                GameObject.Instantiate(this.veteranModel, veteranModel.transform);
+            }
+        }
+
+
     }
 
     public class BallistaTowerSkinBinder : BuildingSkinBinder
     {
         public override string UniqueName => "ballista";
 
-        /// <summary>
-        /// An embelishment added to the ballista tower when it achieves the veteran status
-        /// </summary>
+        
         public GameObject veteranModel;
-        /// <summary>
-        /// The main model of the Ballista Tower
-        /// </summary>
         public GameObject baseModel;
-        /// <summary>
-        /// The base of the rotational top half of the ballista
-        /// </summary>
         public GameObject topBase;
-        /// <summary>
-        /// The right side arm used to animate the ballista's firing movement
-        /// </summary>
+
         public GameObject armR;
-        /// <summary>
-        /// The right end of the right arm of the ballista; used for anchoring the right side of the string in animation
-        /// </summary>
         public Transform armREnd;
-        /// <summary>
-        /// The left side arm used to animate the ballista's firing movement
-        /// </summary>
         public GameObject armL;
-        /// <summary>
-        /// The left end of the left arm of the ballista; used for anchoring the left side of the string in animation
-        /// </summary>
         public Transform armLEnd;
-        /// <summary>
-        /// The right side of the animated string used to pull back and fire the ballista projectile
-        /// </summary>
+
         public GameObject stringR;
-        /// <summary>
-        /// The left side of the animated string used to pull back and fire the ballista projectile
-        /// </summary>
         public GameObject stringL;
-        /// <summary>
-        /// The projectile fired from the ballista
-        /// </summary>
+
         public GameObject projectile;
-        /// <summary>
-        /// The end of the ballista projectile that's pulled back before firing
-        /// </summary>
         public Transform projectileEnd;
-        /// <summary>
-        /// A decorative flag on the ballista
-        /// </summary>
+
         public GameObject flag;
 
         public override SkinBinder Create(GameObject obj)
@@ -115,6 +107,126 @@ namespace ReskinEngine.Engine
                 inst.flag = obj.transform.Find("flag").gameObject;
 
             return inst;
+        }
+
+        public override void BindToBuildingBase(Building building)
+        {
+            // Objects
+            GameObject baseModel = building.transform.Find("Offset/ballista").gameObject;
+            GameObject veteranModel = building.transform.Find("Offset/ballistabase_veteran").gameObject;
+
+            GameObject topBase = building.transform.Find("Offset/ballista/ballistatop").gameObject;
+
+            GameObject armR = building.transform.Find("Offset/ballista/ballistatop/armRContainer/armR").gameObject;
+            GameObject armREnd = building.transform.Find("Offset/ballista/ballistatop/armRContainer/armR/armREnd").gameObject;
+            GameObject armL = building.transform.Find("Offset/ballista/ballistatop/armLContainer/armL").gameObject;
+            GameObject armLEnd = building.transform.Find("Offset/ballista/ballistatop/armLContainer/armL/armLEnd").gameObject;
+
+            GameObject arrow = building.transform.Find("Offset/ballista/ballistatop/arrow").gameObject;
+            GameObject arrowEnd = building.transform.Find("Offset/ballista/ballistatop/arrow/arrowEnd").gameObject;
+
+            GameObject stringR = building.transform.Find("Offset/ballista/ballistatop/stringR").gameObject;
+            GameObject stringL = building.transform.Find("Offset/ballista/ballistatop/stringL").gameObject;
+
+            GameObject flag = building.transform.Find("Offset/GameObject (1)").gameObject;
+
+
+
+            // Meshes
+            MeshFilter m_base = baseModel.GetComponent<MeshFilter>();
+            MeshFilter m_veteran = veteranModel.GetComponent<MeshFilter>();
+
+            MeshFilter m_top = topBase.GetComponent<MeshFilter>();
+
+            MeshFilter m_armR = armR.GetComponent<MeshFilter>();
+            MeshFilter m_armL = armL.GetComponent<MeshFilter>();
+
+            MeshFilter m_arrow = arrow.GetComponent<MeshFilter>();
+
+            MeshFilter m_stringR = stringR.GetComponent<MeshFilter>();
+            MeshFilter m_stringL = stringL.GetComponent<MeshFilter>();
+
+            MeshFilter m_flag = flag.GetComponent<MeshFilter>();
+
+
+            // Bases
+            if (this.baseModel)
+            {
+                m_base.mesh = null;
+                GameObject.Instantiate(this.baseModel, baseModel.transform);
+            }
+
+            if (this.veteranModel)
+            {
+                m_veteran.mesh = null;
+                GameObject.Instantiate(this.veteranModel, veteranModel.transform);
+            }
+
+            if (this.topBase)
+            {
+                m_top.mesh = null;
+                GameObject.Instantiate(this.topBase, topBase.transform);
+            }
+
+
+            // Arms
+            if (this.armR)
+            {
+                m_armR.mesh = null;
+                GameObject.Instantiate(this.armR, armR.transform);
+            }
+
+            if (this.armL)
+            {
+                m_armL.mesh = null;
+                GameObject.Instantiate(this.armL, armL.transform);
+            }
+
+            // Arm Anchors
+            if (this.armREnd)
+                armREnd.transform.position = this.armREnd.position;
+            if (this.armLEnd)
+                armLEnd.transform.position = this.armLEnd.position;
+
+            // Projectile
+            if (this.projectile)
+            {
+                m_arrow.mesh = null;
+                GameObject.Instantiate(this.projectile, arrow.transform);
+            }
+
+            // Projectile Anchor
+            if (this.projectileEnd)
+                arrowEnd.transform.position = this.projectileEnd.position;
+
+
+            // Strings
+            if(this.stringR)
+            {
+                m_stringR.mesh = null;
+                GameObject.Instantiate(this.stringR, stringR.transform);
+            }
+
+            if (this.stringL)
+            {
+                m_stringL.mesh = null;
+                GameObject.Instantiate(this.stringL, stringL.transform);
+            }
+
+            // Flag
+            if (this.flag)
+            {
+                m_flag.mesh = null;
+                GameObject.Instantiate(this.flag, flag.transform);
+            }
+
+
+
+        }
+
+        public override void BindToBuildingInstance(Building building)
+        {
+            this.BindToBuildingBase(building);
         }
     }
 

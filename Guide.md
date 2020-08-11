@@ -422,7 +422,6 @@ Models:
 	stairsDown:            Modular | stairs facing -z
 	stairsLeft:            Modular | stairs facing -x
 
-[Not Supported]
 -- Archer Tower --
 Name: Archer Tower
 UniqueName: archer
@@ -430,7 +429,6 @@ Models:
 	baseModel:            Instance | The main model of the Archer Tower
 	veteranModel:         Instance | An embelishment added to the archer tower when it achieves the veteran status
 
-[Not Supported]
 -- Ballista Tower --
 Name: Ballista Tower
 UniqueName: ballista
@@ -440,18 +438,19 @@ Models:
 	topBase:              Instance | The base of the rotational top half of the ballista
 	-------
 	armR:                 Instance | The right side arm used to animate the ballista's firing movement
-	armREnd:              Instance | The right end of the right arm of the ballista; used for anchoring the right side of the string in animation
-	-------
+	----
 	armL:                 Instance | The left side arm used to animate the ballista's firing movement
-	armLEnd:              Instance | The left end of the left arm of the ballista; used for anchoring the left side of the string in animation
-	-------
+	----
 	stringR:              Instance | The right side of the animated string used to pull back and fire the ballista projectile
 	stringL:              Instance | The left side of the animated string used to pull back and fire the ballista projectile
 	-------
 	projectile:           Instance | The projectile fired from the ballista
-	projectileEnd:        Instance | The end of the ballista projectile that's pulled back before firing
-	-------------
+	----------
 	flag:                 Instance | A decorative flag on the ballista
+Anchors:
+	armREnd:       The right end of the right arm of the ballista; position used for anchoring the right side of the string in animation
+	armLEnd:       The left end of the left arm of the ballista; position used for anchoring the left side of the string in animation
+	projectileEnd: The end of the ballista projectile that's pulled back before firing
 
 [Not Supported]
 -- Aqueduct --

@@ -3,7 +3,9 @@
 namespace ReskinEngine.API
 {
 
-   
+
+
+    #region Castle Buildings
 
     ////Keep
     public class KeepBuildingSkin : BuildingSkin
@@ -35,6 +37,8 @@ namespace ReskinEngine.API
 
         }
     }
+
+    #endregion
 
     #region Castle Blocks
 
@@ -173,6 +177,8 @@ namespace ReskinEngine.API
 
     #endregion
 
+    #region Castle Stairs
+
     //Castle Stairs
     public class CastleStairsBuildingSkin : BuildingSkin
     {
@@ -206,10 +212,11 @@ namespace ReskinEngine.API
         public GameObject stairsLeft;
     }
 
+    #endregion
+
     #region Towers
 
     //Archer Tower
-    [NotSupported]
     public class ArcherTowerBuildingSkin : BuildingSkin
     {
         public override string FriendlyName => "Archer Tower";
@@ -242,7 +249,6 @@ namespace ReskinEngine.API
     }
 
     //Ballista Tower
-    [NotSupported]
     public class BallistaTowerBuildingSkin : BuildingSkin
     {
         public override string FriendlyName => "Ballista Tower";
@@ -306,7 +312,7 @@ namespace ReskinEngine.API
         /// <summary>
         /// The right end of the right arm of the ballista; used for anchoring the right side of the string in animation
         /// </summary>
-        [Model(description = "The right end of the right arm of the ballista; used for anchoring the right side of the string in animation")]
+        [Anchor(description = "The right end of the right arm of the ballista; position used for anchoring the right side of the string in animation")]
         public Transform armREnd;
         /// <summary>
         /// The left side arm used to animate the ballista's firing movement
@@ -317,7 +323,7 @@ namespace ReskinEngine.API
         /// <summary>
         /// The left end of the left arm of the ballista; used for anchoring the left side of the string in animation
         /// </summary>
-        [Model(description = "The left end of the left arm of the ballista; used for anchoring the left side of the string in animation")]
+        [Anchor(description = "The left end of the left arm of the ballista; position used for anchoring the left side of the string in animation")]
         public Transform armLEnd;
         /// <summary>
         /// The right side of the animated string used to pull back and fire the ballista projectile
@@ -339,7 +345,7 @@ namespace ReskinEngine.API
         /// <summary>
         /// The end of the ballista projectile that's pulled back before firing
         /// </summary>
-        [Model(description = "The end of the ballista projectile that's pulled back before firing")]
+        [Anchor(description = "The end of the ballista projectile that's pulled back before firing")]
         public Transform projectileEnd;
         /// <summary>
         /// A decorative flag on the ballista

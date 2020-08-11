@@ -47,6 +47,7 @@ namespace ReskinEngine.API
 
 
                     List<ModelAttribute> models = new List<ModelAttribute>();
+                    List<AnchorAttribute> anchors = new List<AnchorAttribute>();
 
                     FieldInfo[] fields = s.GetType().GetFields();
                     foreach(FieldInfo field in fields)
@@ -60,6 +61,20 @@ namespace ReskinEngine.API
                                 attribute.seperator = true;
 
                             models.Add(attribute);
+                        }
+                    }
+
+                    foreach (FieldInfo field in fields)
+                    {
+                        if (field.GetCustomAttribute<AnchorAttribute>() != null)
+                        {
+                            AnchorAttribute attribute = field.GetCustomAttribute<AnchorAttribute>();
+                            attribute.name = field.Name;
+
+                            if (field.GetCustomAttribute<SeperatorAttribute>() != null)
+                                attribute.seperator = true;
+
+                            anchors.Add(attribute);
                         }
                     }
 
@@ -87,6 +102,32 @@ namespace ReskinEngine.API
                     }
 
                     result += modelsText;
+
+                    string anchorsText = "";
+
+                    if (anchors.Count > 0)
+                    {
+                        result += $"Anchors:{Environment.NewLine}";
+
+                        for (int i = 0; i < anchors.Count; i++)
+                        {
+                            AnchorAttribute anchor = anchors[i];
+                            if (anchor.seperator)
+                            {
+                                if (i > 0)
+                                    anchorsText += "\t" + new String(SeperatorChar, models[i - 1].name.Length);
+                                else
+                                    anchorsText += "\t" + new String(SeperatorChar, SeperatorDefaultCount);
+                                anchorsText += Environment.NewLine;
+                            }
+
+
+                            anchorsText += $"\t{string.Format("{0,-15}{1,15}", anchor.name + ":", anchor.description)}{Environment.NewLine}";
+                        }
+                    }
+
+                    result += anchorsText;
+                    
                     result += Environment.NewLine;
                 }
                 

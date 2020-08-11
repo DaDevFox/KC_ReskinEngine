@@ -58,6 +58,25 @@ namespace ReskinEngine.API
         }
     }
 
+    [AttributeUsage(AttributeTargets.Field, Inherited = true)]
+    public class AnchorAttribute : Attribute
+    {
+        public string description;
+        public string name;
+        internal bool seperator;
+
+        public AnchorAttribute()
+        { 
+        }
+
+        public AnchorAttribute(string description) => this.description = description;
+    }
+
+
+
+    /// <summary>
+    /// Adds a seperator above this field
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
     public class SeperatorAttribute : Attribute
     {
