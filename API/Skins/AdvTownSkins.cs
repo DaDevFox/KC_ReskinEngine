@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ReskinEngine.API
 {
     [Jobs(4)]
+    [Category("advTown")]
     public class ChurchBuildingSkin : GenericBuildingSkin
     {
         internal override string UniqueName => "church";

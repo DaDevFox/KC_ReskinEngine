@@ -19,9 +19,43 @@ namespace ReskinEngine.API
         {
             string result = "";
 
-            List<string> completed = new List<string>();
+            List<string> completedBuildings = new List<string>();
 
             Type[] types = Assembly.GetExecutingAssembly().GetTypes();
+            List<Category> categories = new List<Category>();
+
+            foreach(Type t in types)
+            {
+                if (t.IsSubclassOf(typeof(Category)))
+                    categories.Add(Activator.CreateInstance(t) as Category);
+            }
+
+            types = types.OrderBy(
+                t =>
+                {
+                    if (t.IsSubclassOf(typeof(Skin)))
+                    {
+                        if (t.GetCustomAttribute<CategoryAttribute>() != null)
+                        {
+                            CategoryAttribute categoryAttribute = t.GetCustomAttribute<CategoryAttribute>();
+
+                            Category category = categories.Find((c) => c.id == categoryAttribute.category);
+
+                            if (category != null)
+                            {
+                                return category.position;
+                            }
+                            else
+                                return 100;
+                        }
+                    }
+
+                    return 100;
+                }).ToArray();
+
+            List<string> usedCategories = new List<string>();
+
+
             foreach (Type type in types)
             {
 
@@ -29,122 +63,169 @@ namespace ReskinEngine.API
                     continue;
 
 
-                if (type.IsSubclassOf(typeof(BuildingSkin)))
+
+                if (type.IsSubclassOf(typeof(Skin)))
                 {
+                    if(type.GetCustomAttribute<CategoryAttribute>() != null)
+                    {
+                        CategoryAttribute categoryAttribute = type.GetCustomAttribute<CategoryAttribute>();
 
-                    BuildingSkin s = Activator.CreateInstance(type) as BuildingSkin;
+                        Category category = categories.Find((c) => c.id == categoryAttribute.category);
 
-                    completed.Add(s.UniqueName);
+
+                        if (!usedCategories.Contains(categoryAttribute.category))
+                        {
+                            string title = $" {new String(SeperatorChar, TitleSeperatorCount)} {category.name} {new String(SeperatorChar, TitleSeperatorCount)} ";
+                            result += title + Environment.NewLine;
+                            result += new String(SeperatorChar, title.Length);
+                            result += Environment.NewLine + Environment.NewLine;
+
+                            usedCategories.Add(categoryAttribute.category);
+                        }
+                    }
+
+
+                    Skin skin = Activator.CreateInstance(type) as Skin;
 
                     if (type.GetCustomAttribute<NotSupportedAttribute>() != null)
                         result += $"[Not Supported]{Environment.NewLine}";
 
-                    result += $"{new String(SeperatorChar, TitleSeperatorCount)} {s.FriendlyName} {new String(SeperatorChar, TitleSeperatorCount)}";
+                    result += $"{new String(SeperatorChar, TitleSeperatorCount)} {skin.Name} {new String(SeperatorChar, TitleSeperatorCount)}";
                     result += Environment.NewLine;
-                    result +=
-                        $"Name: {s.FriendlyName}{Environment.NewLine}" +
-                        $"UniqueName: {s.UniqueName}{Environment.NewLine}";
 
-                    if (type.GetCustomAttribute<JobsAttribute>() != null)
-                        result += $"Jobs: {type.GetCustomAttribute<JobsAttribute>().count}{Environment.NewLine}";
+                    #region For BuildingSkins
 
-
-                    List <ModelAttribute> models = new List<ModelAttribute>();
-                    List<AnchorAttribute> anchors = new List<AnchorAttribute>();
-
-                    FieldInfo[] fields = s.GetType().GetFields();
-                    foreach(FieldInfo field in fields)
+                    if (type.IsSubclassOf(typeof(BuildingSkin)))
                     {
-                        if(field.GetCustomAttribute<ModelAttribute>() != null)
+                        BuildingSkin buildingSkin = Activator.CreateInstance(type) as BuildingSkin;
+                        
+                        result +=
+                            $"Name: {buildingSkin.FriendlyName}{Environment.NewLine}" +
+                            $"UniqueName: {buildingSkin.UniqueName}{Environment.NewLine}";
+
+                        if (type.GetCustomAttribute<JobsAttribute>() != null)
+                            result += $"Jobs: {type.GetCustomAttribute<JobsAttribute>().count}{Environment.NewLine}";
+
+
+                        List<ModelAttribute> models = new List<ModelAttribute>();
+                        List<AnchorAttribute> anchors = new List<AnchorAttribute>();
+
+                        FieldInfo[] fields = buildingSkin.GetType().GetFields();
+                        foreach (FieldInfo field in fields)
                         {
-                            ModelAttribute attribute = field.GetCustomAttribute<ModelAttribute>();
-                            attribute.name = field.Name;
-
-                            if (field.GetCustomAttribute<SeperatorAttribute>() != null)
-                                attribute.seperator = true;
-
-                            models.Add(attribute);
-                        }
-                    }
-
-                    foreach (FieldInfo field in fields)
-                    {
-                        if (field.GetCustomAttribute<AnchorAttribute>() != null)
-                        {
-                            AnchorAttribute attribute = field.GetCustomAttribute<AnchorAttribute>();
-                            attribute.name = field.Name;
-
-                            if (field.GetCustomAttribute<SeperatorAttribute>() != null)
-                                attribute.seperator = true;
-
-                            anchors.Add(attribute);
-                        }
-                    }
-
-                    string modelsText = "";
-
-                    if (models.Count > 0) 
-                    {
-                        result += $"Models:{Environment.NewLine}";
-
-                        for(int i = 0; i < models.Count; i++)
-                        {
-                            ModelAttribute model = models[i];
-                            if (model.seperator)
+                            if (field.GetCustomAttribute<ModelAttribute>() != null)
                             {
-                                if (i > 0)
-                                    modelsText += "\t" + new String(SeperatorChar, models[i - 1].name.Length);
-                                else
-                                    modelsText += "\t" + new String(SeperatorChar, SeperatorDefaultCount);
-                                modelsText += Environment.NewLine;
+                                ModelAttribute attribute = field.GetCustomAttribute<ModelAttribute>();
+                                attribute.name = field.Name;
+
+                                if (field.GetCustomAttribute<SeperatorAttribute>() != null)
+                                    attribute.seperator = true;
+
+                                models.Add(attribute);
                             }
-
-                            
-                            modelsText += $"\t{string.Format("{0,-15}{1,15} | {2,8}", model.name + ":", model.type.ToString(), model.description)}{Environment.NewLine}";
                         }
-                    }
 
-                    result += modelsText;
-
-                    string anchorsText = "";
-
-                    if (anchors.Count > 0)
-                    {
-                        result += $"Anchors:{Environment.NewLine}";
-
-                        for (int i = 0; i < anchors.Count; i++)
+                        foreach (FieldInfo field in fields)
                         {
-                            AnchorAttribute anchor = anchors[i];
-                            if (anchor.seperator)
+                            if (field.GetCustomAttribute<AnchorAttribute>() != null)
                             {
-                                if (i > 0)
-                                    anchorsText += "\t" + new String(SeperatorChar, models[i - 1].name.Length);
-                                else
-                                    anchorsText += "\t" + new String(SeperatorChar, SeperatorDefaultCount);
-                                anchorsText += Environment.NewLine;
+                                AnchorAttribute attribute = field.GetCustomAttribute<AnchorAttribute>();
+                                attribute.name = field.Name;
+
+                                if (field.GetCustomAttribute<SeperatorAttribute>() != null)
+                                    attribute.seperator = true;
+
+                                anchors.Add(attribute);
                             }
-
-
-                            anchorsText += $"\t{string.Format("{0,-15}{1,15}", anchor.name + ":", anchor.description)}{Environment.NewLine}";
                         }
+
+                        string modelsText = "";
+
+                        if (models.Count > 0)
+                        {
+                            result += $"Models:{Environment.NewLine}";
+
+                            for (int i = 0; i < models.Count; i++)
+                            {
+                                ModelAttribute model = models[i];
+                                if (model.seperator)
+                                {
+                                    if (i > 0)
+                                        modelsText += "\t" + new String(SeperatorChar, models[i - 1].name.Length);
+                                    else
+                                        modelsText += "\t" + new String(SeperatorChar, SeperatorDefaultCount);
+                                    modelsText += Environment.NewLine;
+                                }
+
+
+                                modelsText += $"\t{string.Format("{0,-15}{1,15} | {2,8}", model.name + ":", model.type.ToString(), model.description)}{Environment.NewLine}";
+                            }
+                        }
+
+                        result += modelsText;
+
+                        string anchorsText = "";
+
+                        if (anchors.Count > 0)
+                        {
+                            result += $"Anchors:{Environment.NewLine}";
+
+                            for (int i = 0; i < anchors.Count; i++)
+                            {
+                                AnchorAttribute anchor = anchors[i];
+                                if (anchor.seperator)
+                                {
+                                    if (i > 0)
+                                        anchorsText += "\t" + new String(SeperatorChar, models[i - 1].name.Length);
+                                    else
+                                        anchorsText += "\t" + new String(SeperatorChar, SeperatorDefaultCount);
+                                    anchorsText += Environment.NewLine;
+                                }
+
+
+                                anchorsText += $"\t{string.Format("{0,-15}{1,15}", anchor.name + ":", anchor.description)}{Environment.NewLine}";
+                            }
+                        }
+
+                        result += anchorsText;
+
+                        result += Environment.NewLine;
+
+                        completedBuildings.Add(buildingSkin.UniqueName);
                     }
 
-                    result += anchorsText;
+                    #endregion
+
                     
-                    result += Environment.NewLine;
                 }
                 
             }
 
+
+            bool madeHeader = false;
+
             foreach(Building b in GameState.inst.internalPrefabs)
             {
-                if (!completed.Contains(b.UniqueName))
-                    result += $"[Not Supported]" + Environment.NewLine + 
+                if (!completedBuildings.Contains(b.UniqueName))
+                {
+                    if (!madeHeader)
+                    {
+                        string title = $" {new String(SeperatorChar, TitleSeperatorCount)} Unsupported {new String(SeperatorChar, TitleSeperatorCount)} ";
+                        result += title + Environment.NewLine;
+                        result += new String(SeperatorChar, title.Length);
+                        result += Environment.NewLine + Environment.NewLine;
+
+                        madeHeader = true;
+                    }
+
+
+                    result += $"[Not Supported]" + Environment.NewLine +
                         $"{new String(SeperatorChar, TitleSeperatorCount)} {b.FriendlyName} {new String(SeperatorChar, TitleSeperatorCount)}" +
                         Environment.NewLine +
                         $"Name: {b.FriendlyName}{Environment.NewLine}" +
                         $"UniqueName: {b.UniqueName}{Environment.NewLine}" +
                         Environment.NewLine;
+                }
             }
 
 

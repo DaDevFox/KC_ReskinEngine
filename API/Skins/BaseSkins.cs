@@ -10,7 +10,116 @@ namespace ReskinEngine.API
 {
     #region Base
 
+    #region Category Definitions
+
+    #region Base
+
+    /// <summary>
+    /// A category with a string id that any skin can be a part of; used for documentation
+    /// </summary>
+    public abstract class Category
+    {
+        /// <summary>
+        /// ID skins can use to refer to this
+        /// </summary>
+        public abstract string id { get; }
+        /// <summary>
+        /// Name shown in documentation; default is id with first letter uppercase
+        /// </summary>
+        public virtual string name
+        {
+            get
+            {
+                if (id.Length == 0)
+                    return "";
+                else if (id.Length == 1)
+                    return char.ToUpper(id[0]).ToString();
+                else
+                    return char.ToUpper(id[0]) + id.Substring(1);
+            }
+        }
+        /// <summary>
+        /// Order of this category in skins list
+        /// </summary>
+        public virtual int position { get; } = -1;
+    }
+
+    #endregion
+
+    #region Skins
+
+    public class GenericSkinsCategory : Category
+    {
+        public override string id => "generic";
+        public override string name => "Generic Skins";
+        public override int position => 0;
+    }
+
+    #endregion
+
+    #region Buildings
+
+    public class CastleCategory : Category
+    {
+        public override string id => "castle";
+        public override int position => 1;
+    }
+
+    public class TownCategory : Category
+    {
+        public override string id => "town";
+        public override int position => 2;
+    }
+
+    public class AdvTownCategory : Category
+    {
+        public override string id => "advTown";
+        public override string name => "Advanced Town";
+        public override int position => 3;
+    }
+
+    public class FoodCategory : Category
+    {
+        public override string id => "food";
+        public override int position => 4;
+    }
+
+    public class IndustryCategory : Category
+    {
+        public override string id => "industry";
+        public override int position => 5;
+    }
+
+    public class MaritimeCategory : Category
+    {
+        public override string id => "maritime";
+        public override int position => 6;
+    }
+
+    public class CemetaryCategory : Category
+    {
+        public override string id => "cemetary";
+        public override string name => "Cemetaries";
+        public override int position => 7;
+    }
+
+
+
+
+    #endregion
+
+    #endregion
+
     #region Attributes
+
+    [AttributeUsage(AttributeTargets.Class, Inherited = true)]
+    public class CategoryAttribute : Attribute
+    {
+        public string category = "none";
+
+        public CategoryAttribute(string category) => this.category = category;
+    }
+
 
     /// <summary>
     /// Signifies a skin that shouldn't be used
@@ -89,6 +198,8 @@ namespace ReskinEngine.API
         public JobsAttribute(int count) => this.count = count;
     }
 
+    
+
 
 
     /// <summary>
@@ -116,6 +227,7 @@ namespace ReskinEngine.API
         public ReskinProfile ReskinProfile { get; internal set; }
         public int Identifier { get; internal set; }
         internal virtual string TypeIdentifier { get; }
+        public abstract string Name { get; }
 
         /// <summary>
         /// Adds GameObject children to the target with specifications per skin as a method of communication between the client API and the Engine
@@ -146,6 +258,8 @@ namespace ReskinEngine.API
     [Hidden]
     public abstract class BuildingSkin : Skin
     {
+        public sealed override string Name => FriendlyName;
+
         /// <summary>
         /// Name of building that shows in build menu; used for documentation
         /// </summary>

@@ -365,29 +365,18 @@ In order to register skins to the framework, they need to be added to a `ReskinP
 Building Index
 ===========================
 ```
- -- Castle --
+ -- Castle -- 
 --------------
 
 -- Keep --
 Name: Keep
 UniqueName: keep
+Jobs: 3
 Models:
 	keepUpgrade1:         Instance | The base upgrade for the keep
 	keepUpgrade2:         Instance | The second upgrade for the keep
 	keepUpgrade3:         Instance | The third upgrade for the keep
 	keepUpgrade4:         Instance | The fourth upgrade for the keep
-
--- Treasure Room --
-Name: Treasure Room
-UniqueName: throneroom
-Models:
-	baseModel:            Instance | The base model of the treasure room
-
--- Chamber Of War --
-Name: Chamber Of War
-UniqueName: chamberofwar
-Models:
-	baseModel:            Instance | The base model of the chamber of war room
 
 -- Wooden Castle Block --
 Name: Wooden Castle Block
@@ -441,6 +430,7 @@ Models:
 -- Archer Tower --
 Name: Archer Tower
 UniqueName: archer
+Jobs: 2
 Models:
 	baseModel:            Instance | The main model of the Archer Tower
 	veteranModel:         Instance | An embelishment added to the archer tower when it achieves the veteran status
@@ -448,6 +438,7 @@ Models:
 -- Ballista Tower --
 Name: Ballista Tower
 UniqueName: ballista
+Jobs: 4
 Models:
 	veteranModel:         Instance | An embelishment added to the archer tower when it achieves the veteran status
 	baseModel:            Instance | The main model of the Ballista Tower
@@ -468,25 +459,60 @@ Anchors:
 	armLEnd:       The left end of the left arm of the ballista; position used for anchoring the left side of the string in animation
 	projectileEnd: The end of the ballista projectile that's pulled back before firing
 
+-- Treasure Room --
+Name: Treasure Room
+UniqueName: throneroom
+Jobs: 5
+Models:
+	baseModel:            Instance | The base model that will replace the building
+
+-- Chamber Of War --
+Name: Chamber Of War
+UniqueName: chamberofwar
+Jobs: 5
+Models:
+	baseModel:            Instance | The base model that will replace the building
+
+[Not Supported]
+-- Great Hall --
+Name: Great Hall
+UniqueName: greathall
+Jobs: 3
+
+[Not Supported]
+-- Barracks --
+Name: Barracks
+UniqueName: barracks
+Jobs: 8
+
+[Not Supported]
+-- Archer School --
+Name: Archer School
+UniqueName: archerschool
+Jobs: 8
+
+ -- Advanced Town -- 
+---------------------
+
+-- Church --
+Name: Church
+UniqueName: church
+Jobs: 4
+Models:
+	baseModel:            Instance | The base model that will replace the building
+
+ -- Unsupported -- 
+-------------------
+
 [Not Supported]
 -- Aqueduct --
 Name: Aqueduct
 UniqueName: aqueduct
 
 [Not Supported]
--- Archer School --
-Name: Archer School
-UniqueName: archerschool
-
-[Not Supported]
 -- Baker --
 Name: Baker
 UniqueName: baker
-
-[Not Supported]
--- Barracks --
-Name: Barracks
-UniqueName: barracks
 
 [Not Supported]
 -- Bath House --
@@ -549,11 +575,6 @@ Name: Charcoal Maker
 UniqueName: charcoalmaker
 
 [Not Supported]
--- Church --
-Name: Church
-UniqueName: church
-
-[Not Supported]
 -- Clinic --
 Name: Clinic
 UniqueName: clinic
@@ -612,11 +633,6 @@ UniqueName: garden
 -- Granary --
 Name: Granary
 UniqueName: largegranary
-
-[Not Supported]
--- Great Hall --
-Name: Great Hall
-UniqueName: greathall
 
 [Not Supported]
 -- Great Library --

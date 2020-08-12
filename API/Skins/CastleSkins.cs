@@ -5,8 +5,9 @@ namespace ReskinEngine.API
 
 
 
-    #region Castle Buildings
-
+    #region Keep
+    
+    [Category("castle")]
     [Jobs(3)]
     ////Keep
     public class KeepBuildingSkin : BuildingSkin
@@ -41,20 +42,6 @@ namespace ReskinEngine.API
         }
     }
 
-    [Jobs(5)]
-    public class TreasureRoomBuildingSkin : GenericBuildingSkin
-    {
-        internal override string FriendlyName => "Treasure Room";
-        internal override string UniqueName => "throneroom";
-    }
-
-    [Jobs(5)]
-    public class ChamberOfWarBuildingSkin : GenericBuildingSkin
-    {
-        internal override string FriendlyName => "Chamber Of War";
-        internal override string UniqueName => "chamberofwar";
-    }
-
 
 
 
@@ -65,6 +52,7 @@ namespace ReskinEngine.API
     /// <summary>
     /// Don't use as a skin
     /// </summary>
+    [Category("castle")]
     [Hidden]
     public class CastleBlockBuildingSkinBase : BuildingSkin
     {
@@ -156,6 +144,7 @@ namespace ReskinEngine.API
 
     //  Gate Base
     [Hidden]
+    [Category("castle")]
     public class GateBuildingSkinBase : BuildingSkin
     {
         [Model(description = "The main model of the gate, excluding the porticulus")]
@@ -196,6 +185,7 @@ namespace ReskinEngine.API
     #region Castle Stairs
 
     //Castle Stairs
+    [Category("castle")]
     public class CastleStairsBuildingSkin : BuildingSkin
     {
         internal override string FriendlyName => "Castle Stairs";
@@ -233,6 +223,7 @@ namespace ReskinEngine.API
 
     //Archer Tower
     [Jobs(2)]
+    [Category("castle")]
     public class ArcherTowerBuildingSkin : BuildingSkin
     {
         internal override string FriendlyName => "Archer Tower";
@@ -264,6 +255,7 @@ namespace ReskinEngine.API
 
     //Ballista Tower
     [Jobs(4)]
+    [Category("castle")]
     public class BallistaTowerBuildingSkin : BuildingSkin
     {
         internal override string FriendlyName => "Ballista Tower";
@@ -371,6 +363,61 @@ namespace ReskinEngine.API
 
     #endregion
 
+    #region Castle Buildings
+
+
+    [Category("castle")]
+    [Jobs(5)]
+    public class TreasureRoomBuildingSkin : GenericBuildingSkin
+    {
+        internal override string FriendlyName => "Treasure Room";
+        internal override string UniqueName => "throneroom";
+    }
+
+    [Category("castle")]
+    [Jobs(5)]
+    public class ChamberOfWarBuildingSkin : GenericBuildingSkin
+    {
+        internal override string FriendlyName => "Chamber Of War";
+        internal override string UniqueName => "chamberofwar";
+    }
+
+
+    [Category("castle")]
+    [NotSupported]
+    [Jobs(3)]
+    public class GreatHallBuildingSkin : BuildingSkin
+    {
+        internal override string FriendlyName => "Great Hall";
+        internal override string UniqueName => "greathall";
+    }
+
+    #endregion
+
+    #region Training Buildings
+
+    [Category("castle")]
+    [NotSupported]
+    [Jobs(8)]
+    public class BarracksBuildingSkin : BuildingSkin
+    {
+        internal override string FriendlyName => "Barracks";
+        internal override string UniqueName => "barracks";
+    }
+
+
+    [Category("castle")]
+    [NotSupported]
+    [Jobs(8)]
+    public class ArcherSchoolBuildingSkin : BuildingSkin
+    {
+        internal override string FriendlyName => "Archer School";
+        internal override string UniqueName => "archerschool";
+    }
+
+
+
+    #endregion
 
     //#region Town
 
