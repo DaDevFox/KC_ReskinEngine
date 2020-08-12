@@ -84,6 +84,9 @@ namespace ReskinEngine.Engine
 
         public static Dictionary<string, List<SkinBinder>> GetActivePool()
         {
+            if (CollectionIndex.Keys.Count == 0)
+                return new Dictionary<string, List<SkinBinder>>();
+
             return CollectionIndex[CollectionIndex.Keys.First()].Binders;
         }
 
@@ -94,7 +97,8 @@ namespace ReskinEngine.Engine
 
             List<SkinBinder> binders = GetActivePool()[identifier];
 
-            return binders[SRand.Range(0, binders.Count)];
+            
+            return binders.Count > 0 ? binders[SRand.Range(0, binders.Count)] : null;
         }
 
         public static SkinBinder GetBinderFromActive(string identifier)

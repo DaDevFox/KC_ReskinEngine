@@ -7,6 +7,7 @@ namespace ReskinEngine.API
 
     #region Castle Buildings
 
+    [Jobs(3)]
     ////Keep
     public class KeepBuildingSkin : BuildingSkin
     {
@@ -40,35 +41,18 @@ namespace ReskinEngine.API
         }
     }
 
-    public class TreasureRoomBuildingSkin : BuildingSkin
+    [Jobs(5)]
+    public class TreasureRoomBuildingSkin : GenericBuildingSkin
     {
         internal override string FriendlyName => "Treasure Room";
         internal override string UniqueName => "throneroom";
-
-        [Model( description = "The base model of the treasure room", type = ModelAttribute.Type.Instance)]
-        public GameObject baseModel;
-
-        protected override void PackageInternal(Transform target, GameObject _base)
-        {
-            if (baseModel)
-                GameObject.Instantiate(baseModel, _base.transform).name = "baseModel";
-        }
     }
 
-
-    public class ChamberOfWarBuildingSkin : BuildingSkin
+    [Jobs(5)]
+    public class ChamberOfWarBuildingSkin : GenericBuildingSkin
     {
         internal override string FriendlyName => "Chamber Of War";
         internal override string UniqueName => "chamberofwar";
-
-        [Model(description = "The base model of the chamber of war room", type = ModelAttribute.Type.Instance)]
-        public GameObject baseModel;
-
-        protected override void PackageInternal(Transform target, GameObject _base)
-        {
-            if (baseModel)
-                GameObject.Instantiate(baseModel, _base.transform).name = "baseModel";
-        }
     }
 
 
@@ -248,6 +232,7 @@ namespace ReskinEngine.API
     #region Towers
 
     //Archer Tower
+    [Jobs(2)]
     public class ArcherTowerBuildingSkin : BuildingSkin
     {
         internal override string FriendlyName => "Archer Tower";
@@ -278,6 +263,7 @@ namespace ReskinEngine.API
     }
 
     //Ballista Tower
+    [Jobs(4)]
     public class BallistaTowerBuildingSkin : BuildingSkin
     {
         internal override string FriendlyName => "Ballista Tower";

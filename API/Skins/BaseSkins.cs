@@ -74,19 +74,19 @@ namespace ReskinEngine.API
     }
 
     /// <summary>
-    /// Use this on buildings with more than one person working position
+    /// Use this on buildings with one or more job
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public class PersonPositionsAttribute : Attribute
+    public class JobsAttribute : Attribute
     {
-        public int count;
+        public int count = 1;
 
-        public PersonPositionsAttribute()
+        public JobsAttribute()
         {
 
         }
 
-        public PersonPositionsAttribute(int count) => this.count = count;
+        public JobsAttribute(int count) => this.count = count;
     }
 
 
@@ -111,7 +111,7 @@ namespace ReskinEngine.API
     /// <para>It does not contain any functionality on its own to actually use this data; that is handled on the Engine side, it's simply a container that sends data to the Engine</para>
     /// </summary>
     [Hidden]
-    public class Skin
+    public abstract class Skin
     {
         public ReskinProfile ReskinProfile { get; internal set; }
         public int Identifier { get; internal set; }
@@ -143,18 +143,22 @@ namespace ReskinEngine.API
         }
     }
 
-    public class BuildingSkin : Skin
+    [Hidden]
+    public abstract class BuildingSkin : Skin
     {
+        /// <summary>
+        /// Name of building that shows in build menu; used for documentation
+        /// </summary>
         internal virtual string FriendlyName { get; } = "No Name";
         internal virtual string UniqueName { get; } = "No UniqueName";
 
         internal sealed override string TypeIdentifier => $"building_{UniqueName}";
 
         /// <summary>
-        /// Optional; the positions peasants stand at while working at the building; 
-        /// If left null this field will be set to its default value; 
+        /// Optional; the positions peasants stand at while working at the building; directly corresponds to number of jobs a building employs
+        /// <para>If left null this field will be set to its default value;</para>
         /// </summary>
-        public Vector3[] personPositions = null;
+        public Vector3[] jobPositions = null;
 
 
         protected override void PackageInternal(Transform target, GameObject _base)
@@ -162,14 +166,14 @@ namespace ReskinEngine.API
             base.PackageInternal(target, _base);
 
 
-            if (personPositions.Length > 0)
+            if (jobPositions.Length > 0)
             {
                 GameObject obj = new GameObject("personPositions");
                 obj.transform.SetParent(_base.transform);
 
-                for (int i = 0; i < personPositions.Length; i++)
+                for (int i = 0; i < jobPositions.Length; i++)
                 {
-                    Vector3 personPosition = personPositions[i];
+                    Vector3 personPosition = jobPositions[i];
                     GameObject position = new GameObject($"personPosition{i}");
                     position.transform.SetParent(obj.transform);
                     position.transform.position = personPosition;
@@ -182,19 +186,23 @@ namespace ReskinEngine.API
     //Generic
     /// <summary>
     /// Don't use as a skin
+    /// <para>Type of skin that can be used for most buildings in the game</para>
     /// </summary>
     [Hidden]
-    public class GenericBuildingSkin : BuildingSkin
+    public abstract class GenericBuildingSkin : BuildingSkin
     {
         /// <summary>
         /// The base model to be inserted
         /// </summary>
-        [Model(description = "The base model to be inserted")]
-        public GameObject model;
+        [Model(description = "The base model that will replace the building")]
+        public GameObject baseModel;
 
         protected override void PackageInternal(Transform target, GameObject _base)
         {
             base.PackageInternal(target, _base);
+
+            if (baseModel)
+                GameObject.Instantiate(baseModel, _base.transform).name = "baseModel";
         }
     }
 

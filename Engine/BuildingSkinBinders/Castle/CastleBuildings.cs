@@ -94,82 +94,18 @@ namespace ReskinEngine.Engine
 
     #region Treasure Room
 
-    public class TreasureRoomSkinBinder : BuildingSkinBinder
+    public class TreasureRoomSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "throneroom";
-
-        public GameObject baseModel;
-
-        public override SkinBinder Create(GameObject obj)
-        {
-            var inst = new TreasureRoomSkinBinder();
-
-            if (obj.transform.Find("baseModel"))
-                this.baseModel = obj.transform.Find("baseModel").gameObject;
-
-            ApplyPersonPositions(inst, obj);
-
-            return inst;
-        }
-
-        public override void BindToBuildingBase(Building building)
-        {
-            MeshFilter mesh = building.transform.Find("Offset/throneroom").GetComponent<MeshFilter>();
-
-            if (baseModel)
-            {
-                mesh.mesh = null;
-                GameObject.Instantiate(baseModel, mesh.transform);
-            }
-
-            BindPersonPositions(building, this);
-        }
-
-        public override void BindToBuildingInstance(Building building)
-        {
-            this.BindToBuildingBase(building);
-        }
     }
 
     #endregion
 
     #region Chamber Of War
 
-    public class ChamberOfWarSkinBinder : BuildingSkinBinder
+    public class ChamberOfWarSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "chamberofwar";
-
-        public GameObject baseModel;
-
-        public override SkinBinder Create(GameObject obj)
-        {
-            var inst = new ChamberOfWarSkinBinder();
-
-            if (obj.transform.Find("baseModel"))
-                this.baseModel = obj.transform.Find("baseModel").gameObject;
-
-            ApplyPersonPositions(inst, obj);
-
-            return inst;
-        }
-
-        public override void BindToBuildingBase(Building building)
-        {
-            MeshFilter mesh = building.transform.Find("Offset/chamberofwar").GetComponent<MeshFilter>();
-
-            if (baseModel)
-            {
-                mesh.mesh = null;
-                GameObject.Instantiate(baseModel, mesh.transform);
-            }
-
-            BindPersonPositions(building, this);
-        }
-
-        public override void BindToBuildingInstance(Building building)
-        {
-            this.BindToBuildingBase(building);
-        }
     }
 
     #endregion
