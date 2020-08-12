@@ -92,23 +92,39 @@ namespace ReskinEngine.Engine
 
     #endregion
 
-    #region Treasure Room
+    #region Training Buildings
+
+
+
+    public class ArcherSchoolSkinBinder : GenericBuildingSkinBinder
+    {
+        public override string UniqueName => "archerschool";
+    }
+
+    #endregion
+
+    #region Misc Buildings
 
     public class TreasureRoomSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "throneroom";
     }
-
-    #endregion
-
-    #region Chamber Of War
+    
 
     public class ChamberOfWarSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "chamberofwar";
     }
 
+    public class GreatHallSkinBinder : GenericBuildingSkinBinder
+    {
+        public override string UniqueName => "greathall";
+    }
+
+
     #endregion
+
+
 
 
     // Great Hall

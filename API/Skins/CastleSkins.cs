@@ -384,7 +384,6 @@ namespace ReskinEngine.API
 
 
     [Category("castle")]
-    [NotSupported]
     [Jobs(3)]
     public class GreatHallBuildingSkin : BuildingSkin
     {
@@ -407,7 +406,6 @@ namespace ReskinEngine.API
 
 
     [Category("castle")]
-    [NotSupported]
     [Jobs(8)]
     public class ArcherSchoolBuildingSkin : BuildingSkin
     {

@@ -473,7 +473,6 @@ Jobs: 5
 Models:
 	baseModel:            Instance | The base model that will replace the building
 
-[Not Supported]
 -- Great Hall --
 Name: Great Hall
 UniqueName: greathall
@@ -485,7 +484,6 @@ Name: Barracks
 UniqueName: barracks
 Jobs: 8
 
-[Not Supported]
 -- Archer School --
 Name: Archer School
 UniqueName: archerschool
