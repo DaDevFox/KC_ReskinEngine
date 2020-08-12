@@ -45,8 +45,11 @@ namespace ReskinEngine.API
                         $"Name: {s.FriendlyName}{Environment.NewLine}" +
                         $"UniqueName: {s.UniqueName}{Environment.NewLine}";
 
+                    if (type.GetCustomAttribute<JobsAttribute>() != null)
+                        result += $"Jobs: {type.GetCustomAttribute<JobsAttribute>().count}{Environment.NewLine}";
 
-                    List<ModelAttribute> models = new List<ModelAttribute>();
+
+                    List <ModelAttribute> models = new List<ModelAttribute>();
                     List<AnchorAttribute> anchors = new List<AnchorAttribute>();
 
                     FieldInfo[] fields = s.GetType().GetFields();

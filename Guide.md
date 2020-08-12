@@ -45,7 +45,11 @@ Entries usually contain multiple elements, which can include:
 
 `UniqueName`: The name of the building used in many places in code *
 
-`Models`: A list of the different models the building incorporates and their types and descriptions *
+`Jobs`: If present, the number of jobs the building provides, if not, the building provides 0 jobs
+
+`Models`: A list of the different models the building incorporates and their types and descriptions
+
+`Anchors`: A list of GameObjects whose positions are used in certain animations
 
 `[Dynamic Stacks]`: If this is present, it means Resource Stacks can be added or removed from the building
 
