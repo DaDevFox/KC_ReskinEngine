@@ -15,6 +15,8 @@ To reskin a building through the framework, first a model, or multiple models, d
 The Framework also takes into account your various collections, their compatability with other collections, and it also does it's best to allow multiple reskins to run at the same time. 
 
 # Collections and Compatibility
+|| Subject to rework
+
 
 When you create your reskin through the Framework, you must give it a *Collection*. A *Collection* is a set of building reskins that are used together, usually collections are themed, like a Halloween-themed collection, or a Christmas one. 
 
@@ -27,16 +29,17 @@ Usually when you give a Compatability Identifier it's the mod name, or if you wa
 > A mod does not have to be limited to only one collection, however I recomend that you only put one collection in every mod so that anybody who want's one of the collections but not the other can subscribe to them seperately.  
 
 
-# How to use the **Building Index**
+# How to use the **Skin Index**
+|| Subject to rework
 
-The **Building Index** is organized into entries of information which usually look like this, sometimes with a little bit of extra information. 
+The **Skin Index** is organized into entries of information which usually look like this for buildings, sometimes with a little bit of extra information. 
 ```
 -- BuildingName --
 Name: ...
 UniqueName: ...
 Models: ...
 ```
-Every entry in the Building Index corresponds to a building in Kingdoms and Castles.
+Every entry in the Skin Index corresponds to a building in Kingdoms and Castles.
 Entries usually contain multiple elements, which can include:
 
 `[Not Supported]`: If this is present, it means the building is not supported by the Framework 
@@ -74,11 +77,11 @@ Entries usually contain multiple elements, which can include:
 
 The first step is, somewhat obviously, to create a model to use. 
 
-To start, pick a building to begin modelling, and look it up in the **Building Index** section. Once you've found it, look at all the corresponding information below its name, most of it is important and could affect how you need to make your art, so you should know what it means and how it will affect you.  
+To start, pick a building to begin modelling, and look it up in the **Skin Index** section. Once you've found it, look at all the corresponding information below its name, most of it is important and could affect how you need to make your art, so you should know what it means and how it will affect you.  
 
 ### Know what to model
 
-The first piece of information you need to look at is the *Models* section, this will tell you what and how to model for a reskin of your chosen building, below is a highlight of all the important information you'll need to understand while reading the **Building Index** section. 
+The first piece of information you need to look at is the *Models* section, this will tell you what and how to model for a reskin of your chosen building, below is a highlight of all the important information you'll need to understand while reading the **Skin Index** section. 
 
 *Models*: The different 3D Models the building uses, these can be *Instance* models or *Modular* models, you will have to model differently according to the type
 
@@ -104,7 +107,7 @@ These pieces, disregarding the flag and veteran model, must be in the correct po
 
 ### To Make a Model
 
-First, as talked about already, look up your building in the **Building Index** section of this guide and gather your information for how and what to model. 
+First, as talked about already, look up your building in the **Skin Index** section of this guide and gather your information for how and what to model. 
 
 Once that is done, make the model in your chosen art program! I recommend using [Blender](https://www.blender.org/) because it's free, although I'm not much of an artist, so you can use whatever, but make sure that it can export files in a format supported by unity: [here](https://docs.unity3d.com/Manual/3D-formats.html)'s a list of all those formats
 
@@ -142,6 +145,8 @@ The BuildingFramework allows you to change these things optionally, but note tha
 > Important: Only ResourceStacks and Stacks are supported at present time
 
 ### Resource Stacks
+|| Not currently supported
+
 #### Important Information
 
 > **Note**: ResourceStack and Stack are **not** the same thing, this will be explained later
@@ -227,7 +232,7 @@ Ability to change Stacks and ResourceStacks
 #  Code
 This section will require at least some technical expertise in programming, if you aren't a developer and you're just here to see the barebones of how to get your models into the game, that's fine too! I'll try and keep the guide nice and simple, but I'll have some of the more technical details towards the end for you nerds out there like me :p
 
-To begin, you'll need to have your models set and ready to go, for this I recommend reading the section on modelling and finding information about the models in the **Building Index** section. 
+To begin, you'll need to have your models set and ready to go, for this I recommend reading the section on modelling and finding information about the models in the **Skin Index** section. 
 
 Once you have that done, you'll need to export that into an AssetBundle, this process is already covered in the Kingdoms and Castles [Mod Tutorial](https://modtutorial.kingdomsandcastles.com/) so I won't go into too much detail over it. 
 
@@ -314,7 +319,7 @@ Each of these classes have variables that you can modify, for the keep they are:
 
 each of those correspond to an element of the model of the Keep, as you can imagine, Keep upgrades 1-4 are the different looks for the Keep as it gets upgraded, and the 2 banners are the banners that swing in the wind above the Keep. 
 
-Every entry in the **Building Index** section that's supported has a corresponding `BuildingSkin` in code. 
+Every entry in the **Skin Index** section that's supported has a corresponding `BuildingSkin` in code. 
 
 in order to make a BuildingSkin, all they have to do is create an instance of it: 
 
@@ -334,8 +339,6 @@ In order to register skins to the framework, they need to be added to a `ReskinP
 
 
 ```cs
-	// This should always be at the begginning of SceneLoaded
-
 	// This piece of code creates a new ReskinProfile with the collection name 'My Super Awesome Collection' and compatability identifier 'Fox's Collections'
 	ReskinProfile exampleModProfile = new ReskinProfile("My Super Awesome Collection" /* Collection name */, "Fox's Collections" /* Compatability Identifier */);
 
@@ -343,7 +346,7 @@ In order to register skins to the framework, they need to be added to a `ReskinP
 
 	// This part specifies which skin is being created and assigns it a name, in this case, we are creating a KeepBuildingSkin, which is a skin for the building keep, and assigning it the name 'keepSkin'
 	KeepBuildingSkin keepSkin = new KeepBuildingSkin();
-	// We then assign each of the variables of the keep skin to their values, these can be found in the Building Index section
+	// We then assign each of the variables of the keep skin to their values, these can be found in the Skin Index section
 	keepSkin.keepUpgrade1 = upgrade0;
 	keepSkin.keepUpgrade2 = upgrade1;
 	keepSkin.keepUpgrade3 = upgrade2;
@@ -352,7 +355,8 @@ In order to register skins to the framework, they need to be added to a `ReskinP
 	// This part adds the skin to the ReskinProfile we created eariler
 	exampleModProfile.Add(keepSkin);
 
-	// This should always be at the end of SceneLoaded
+	// This registers the reskin, so it will be taken into account by the engine considering other mods installed
+	// Reskins must be registered at some time during SceneLoaded
 	exampleModProfile.Register();
 ```
 
@@ -362,7 +366,7 @@ In order to register skins to the framework, they need to be added to a `ReskinP
 
 
 
-Building Index
+Skin Index
 ===========================
 ```
  -- Castle -- 
