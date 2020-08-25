@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 //using ReskinEngine.Examples.ExampleMod;
+using System.Reflection;
 
 namespace ReskinEngine.API
 {
@@ -45,6 +46,9 @@ namespace ReskinEngine.API
 
         public void Add<T>(T skin) where T : Skin 
         {
+            if (typeof(T).GetCustomAttribute<NotSupportedAttribute>() != null)
+                return;
+
             skin.Identifier = skins.Keys.Count;
             skin.ReskinProfile = this;
             skins.Add(skins.Keys.Count, skin);
@@ -67,8 +71,11 @@ namespace ReskinEngine.API
                 target = World.inst.transform.Find(ReskinWorldLocation);
 
 
-            foreach(Skin skin in skins.Values)
+            foreach (Skin skin in skins.Values)
+            {
+                //helper.Log(skin.GetType().Name);
                 skin.Package(target);
+            }
 
 
             //helper.Log(InfoFileGenerator.Generate());

@@ -82,6 +82,10 @@ namespace ReskinEngine.Engine
             return CollectionIndex.ContainsKey(name) ? CollectionIndex[name] : null;
         }
 
+        /// <summary>
+        /// Returns a dictionary with skin id's as keys and skin binders as values
+        /// </summary>
+        /// <returns></returns>
         public static Dictionary<string, List<SkinBinder>> GetActivePool()
         {
             if (CollectionIndex.Keys.Count == 0)
@@ -178,7 +182,7 @@ namespace ReskinEngine.Engine
 
         private static void BindAll()
         {
-            GetActivePool().Values.Do((binders) => binders[0].Bind());
+            GetActivePool().Values.Do(binders => binders[0].Bind());
         }
 
         #endregion

@@ -104,8 +104,11 @@ namespace ReskinEngine.Engine
         /// </summary>
         public sealed override void Bind()
         {
-            if(UniqueName != "unregistered")
+            if (UniqueName != "unregistered")
+            {
+                Engine.helper.Log(UniqueName);
                 BindToBuildingBase(GameState.inst.GetPlaceableByUniqueName(UniqueName));
+            }
         }
 
         /// <summary>
@@ -203,7 +206,19 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
-            Transform target = building.transform.Find("Offset").GetChild(0);
+            Engine.helper.Log((building == null).ToString());
+
+            Transform target = building.transform.GetChild(0).GetChild(0);
+
+            foreach (Transform t in building.transform)
+                Engine.helper.Log(t.ToString());
+
+            if (!target)
+            {
+                Engine.helper.Log("GenericBuildingSkinBinder bound to building that doesn't follow generic building architechture; aborting");
+                return;
+            }
+
 
             if (baseModel)
             {
@@ -211,7 +226,7 @@ namespace ReskinEngine.Engine
                 GameObject.Instantiate(baseModel, target);
             }
 
-            BindPersonPositions(building, this);
+            //BindPersonPositions(building, this);
         }
 
         public override void BindToBuildingInstance(Building building)

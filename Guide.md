@@ -493,6 +493,27 @@ Name: Archer School
 UniqueName: archerschool
 Jobs: 8
 
+ -- Town -- 
+------------
+
+-- Road --
+Name: Road
+UniqueName: road
+Models:
+	straight:              Modular | The straight segment 
+	elbow:                 Modular | The elbow segment
+	intersection3:         Modular | The three way intersection segment
+	intersection4:         Modular | The four way intersection segment
+
+-- Stone Road --
+Name: Stone Road
+UniqueName: stoneroad
+Models:
+	straight:              Modular | The straight segment 
+	elbow:                 Modular | The elbow segment
+	intersection3:         Modular | The three way intersection segment
+	intersection4:         Modular | The four way intersection segment
+
  -- Advanced Town -- 
 ---------------------
 
@@ -502,6 +523,27 @@ UniqueName: church
 Jobs: 4
 Models:
 	baseModel:            Instance | The base model that will replace the building
+
+ -- Maritime -- 
+----------------
+
+-- Bridge --
+Name: Bridge
+UniqueName: bridge
+Models:
+	straight:              Modular | The straight segment 
+	elbow:                 Modular | The elbow segment
+	intersection3:         Modular | The three way intersection segment
+	intersection4:         Modular | The four way intersection segment
+
+-- Stone Bridge --
+Name: Stone Bridge
+UniqueName: stonebridge
+Models:
+	straight:              Modular | The straight segment 
+	elbow:                 Modular | The elbow segment
+	intersection3:         Modular | The three way intersection segment
+	intersection4:         Modular | The four way intersection segment
 
  -- Unsupported -- 
 -------------------
@@ -525,11 +567,6 @@ UniqueName: bathhouse
 -- Blacksmith --
 Name: Blacksmith
 UniqueName: blacksmith
-
-[Not Supported]
--- Bridge --
-Name: Bridge
-UniqueName: bridge
 
 [Not Supported]
 -- Butcher --
@@ -727,11 +764,6 @@ Name: Reservoir
 UniqueName: reservoir
 
 [Not Supported]
--- Road --
-Name: Road
-UniqueName: road
-
-[Not Supported]
 -- Rubble --
 Name: Rubble
 UniqueName: rubble
@@ -770,16 +802,6 @@ UniqueName: statue_sam
 -- Stockpile --
 Name: Stockpile
 UniqueName: largestockpile
-
-[Not Supported]
--- Stone Bridge --
-Name: Stone Bridge
-UniqueName: stonebridge
-
-[Not Supported]
--- Stone Road --
-Name: Stone Road
-UniqueName: stoneroad
 
 [Not Supported]
 -- Swineherd --

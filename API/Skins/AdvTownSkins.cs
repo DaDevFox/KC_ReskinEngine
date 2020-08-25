@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+//using ReskinEngine.Examples.ExampleMod;
 
 namespace ReskinEngine.API
 {
@@ -11,6 +13,6 @@ namespace ReskinEngine.API
     public class ChurchBuildingSkin : GenericBuildingSkin
     {
         internal override string UniqueName => "church";
-        internal override string FriendlyName => "Church"; 
+        internal override string FriendlyName => "Church";
     }
 }

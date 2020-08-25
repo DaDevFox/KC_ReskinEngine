@@ -48,11 +48,17 @@ namespace ReskinEngine.API
 
     #region Skins
 
+    public class EnvironmentCategory : Category
+    {
+        public override string id => "environment";
+        public override int position => 0;
+    }
+
     public class GenericSkinsCategory : Category
     {
         public override string id => "generic";
         public override string name => "Generic Skins";
-        public override int position => 0;
+        public override int position => 1;
     }
 
     #endregion
@@ -62,45 +68,45 @@ namespace ReskinEngine.API
     public class CastleCategory : Category
     {
         public override string id => "castle";
-        public override int position => 1;
+        public override int position => 3;
     }
 
     public class TownCategory : Category
     {
         public override string id => "town";
-        public override int position => 2;
+        public override int position => 4;
     }
 
     public class AdvTownCategory : Category
     {
         public override string id => "advTown";
         public override string name => "Advanced Town";
-        public override int position => 3;
+        public override int position => 5;
     }
 
     public class FoodCategory : Category
     {
         public override string id => "food";
-        public override int position => 4;
+        public override int position => 6;
     }
 
     public class IndustryCategory : Category
     {
         public override string id => "industry";
-        public override int position => 5;
+        public override int position => 7;
     }
 
     public class MaritimeCategory : Category
     {
         public override string id => "maritime";
-        public override int position => 6;
+        public override int position => 8;
     }
 
     public class CemetaryCategory : Category
     {
         public override string id => "cemetary";
         public override string name => "Cemetaries";
-        public override int position => 7;
+        public override int position => 9;
     }
 
 
@@ -272,7 +278,7 @@ namespace ReskinEngine.API
         /// Optional; the positions peasants stand at while working at the building; directly corresponds to number of jobs a building employs
         /// <para>If left null this field will be set to its default value;</para>
         /// </summary>
-        public Vector3[] jobPositions = null;
+        public Vector3[] jobPositions = new Vector3[0];
 
 
         protected override void PackageInternal(Transform target, GameObject _base)
@@ -313,10 +319,16 @@ namespace ReskinEngine.API
 
         protected override void PackageInternal(Transform target, GameObject _base)
         {
+            //Mod.helper.Log($"packaging generic skin for {UniqueName}");
+
             base.PackageInternal(target, _base);
+
+            //Mod.helper.Log("2");
 
             if (baseModel)
                 GameObject.Instantiate(baseModel, _base.transform).name = "baseModel";
+
+            //Mod.helper.Log($"packaged generic skin for {UniqueName}");
         }
     }
 

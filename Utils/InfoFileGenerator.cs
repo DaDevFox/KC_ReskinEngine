@@ -98,7 +98,8 @@ namespace ReskinEngine.API
                     if (type.IsSubclassOf(typeof(BuildingSkin)))
                     {
                         BuildingSkin buildingSkin = Activator.CreateInstance(type) as BuildingSkin;
-                        
+
+
                         result +=
                             $"Name: {buildingSkin.FriendlyName}{Environment.NewLine}" +
                             $"UniqueName: {buildingSkin.UniqueName}{Environment.NewLine}";
