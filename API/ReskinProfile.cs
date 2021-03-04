@@ -10,25 +10,26 @@ using System.Reflection;
 namespace ReskinEngine.API
 {
     /// <summary>
-    /// Class that holds a set of building reskins categorized under a single collection. 
+    /// Class that holds a set of reskins categorized under a single mod. 
     /// </summary>
     public class ReskinProfile
     {
         private static KCModHelper helper;
 
         /// <summary>
-        /// Name of the collection this reskin profile is categorized under
+        /// Name of the mod this reskin profile is categorized under
         /// </summary>
-        public string CollectionName { get; private set; }
+        public string ModName { get; private set; }
 
         /// <summary>
-        /// String identifier used to detremine if other collections are part of the same set; usually the mod name
+        /// String identifier used to detremine if other mods are part of the same set; usually the mod name or authors name
         /// </summary>
         public string CompatabilityIdentifier { get; private set; }
 
         /// <summary>
         /// List of other origins this profile is able to be switched out with. 
         /// </summary>
+        [Obsolete]
         public string[] Compatability { get; private set; }
 
         private Dictionary<int, Skin> skins = new Dictionary<int, Skin>();
@@ -38,11 +39,11 @@ namespace ReskinEngine.API
         /// <summary>
         /// Creates a new ReskinProfile with the specified configuration. 
         /// </summary>
-        /// <param name="collectionName">Name of the collection this reskin profile is categorized under</param>
-        /// <param name="compatabilityIdentifier">String identifier used to detremine if other collections are part of the same set; usually the mod name</param>
-        public ReskinProfile(string collectionName, string compatabilityIdentifier)
+        /// <param name="modName">Name of the mod this reskin profile is categorized under</param>
+        /// <param name="compatabilityIdentifier">String identifier used to detremine if other mods are part of the same set; usually the mod name</param>
+        public ReskinProfile(string modName, string compatabilityIdentifier)
         {
-            this.CollectionName = collectionName;
+            this.ModName = modName;
             this.CompatabilityIdentifier = compatabilityIdentifier;
         }
 

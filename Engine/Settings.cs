@@ -17,14 +17,14 @@ namespace ReskinEngine.Engine
 
         private static int defaultPriority = 1;
 
-        public static Dictionary<string, int> CollectionPriority { get; set; } = new Dictionary<string, int>();
+        public static Dictionary<string, int> ModPriority { get; set; } = new Dictionary<string, int>();
         public static PriorityType priorityType { get; set; }
 
         public static void Setup()
         {
-            foreach(string collection in Engine.CollectionIndex.Keys)
+            foreach(string mod in Engine.ModIndex.Keys)
             {
-                CollectionPriority.Add(collection, defaultPriority);
+                ModPriority.Add(mod, defaultPriority);
             }
         }
 

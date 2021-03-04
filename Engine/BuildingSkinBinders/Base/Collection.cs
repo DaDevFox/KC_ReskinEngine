@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace ReskinEngine.Engine
 {
-    public class Collection : IEnumerable
+    public class Mod : IEnumerable
     {
-        public string CollectionName { get; internal set; }
+        public string ModName { get; internal set; }
         public string CompatabilityIdentifier { get; internal set; }
 
         public Dictionary<string, List<SkinBinder>> Binders { get; private set; } = new Dictionary<string, List<SkinBinder>>();
 
-        public static Collection Create(string name, string compatabilityIdentifier)
+        public static Mod Create(string name, string compatabilityIdentifier)
         {
-            return new Collection() {
-                CollectionName = name,
+            return new Mod() {
+                ModName = name,
                 CompatabilityIdentifier = compatabilityIdentifier
             };
         }
@@ -46,18 +46,18 @@ namespace ReskinEngine.Engine
             return (IEnumerator) GetEnumerator();
         }
 
-        public CollectionEnumerator GetEnumerator()
+        public ModEnumerator GetEnumerator()
         {
-            return new CollectionEnumerator(Binders);
+            return new ModEnumerator(Binders);
         }
 
-        public class CollectionEnumerator : IEnumerator<SkinBinder>
+        public class ModEnumerator : IEnumerator<SkinBinder>
         {
             private List<SkinBinder> binders;
 
             int index = -1;
 
-            public CollectionEnumerator(Dictionary<string,List<SkinBinder>> binderIndex)
+            public ModEnumerator(Dictionary<string,List<SkinBinder>> binderIndex)
             {
                 binders = new List<SkinBinder>();
                 foreach(string key in binderIndex.Keys)

@@ -12,7 +12,7 @@ namespace ReskinEngine.Engine
     public abstract class SkinBinder
     {
         /// <summary>
-        /// The index of the skin within its collection
+        /// The index of the skin within its mod
         /// </summary>
         public int Identifier { get; internal set; }
 
@@ -21,9 +21,9 @@ namespace ReskinEngine.Engine
         /// </summary>
         public string CompatabilityIdentifier { get; private set; }
         /// <summary>
-        /// Name of the collection the skin is included in
+        /// Name of the mod the skin is included in
         /// </summary>
-        public string CollectionName { get; private set; }
+        public string ModName { get; private set; }
 
         /// <summary>
         /// String that the engine uses to identify this binder
@@ -43,7 +43,7 @@ namespace ReskinEngine.Engine
             string[] info = obj.name.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
             string compatabilityIdentifier = info[0];
-            string collection = info[1];
+            string mod = info[1];
             string skinType = info[2];
             int skinIdentifier = int.Parse(info[3]);
 
@@ -61,7 +61,7 @@ namespace ReskinEngine.Engine
 
             
             instance.CompatabilityIdentifier = compatabilityIdentifier;
-            instance.CollectionName = collection;
+            instance.ModName = mod;
             instance.Identifier = skinIdentifier;
 
             return instance;

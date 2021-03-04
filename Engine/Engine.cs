@@ -23,11 +23,11 @@ namespace ReskinEngine.Engine
         public static Dictionary<string, SkinBinder> SkinLookup { get; } = new Dictionary<string, SkinBinder>();
 
         /// <summary>
-        /// A dictionary of all registered collections, keyed by collection name. 
+        /// A dictionary of all registered mods, keyed by mod name. 
         /// </summary>
-        internal static Dictionary<string, Collection> CollectionIndex { get; private set; } = new Dictionary<string, Collection>();
+        internal static Dictionary<string, Mod> ModIndex { get; private set; } = new Dictionary<string, Mod>();
 
-        public static List<string> ActiveCollections { get; private set; }
+        public static List<string> ActiveMods { get; private set; }
 
         #region Initialization
 
@@ -77,9 +77,9 @@ namespace ReskinEngine.Engine
             return SkinLookup.ContainsKey(identifier) ? SkinLookup[identifier] : null;
         }
 
-        public static Collection GetCollection(string name)
+        public static Mod GetMod(string name)
         {
-            return CollectionIndex.ContainsKey(name) ? CollectionIndex[name] : null;
+            return ModIndex.ContainsKey(name) ? ModIndex[name] : null;
         }
 
         /// <summary>
@@ -88,10 +88,10 @@ namespace ReskinEngine.Engine
         /// <returns></returns>
         public static Dictionary<string, List<SkinBinder>> GetActivePool()
         {
-            if (CollectionIndex.Keys.Count == 0)
+            if (ModIndex.Keys.Count == 0)
                 return new Dictionary<string, List<SkinBinder>>();
 
-            return CollectionIndex[CollectionIndex.Keys.First()].Binders;
+            return ModIndex[ModIndex.Keys.First()].Binders;
         }
 
         public static SkinBinder GetRandomBinderFromActive(string identifier)
@@ -123,7 +123,7 @@ namespace ReskinEngine.Engine
         {
             InitLookup();
             ReadSkins();
-            SetupCollections();
+            SetupMods();
             BindAll();
 
             helper.Log("AfterSceneLoaded complete");
@@ -165,10 +165,10 @@ namespace ReskinEngine.Engine
                 if (binder == null)
                     continue;
 
-                if (!CollectionIndex.ContainsKey(binder.CollectionName))
-                    CollectionIndex.Add(binder.CollectionName, Collection.Create(binder.CollectionName, binder.CompatabilityIdentifier));
+                if (!ModIndex.ContainsKey(binder.ModName))
+                    ModIndex.Add(binder.ModName, Mod.Create(binder.ModName, binder.CompatabilityIdentifier));
                 
-                CollectionIndex[binder.CollectionName].Add(binder);
+                ModIndex[binder.ModName].Add(binder);
             }
         }
 
@@ -177,7 +177,7 @@ namespace ReskinEngine.Engine
             World.inst.transform.Find(ReskinWorldLocation).gameObject.SetActive(false);
         }
 
-        private static void SetupCollections()
+        private static void SetupMods()
         {
             Settings.Setup();
         }

@@ -267,7 +267,7 @@ namespace ReskinEngine.API
             _base.name =
                 ReskinProfile.CompatabilityIdentifier +
                 ":" +
-                ReskinProfile.CollectionName +
+                ReskinProfile.ModName +
                 ":" +
                 TypeIdentifier +
                 ":" +
