@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+CRC: 1893400868
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f1ff92f765381e630dd89e0cae35b4fc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ce00b96eb05100871f39954dc67941ec
+HashAppended: 1
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+Assets:
+- Assets/Mod/TPunkoModels/Models/Keep/Keep-0.prefab
+- Assets/Mod/TPunkoModels/Models/Church/Church.prefab
+- Assets/Mod/TPunkoModels/Models/Cathedral/Cathedral 2.prefab
+Dependencies:
+- D:/Modding/KCMods/Output/Reskin/Examples/One/assetbundle/linux/testmod_voxel_enviornment_bf250c4e91432cced813dd0f9e2cacfd

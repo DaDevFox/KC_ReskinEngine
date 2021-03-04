@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 2329576992
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bf250c4e91432cced813dd0f9e2cacfd
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cb5cff3a1350143ce413b676b0fb473f
+HashAppended: 1
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Mod/TPunkoModels/Models/Props/Trees/Tree Green.obj
+- Assets/Mod/TPunkoModels/TPunkoPalatte.mat
+Dependencies: []
