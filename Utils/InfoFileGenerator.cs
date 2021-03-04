@@ -108,10 +108,15 @@ namespace ReskinEngine.API
                             result += $"Jobs: {type.GetCustomAttribute<JobsAttribute>().count}{Environment.NewLine}";
 
 
+                        #region Gather Info
+
                         List<ModelAttribute> models = new List<ModelAttribute>();
                         List<AnchorAttribute> anchors = new List<AnchorAttribute>();
+                        List<MaterialAttribute> materials = new List<MaterialAttribute>();
 
                         FieldInfo[] fields = buildingSkin.GetType().GetFields();
+
+                        // models
                         foreach (FieldInfo field in fields)
                         {
                             if (field.GetCustomAttribute<ModelAttribute>() != null)
@@ -122,10 +127,14 @@ namespace ReskinEngine.API
                                 if (field.GetCustomAttribute<SeperatorAttribute>() != null)
                                     attribute.seperator = true;
 
+                                if (field.GetCustomAttribute<PresetMaterialAttribute>() != null)
+                                    attribute.presetMatName = field.GetCustomAttribute<PresetMaterialAttribute>().name;
+
                                 models.Add(attribute);
                             }
                         }
 
+                        // anchors
                         foreach (FieldInfo field in fields)
                         {
                             if (field.GetCustomAttribute<AnchorAttribute>() != null)
@@ -140,6 +149,24 @@ namespace ReskinEngine.API
                             }
                         }
 
+                        // materials
+                        foreach (FieldInfo field in fields)
+                        {
+                            if (field.GetCustomAttribute<MaterialAttribute>() != null)
+                            {
+                                MaterialAttribute attribute = field.GetCustomAttribute<MaterialAttribute>();
+                                attribute.name = field.Name;
+
+                                if (field.GetCustomAttribute<SeperatorAttribute>() != null)
+                                    attribute.seperator = true;
+
+                                materials.Add(attribute);
+                            }
+                        }
+
+                        #endregion
+
+                        // models
                         string modelsText = "";
 
                         if (models.Count > 0)
@@ -158,6 +185,8 @@ namespace ReskinEngine.API
                                     modelsText += Environment.NewLine;
                                 }
 
+                                if (!String.IsNullOrEmpty(model.presetMatName))
+                                    modelsText += $"\t[Preset Material ({model.presetMatName})]\n";
 
                                 modelsText += $"\t{string.Format("{0,-15}{1,15} | {2,8}", model.name + ":", model.type.ToString(), model.description)}{Environment.NewLine}";
                             }
@@ -165,6 +194,7 @@ namespace ReskinEngine.API
 
                         result += modelsText;
 
+                        // anchors
                         string anchorsText = "";
 
                         if (anchors.Count > 0)
@@ -189,6 +219,32 @@ namespace ReskinEngine.API
                         }
 
                         result += anchorsText;
+
+                        // materials
+                        string materialsText = "";
+
+                        if (materials.Count > 0)
+                        {
+                            result += $"Materials:{Environment.NewLine}";
+
+                            for (int i = 0; i < materials.Count; i++)
+                            {
+                                MaterialAttribute material = materials[i];
+                                if (material.seperator)
+                                {
+                                    if (i > 0)
+                                        materialsText += "\t" + new String(SeperatorChar, models[i - 1].name.Length);
+                                    else
+                                        materialsText += "\t" + new String(SeperatorChar, SeperatorDefaultCount);
+                                    materialsText += Environment.NewLine;
+                                }
+
+
+                                materialsText += $"\t{string.Format("{0,-15}{1,15}", material.name + ":", material.description)}{Environment.NewLine}";
+                            }
+                        }
+
+                        result += materialsText;
 
                         result += Environment.NewLine;
 

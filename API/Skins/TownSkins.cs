@@ -7,11 +7,13 @@ using UnityEngine;
 
 namespace ReskinEngine.API
 {
-    [Category("town")]
+    #region Paths
+
+    [Category("generic")]
     [Hidden]
     public class PathSkinBase : BuildingSkin
     {
-        [Model(ModelAttribute.Type.Modular, description = "The straight segment ")]
+        [Model(ModelAttribute.Type.Modular, description = "The straight segment")]
         public GameObject straight;
 
         [Model(ModelAttribute.Type.Modular, description = "The elbow segment")]
@@ -38,12 +40,14 @@ namespace ReskinEngine.API
         }
     }
 
+    [Category("town")]
     public class RoadSkin : PathSkinBase
     {
         internal override string FriendlyName => "Road";
         internal override string UniqueName => "road";
     }
 
+    [Category("town")]
     public class StoneRoadSkin : PathSkinBase
     {
         internal override string FriendlyName => "Stone Road";
@@ -62,5 +66,101 @@ namespace ReskinEngine.API
     {
         internal override string FriendlyName => "Stone Bridge";
         internal override string UniqueName => "stonebridge";
+    }
+
+    #endregion
+
+    #region Homes
+
+    [Category("town")]
+    [Jobs(1)]
+    public class HovelSkin : GenericBuildingSkin
+    {
+        internal override string UniqueName => "smallhouse";
+        internal override string FriendlyName => "Hovel";
+    }
+
+    [Category("town")]
+    [Jobs(2)]
+    public class CottageSkin : GenericBuildingSkin
+    {
+        internal override string UniqueName => "largehouse";
+        internal override string FriendlyName => "Cottage";
+    }
+
+
+    [Category("town")]
+    [Jobs(4)]
+    public class ManorSkin : GenericBuildingSkin
+    {
+        internal override string UniqueName => "manorhouse";
+        internal override string FriendlyName => "Manor House";
+    }
+
+
+    #endregion
+
+    [Category("town")]
+    public class WellSkin : GenericBuildingSkin
+    {
+        internal override string UniqueName => "well";
+        internal override string FriendlyName => "Well";
+    }
+
+    [Category("town")]
+    [Jobs(1)]
+    public class TownSquareSkin : BuildingSkin
+    {
+        internal override string UniqueName => "townsquare";
+        internal override string FriendlyName => "Town Square";
+
+        [Model(description = "Base town square floor and flag pole")]
+        public GameObject baseModel;
+        [Model(description = "GameObject whose children will be the items turned on and off for festivals")]
+        public GameObject festivalContainer;
+        [Model(description = "GameObject that is turned on or off for halloween (yes it exists off-season)")]
+        public GameObject halloweenContainer;
+        
+        [Seperator]
+        [Model(description = "Flag on flagpole")]
+        public GameObject flag;
+
+        [Anchor("Position of the flag")]
+        public Vector3 flagPosition;
+
+        protected override void PackageInternal(Transform target, GameObject _base)
+        {
+            base.PackageInternal(target, _base);
+
+            if (baseModel)
+                GameObject.Instantiate(baseModel, target).name = "baseModel";
+            if (festivalContainer)
+                GameObject.Instantiate(festivalContainer, target).name = "festivalContainer";
+            if (halloweenContainer)
+                GameObject.Instantiate(halloweenContainer, target).name = "halloweenContainer";
+            if (flag)
+                GameObject.Instantiate(flag, target).name = "flag";
+
+            Transform positionObj = new GameObject("flagPosition").transform;
+            positionObj.SetParent(target);
+            positionObj.localPosition = flagPosition;
+
+        }
+    }
+
+    [Category("town")]
+    [Jobs(4)]
+    public class TavernSkin : GenericBuildingSkin
+    {
+        internal override string UniqueName => "tavern";
+        internal override string FriendlyName => "Tavern";
+    }
+
+    [Category("town")]
+    [Jobs(5)]
+    public class FireBrigadeSkin : GenericBuildingSkin
+    {
+        internal override string UniqueName => "firehouse";
+        internal override string FriendlyName => "Fire Brigade";
     }
 }

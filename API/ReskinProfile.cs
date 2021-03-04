@@ -14,6 +14,8 @@ namespace ReskinEngine.API
     /// </summary>
     public class ReskinProfile
     {
+        private static KCModHelper helper;
+
         /// <summary>
         /// Name of the collection this reskin profile is categorized under
         /// </summary>
@@ -81,7 +83,10 @@ namespace ReskinEngine.API
             //helper.Log(InfoFileGenerator.Generate());
         }
 
-
+        private void Preload(KCModHelper helper)
+        {
+            ReskinProfile.helper = helper;
+        }
 
 
 

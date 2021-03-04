@@ -102,7 +102,7 @@ namespace ReskinEngine.Engine
             List<SkinBinder> binders = GetActivePool()[identifier];
 
             
-            return binders.Count > 0 ? binders[SRand.Range(0, binders.Count)] : null;
+            return binders.Count > 0 ? binders[SRand.Range(0, binders.Count - 1)] : null;
         }
 
         public static SkinBinder GetBinderFromActive(string identifier)
@@ -141,8 +141,8 @@ namespace ReskinEngine.Engine
 
                 if (type.IsSubclassOf(typeof(SkinBinder)) && !type.IsAbstract)
                 {
-                    SkinBinder s = Activator.CreateInstance(type) as SkinBinder;
-                    SkinLookup.Add(s.TypeIdentifier, s);
+                    SkinBinder binder = Activator.CreateInstance(type) as SkinBinder;
+                    SkinLookup.Add(binder.TypeIdentifier, binder);
                 }
                 
             }
@@ -161,6 +161,9 @@ namespace ReskinEngine.Engine
             for (int i = 0; i < childCount; i++)
             {
                 SkinBinder binder = SkinBinder.Unpack(target.GetChild(i).gameObject);
+
+                if (binder == null)
+                    continue;
 
                 if (!CollectionIndex.ContainsKey(binder.CollectionName))
                     CollectionIndex.Add(binder.CollectionName, Collection.Create(binder.CollectionName, binder.CompatabilityIdentifier));

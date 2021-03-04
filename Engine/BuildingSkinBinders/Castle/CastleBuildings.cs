@@ -99,6 +99,15 @@ namespace ReskinEngine.Engine
     public class ArcherSchoolSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "archerschool";
+
+        public override SkinBinder Create(GameObject obj) => base.Create<ArcherSchoolSkinBinder>(obj);
+    }
+
+    public class BarracksSkinBinder : GenericBuildingSkinBinder
+    {
+        public override string UniqueName => "barracks";
+
+        public override SkinBinder Create(GameObject obj) => base.Create<BarracksSkinBinder>(obj);
     }
 
     #endregion
@@ -108,17 +117,24 @@ namespace ReskinEngine.Engine
     public class TreasureRoomSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "throneroom";
+
+        public override SkinBinder Create(GameObject obj) => base.Create<TreasureRoomSkinBinder>(obj);
+
     }
-    
+
 
     public class ChamberOfWarSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "chamberofwar";
+        public override SkinBinder Create(GameObject obj) => base.Create<ChamberOfWarSkinBinder>(obj);
+
     }
 
     public class GreatHallSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "greathall";
+        public override SkinBinder Create(GameObject obj) => base.Create<GreatHallSkinBinder>(obj);
+
     }
 
 

@@ -145,6 +145,26 @@ namespace ReskinEngine.API
     }
 
     /// <summary>
+    /// Represents a material field that can be changed
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field, Inherited = true)]
+    public class MaterialAttribute : Attribute
+    {
+        public string description;
+        public MaterialAttribute(string description) => this.description = description;
+    }
+
+    /// <summary>
+    /// Represents a material that cannot be changed
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field, Inherited = true)]
+    public class PresetMaterialAttribute : Attribute
+    {
+        public string name;
+        public PresetMaterialAttribute(string name) => this.name = name;
+    }
+
+    /// <summary>
     /// Signifies a field in a skin that is a model and contains data about its type and description
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, Inherited = true)]
@@ -220,8 +240,6 @@ namespace ReskinEngine.API
 
     #region Skin Definitions
 
-
-
     //Base
     /// <summary>
     /// A Skin object holds fields that pertain to the skin's data, such as models, banners, peasant work positions, etc. 
@@ -237,7 +255,7 @@ namespace ReskinEngine.API
 
         /// <summary>
         /// Adds GameObject children to the target with specifications per skin as a method of communication between the client API and the Engine
-        /// <para>For advanced users only</para>
+        /// <para>For advanced uses only</para>
         /// </summary>
         /// <param name="target"></param>
         public void Package(Transform target)
@@ -255,7 +273,12 @@ namespace ReskinEngine.API
             PackageInternal(target, _base);
         }
 
-        protected virtual void PackageInternal(Transform target, GameObject _base)
+        /// <summary>
+        /// Package data pertaining to this skin in GameObject form
+        /// </summary>
+        /// <param name="dropoff">dropoff target object</param>
+        /// <param name="_base">skin target object</param>
+        protected virtual void PackageInternal(Transform dropoff, GameObject _base)
         {
 
         }
@@ -278,7 +301,7 @@ namespace ReskinEngine.API
         /// Optional; the positions peasants stand at while working at the building; directly corresponds to number of jobs a building employs
         /// <para>If left null this field will be set to its default value;</para>
         /// </summary>
-        public Vector3[] jobPositions = new Vector3[0];
+        public Vector3[] personPositions = new Vector3[0];
 
 
         protected override void PackageInternal(Transform target, GameObject _base)
@@ -286,14 +309,14 @@ namespace ReskinEngine.API
             base.PackageInternal(target, _base);
 
 
-            if (jobPositions.Length > 0)
+            if (personPositions.Length > 0)
             {
                 GameObject obj = new GameObject("personPositions");
                 obj.transform.SetParent(_base.transform);
 
-                for (int i = 0; i < jobPositions.Length; i++)
+                for (int i = 0; i < personPositions.Length; i++)
                 {
-                    Vector3 personPosition = jobPositions[i];
+                    Vector3 personPosition = personPositions[i];
                     GameObject position = new GameObject($"personPosition{i}");
                     position.transform.SetParent(obj.transform);
                     position.transform.position = personPosition;
@@ -334,6 +357,8 @@ namespace ReskinEngine.API
 
     #endregion
 
+    #endregion
+
 
     //#region Town
 
@@ -344,7 +369,7 @@ namespace ReskinEngine.API
     //#region Advanced Town
 
     ////Hospital
-    //public class HospitalBuildingSkin : GenericBuildingSkin
+    //public class HospitalSkin : GenericBuildingSkin
     //{
     //    public HospitalBuildingSkin()
     //    {
@@ -485,6 +510,5 @@ namespace ReskinEngine.API
 
     //#endregion
 
-    #endregion
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using UnityEngine;
 
 namespace ReskinEngine.Engine
@@ -24,9 +25,14 @@ namespace ReskinEngine.Engine
 
         public GameObject doorPrefab;
 
+        public Material material;
+
         public override SkinBinder Create(GameObject obj)
         {
             var inst = new CastleBlockSkinBinderBase();
+
+            //ApplyModels(inst, obj, BindingFlags.Instance | BindingFlags.Public,
+            //    "Open", "Closed", "Single", "Opposite", "Adjacent", "Threeside");
 
             if (obj.transform.Find("Open"))
                 inst.Open = obj.transform.Find("Open").gameObject;
@@ -43,6 +49,8 @@ namespace ReskinEngine.Engine
 
             if (obj.transform.Find("doorPrefab"))
                 inst.doorPrefab = obj.transform.Find("doorPrefab").gameObject;
+
+            ApplyMaterial(inst, obj, "material");
 
             return inst;
         }
@@ -66,6 +74,9 @@ namespace ReskinEngine.Engine
 
             if(doorPrefab)
                 block.doorPrefab = doorPrefab;
+
+            if (material)
+                block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = material;
         }
 
         public override void BindToBuildingInstance(Building building)
@@ -90,7 +101,7 @@ namespace ReskinEngine.Engine
 
     #region Castle Stairs
     
-    class CastleStairsSkinBinder : BuildingSkinBinder
+    public class CastleStairsSkinBinder : BuildingSkinBinder
     {
         public override string UniqueName => "castlestairs";
 
@@ -144,18 +155,15 @@ namespace ReskinEngine.Engine
     {
         public override string UniqueName => "gate";
 
-        public GameObject _gate;
-        public GameObject _porticulus;
+        public GameObject gate;
+        public GameObject porticulus;
 
         public override SkinBinder Create(GameObject obj)
         {
             var inst = new GateSkinBinderBase();
 
-            if (obj.transform.Find("gate"))
-                inst._gate = obj.transform.Find("gate").gameObject;
-
-            if (obj.transform.Find("porticulus"))
-                inst._porticulus = obj.transform.Find("porticulus").gameObject;
+            ApplyModel(inst, obj, "gate");
+            ApplyModel(inst, obj, "porticulus");
 
             return inst;
         }
@@ -165,16 +173,16 @@ namespace ReskinEngine.Engine
             GameObject gateObj = building.transform.Find("Offset/Gate").gameObject;
             GameObject portculusObj = building.transform.Find("Offset/Portculus").gameObject;
             
-            if (_gate)
+            if (gate)
             {
                 gateObj.GetComponent<MeshFilter>().mesh = null;
-                GameObject.Instantiate(_gate, gateObj.transform);
+                GameObject.Instantiate(gate, gateObj.transform);
             }
 
-            if(_porticulus)
+            if(porticulus)
             {
-                _porticulus.GetComponent<MeshFilter>().mesh = null;
-                GameObject.Instantiate(_porticulus, portculusObj.transform);
+                porticulus.GetComponent<MeshFilter>().mesh = null;
+                GameObject.Instantiate(porticulus, portculusObj.transform);
             }
         }
 

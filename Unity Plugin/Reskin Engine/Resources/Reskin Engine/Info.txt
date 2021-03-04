@@ -1,0 +1,470 @@
+ -- Castle -- 
+--------------
+
+-- Keep --
+Name: Keep
+UniqueName: keep
+Jobs: 3
+Models:
+	keepUpgrade1:         Instance | The base upgrade for the keep
+	keepUpgrade2:         Instance | The second upgrade for the keep
+	keepUpgrade3:         Instance | The third upgrade for the keep
+	keepUpgrade4:         Instance | The fourth upgrade for the keep
+
+-- Wood Castle Block --
+Name: Wood Castle Block
+UniqueName: woodcastleblock
+Models:
+	Open:                  Modular | The flat piece without crenelations for a castle block
+	Closed:                Modular | The piece of a castleblock with all crenelations at the top and no connections
+	Single:                Modular | The piece of a castleblock that only has crenelations on one side
+	Opposite:              Modular | The straight piece of a castle block
+	Adjacent:              Modular | The corner piece for a castle block
+	Threeside:             Modular | The piece of a castleblock with crenelations on 3 sides
+	---------
+	doorPrefab:           Instance | The door that appears on a castleblock when it connects to other castleblocks
+
+-- Stone Castle Block --
+Name: Stone Castle Block
+UniqueName: castleblock
+Models:
+	Open:                  Modular | The flat piece without crenelations for a castle block
+	Closed:                Modular | The piece of a castleblock with all crenelations at the top and no connections
+	Single:                Modular | The piece of a castleblock that only has crenelations on one side
+	Opposite:              Modular | The straight piece of a castle block
+	Adjacent:              Modular | The corner piece for a castle block
+	Threeside:             Modular | The piece of a castleblock with crenelations on 3 sides
+	---------
+	doorPrefab:           Instance | The door that appears on a castleblock when it connects to other castleblocks
+
+-- Wooden Gate --
+Name: Wooden Gate
+UniqueName: woodengate
+Models:
+	gate:                 Modular | The main model of the gate, excluding the porticulus
+	porticulus:           Modular | The part of the gate that moves up and down to show opening/closing
+
+-- Stone Gate --
+Name: Stone Gate
+UniqueName: gate
+Models:
+	gate:                 Modular | The main model of the gate, excluding the porticulus
+	porticulus:           Modular | The part of the gate that moves up and down to show opening/closing
+
+-- Castle Stairs --
+Name: Castle Stairs
+UniqueName: castlestairs
+Models:
+	stairsFront:           Modular | stairs facing +z
+	stairsRight:           Modular | stairs facing +x
+	stairsDown:            Modular | stairs facing -z
+	stairsLeft:            Modular | stairs facing -x
+
+-- Archer Tower --
+Name: Archer Tower
+UniqueName: archer
+Jobs: 2
+Models:
+	baseModel:            Instance | The main model of the Archer Tower
+	veteranModel:         Instance | An embelishment added to the archer tower when it achieves the veteran status
+
+-- Ballista Tower --
+Name: Ballista Tower
+UniqueName: ballista
+Jobs: 4
+Models:
+	veteranModel:         Instance | An embelishment added to the archer tower when it achieves the veteran status
+	baseModel:            Instance | The main model of the Ballista Tower
+	topBase:              Instance | The base of the rotational top half of the ballista
+	-------
+	armR:                 Instance | The right side arm used to animate the ballista's firing movement
+	----
+	armL:                 Instance | The left side arm used to animate the ballista's firing movement
+	----
+	stringR:              Instance | The right side of the animated string used to pull back and fire the ballista projectile
+	stringL:              Instance | The left side of the animated string used to pull back and fire the ballista projectile
+	-------
+	projectile:           Instance | The projectile fired from the ballista
+	----------
+	flag:                 Instance | A decorative flag on the ballista
+Anchors:
+	armREnd:       The right end of the right arm of the ballista; position used for anchoring the right side of the string in animation
+	armLEnd:       The left end of the left arm of the ballista; position used for anchoring the left side of the string in animation
+	projectileEnd: The end of the ballista projectile that's pulled back before firing
+
+-- Treasure Room --
+Name: Treasure Room
+UniqueName: throneroom
+Jobs: 5
+Models:
+	baseModel:            Instance | The base model that will replace the building
+
+-- Chamber Of War --
+Name: Chamber Of War
+UniqueName: chamberofwar
+Jobs: 5
+Models:
+	baseModel:            Instance | The base model that will replace the building
+
+-- Great Hall --
+Name: Great Hall
+UniqueName: greathall
+Jobs: 3
+
+[Not Supported]
+-- Barracks --
+Name: Barracks
+UniqueName: barracks
+Jobs: 8
+
+-- Archer School --
+Name: Archer School
+UniqueName: archerschool
+Jobs: 8
+
+ -- Town -- 
+------------
+
+-- Road --
+Name: Road
+UniqueName: road
+Models:
+	straight:              Modular | The straight segment 
+	elbow:                 Modular | The elbow segment
+	intersection3:         Modular | The three way intersection segment
+	intersection4:         Modular | The four way intersection segment
+
+-- Stone Road --
+Name: Stone Road
+UniqueName: stoneroad
+Models:
+	straight:              Modular | The straight segment 
+	elbow:                 Modular | The elbow segment
+	intersection3:         Modular | The three way intersection segment
+	intersection4:         Modular | The four way intersection segment
+
+ -- Advanced Town -- 
+---------------------
+
+-- Church --
+Name: Church
+UniqueName: church
+Jobs: 4
+Models:
+	baseModel:            Instance | The base model that will replace the building
+
+ -- Maritime -- 
+----------------
+
+-- Bridge --
+Name: Bridge
+UniqueName: bridge
+Models:
+	straight:              Modular | The straight segment 
+	elbow:                 Modular | The elbow segment
+	intersection3:         Modular | The three way intersection segment
+	intersection4:         Modular | The four way intersection segment
+
+-- Stone Bridge --
+Name: Stone Bridge
+UniqueName: stonebridge
+Models:
+	straight:              Modular | The straight segment 
+	elbow:                 Modular | The elbow segment
+	intersection3:         Modular | The three way intersection segment
+	intersection4:         Modular | The four way intersection segment
+
+ -- Unsupported -- 
+-------------------
+
+[Not Supported]
+-- Aqueduct --
+Name: Aqueduct
+UniqueName: aqueduct
+
+[Not Supported]
+-- Baker --
+Name: Baker
+UniqueName: baker
+
+[Not Supported]
+-- Bath House --
+Name: Bath House
+UniqueName: bathhouse
+
+[Not Supported]
+-- Blacksmith --
+Name: Blacksmith
+UniqueName: blacksmith
+
+[Not Supported]
+-- Butcher --
+Name: Butcher
+UniqueName: butcher
+
+[Not Supported]
+-- Cathedral --
+Name: Cathedral
+UniqueName: cathedral
+
+[Not Supported]
+-- Cemetery --
+Name: Cemetery
+UniqueName: cemetery
+
+[Not Supported]
+-- Cemeteries --
+Name: Cemeteries
+UniqueName: cemeterydummy
+
+[Not Supported]
+-- Cemetery --
+Name: Cemetery
+UniqueName: cemetery44
+
+[Not Supported]
+-- Cemetery Circle --
+Name: Cemetery Circle
+UniqueName: cemeteryCircle
+
+[Not Supported]
+-- Cemetery Diamond --
+Name: Cemetery Diamond
+UniqueName: cemeteryDiamond
+
+[Not Supported]
+-- Cemetery Caretaker --
+Name: Cemetery Caretaker
+UniqueName: cemeterykeeper
+
+[Not Supported]
+-- Charcoal Maker --
+Name: Charcoal Maker
+UniqueName: charcoalmaker
+
+[Not Supported]
+-- Clinic --
+Name: Clinic
+UniqueName: clinic
+
+[Not Supported]
+-- Rock Removal --
+Name: Rock Removal
+UniqueName: destructioncrew
+
+[Not Supported]
+-- Dock --
+Name: Dock
+UniqueName: dock
+
+[Not Supported]
+-- Drawbridge --
+Name: Drawbridge
+UniqueName: drawbridge
+
+[Not Supported]
+-- Farm --
+Name: Farm
+UniqueName: farm
+
+[Not Supported]
+-- Fire Brigade --
+Name: Fire Brigade
+UniqueName: firehouse
+
+[Not Supported]
+-- Fishing Hut --
+Name: Fishing Hut
+UniqueName: fishinghut
+
+[Not Supported]
+-- Fishmonger --
+Name: Fishmonger
+UniqueName: fishmonger
+
+[Not Supported]
+-- Forester --
+Name: Forester
+UniqueName: forester
+
+[Not Supported]
+-- Fountain --
+Name: Fountain
+UniqueName: fountain
+
+[Not Supported]
+-- Garden --
+Name: Garden
+UniqueName: garden
+
+[Not Supported]
+-- Granary --
+Name: Granary
+UniqueName: largegranary
+
+[Not Supported]
+-- Great Library --
+Name: Great Library
+UniqueName: greatlibrary
+
+[Not Supported]
+-- Hospital --
+Name: Hospital
+UniqueName: hospital
+
+[Not Supported]
+-- Hovel --
+Name: Hovel
+UniqueName: smallhouse
+
+[Not Supported]
+-- Iron Mine --
+Name: Iron Mine
+UniqueName: ironmine
+
+[Not Supported]
+-- Large Fountain --
+Name: Large Fountain
+UniqueName: largefountain
+
+[Not Supported]
+-- Cottage --
+Name: Cottage
+UniqueName: largehouse
+
+[Not Supported]
+-- Library --
+Name: Library
+UniqueName: library
+
+[Not Supported]
+-- Manor --
+Name: Manor
+UniqueName: manorhouse
+
+[Not Supported]
+-- Market --
+Name: Market
+UniqueName: market
+
+[Not Supported]
+-- Mason --
+Name: Mason
+UniqueName: Mason
+
+[Not Supported]
+-- Moat --
+Name: Moat
+UniqueName: moat
+
+[Not Supported]
+-- Noria --
+Name: Noria
+UniqueName: noria
+
+[Not Supported]
+-- Orchard --
+Name: Orchard
+UniqueName: orchard
+
+[Not Supported]
+-- Outpost --
+Name: Outpost
+UniqueName: outpost
+
+[Not Supported]
+-- Pier --
+Name: Pier
+UniqueName: pier
+
+[Not Supported]
+-- Produce Storage --
+Name: Produce Storage
+UniqueName: producestand
+
+[Not Supported]
+-- Quarry --
+Name: Quarry
+UniqueName: quarry
+
+[Not Supported]
+-- Reservoir --
+Name: Reservoir
+UniqueName: reservoir
+
+[Not Supported]
+-- Rubble --
+Name: Rubble
+UniqueName: rubble
+
+[Not Supported]
+-- Small Granary --
+Name: Small Granary
+UniqueName: smallgranary
+
+[Not Supported]
+-- Small Market --
+Name: Small Market
+UniqueName: smallmarket
+
+[Not Supported]
+-- Small Stockpile --
+Name: Small Stockpile
+UniqueName: smallstockpile
+
+[Not Supported]
+-- Queen Barbara --
+Name: Queen Barbara
+UniqueName: statue_barbara
+
+[Not Supported]
+-- Lord Levi --
+Name: Lord Levi
+UniqueName: statue_levi
+
+[Not Supported]
+-- Lord Nextraztus --
+Name: Lord Nextraztus
+UniqueName: statue_sam
+
+[Not Supported]
+-- Stockpile --
+Name: Stockpile
+UniqueName: largestockpile
+
+[Not Supported]
+-- Swineherd --
+Name: Swineherd
+UniqueName: swineherd
+
+[Not Supported]
+-- Tavern --
+Name: Tavern
+UniqueName: tavern
+
+[Not Supported]
+-- Town Square --
+Name: Town Square
+UniqueName: townsquare
+
+[Not Supported]
+-- Transport Ship --
+Name: Transport Ship
+UniqueName: transportship
+
+[Not Supported]
+-- Troop Transport Ship --
+Name: Troop Transport Ship
+UniqueName: trooptransportship
+
+[Not Supported]
+-- Well --
+Name: Well
+UniqueName: well
+
+[Not Supported]
+-- Windmill --
+Name: Windmill
+UniqueName: windmill
+
+

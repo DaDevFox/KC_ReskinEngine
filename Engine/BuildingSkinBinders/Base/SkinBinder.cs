@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Harmony;
+using System.Reflection;
 
 namespace ReskinEngine.Engine
 {
@@ -81,6 +82,37 @@ namespace ReskinEngine.Engine
         {
 
         }
+
+        protected void ApplyModels(SkinBinder binder, GameObject _base, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance, params string[] models)
+        {
+            foreach (string model in models)
+                ApplyModel(binder, _base, model, flags);
+        }
+
+        /// <summary>
+        /// Helper function that reads if the given model is present in the packaged GameObject _base and assigns the skin's model to the packaged model.
+        /// <para>requires binding flags to use reflection to modify skin's model</para>
+        /// </summary>
+        /// <param name="binder"></param>
+        /// <param name="_base"></param>
+        /// <param name="modelName"></param>
+        /// <param name="flags"></param>
+        protected void ApplyModel(SkinBinder binder, GameObject _base, string modelName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
+        {
+            if (_base.transform.Find(modelName))
+                if (binder.GetType().GetField(modelName) != null)
+                    binder.GetType().GetField(modelName, flags).SetValue(binder, _base.transform.Find(modelName).gameObject);
+        }
+
+        protected bool MaterialFlag(GameObject _base, string materialName) => _base.transform.Find($"{materialName}Flag");
+
+        protected void ApplyMaterial(SkinBinder binder, GameObject _base, string materialName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
+        {
+            if (_base.transform.Find(materialName))
+                if (binder.GetType().GetField(materialName) != null)
+                    binder.GetType().GetField(materialName, flags).SetValue(binder, _base.transform.Find(materialName).GetComponent<MeshRenderer>().material);
+        }
+
     }
 
     /// <summary>
@@ -104,7 +136,7 @@ namespace ReskinEngine.Engine
         /// </summary>
         public sealed override void Bind()
         {
-            if (UniqueName != "unregistered")
+            if (UniqueName != "unregistered" && UniqueName != "hidden")
             {
                 Engine.helper.Log(UniqueName);
                 BindToBuildingBase(GameState.inst.GetPlaceableByUniqueName(UniqueName));
@@ -129,7 +161,7 @@ namespace ReskinEngine.Engine
 
         }
 
-
+        #region Util Functions
 
         /// <summary>
         /// Helper function that applies peoplePositions from a GameObject to any BuildingSkinBinder; use in Create()
@@ -166,6 +198,7 @@ namespace ReskinEngine.Engine
             }
         }
 
+        #endregion
 
         [HarmonyPatch(typeof(World), "PlaceInternal")]
         static class OnPlacePatch
@@ -186,15 +219,13 @@ namespace ReskinEngine.Engine
     }
 
     [Unregistered]
-    public class GenericBuildingSkinBinder : BuildingSkinBinder
+    public abstract class GenericBuildingSkinBinder : BuildingSkinBinder
     {
-        public override string UniqueName => "";
-
         public GameObject baseModel;
 
-        public override SkinBinder Create(GameObject obj)
+        protected SkinBinder Create<T>(GameObject obj) where T : GenericBuildingSkinBinder, new()
         {
-            var inst = new GenericBuildingSkinBinder();
+            var inst = new T();
 
             if (obj.transform.Find("baseModel"))
                 inst.baseModel = obj.transform.Find("baseModel").gameObject;
@@ -207,6 +238,13 @@ namespace ReskinEngine.Engine
         public override void BindToBuildingBase(Building building)
         {
             Engine.helper.Log((building == null).ToString());
+
+            if (building == null)
+            {
+                Engine.helper.Log("Requested bind to null object instead of building");
+                Engine.helper.Log(StackTraceUtility.ExtractStackTrace());
+                return;
+            }
 
             Transform target = building.transform.GetChild(0).GetChild(0);
 

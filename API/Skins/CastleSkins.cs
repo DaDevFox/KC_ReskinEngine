@@ -10,7 +10,7 @@ namespace ReskinEngine.API
     [Category("castle")]
     [Jobs(3)]
     ////Keep
-    public class KeepBuildingSkin : BuildingSkin
+    public class KeepSkin : BuildingSkin
     {
         internal override string FriendlyName => "Keep";
         internal override string UniqueName => "keep";
@@ -76,6 +76,7 @@ namespace ReskinEngine.API
             if (doorPrefab)
                 GameObject.Instantiate(doorPrefab, _base.transform).name = "doorPrefab";
 
+            AppendMaterial(_base, material, "material");
         }
 
 
@@ -122,17 +123,20 @@ namespace ReskinEngine.API
         [Seperator]
         [Model(description = "The door that appears on a castleblock when it connects to other castleblocks")]
         public GameObject doorPrefab;
+
+        [Material("Material the castleblocks will use, defaults to largehousetex if not used")]
+        public Material material;
     }
 
     //Wood Castle Block
-    public class WoodCastleBlockBuildingSkin : CastleBlockBuildingSkinBase
+    public class WoodCastleBlockSkin : CastleBlockBuildingSkinBase
     {
         internal override string FriendlyName => "Wooden Castle Block";
         internal override string UniqueName => "woodcastleblock";
     }
 
     //Stone Castle Block
-    public class StoneCastleBlockBuildingSkin : CastleBlockBuildingSkinBase
+    public class StoneCastleBlockSkin : CastleBlockBuildingSkinBase
     {
         internal override string FriendlyName => "Stone Castle Block";
         internal override string UniqueName => "castleblock";
@@ -152,27 +156,26 @@ namespace ReskinEngine.API
         [Model(description = "The part of the gate that moves up and down to show opening/closing")]
         public GameObject porticulus;
 
+
         protected override void PackageInternal(Transform target, GameObject _base)
         {
             base.PackageInternal(target, _base);
 
-            if (gate)
-                GameObject.Instantiate(gate, _base.transform).name = "gate";
-            if (porticulus)
-                GameObject.Instantiate(porticulus, _base.transform).name = "porticulus";
+            AppendModel(_base, gate, "gate");
+            AppendModel(_base, porticulus, "porticulus");
         }
 
     }
 
     //Wooden Gate
-    public class WoodenGateBuildingSkin : GateBuildingSkinBase
+    public class WoodenGateSkin : GateBuildingSkinBase
     {
         internal override string FriendlyName => "Wooden Gate";
         internal override string UniqueName => "woodengate";
     }
 
     //Stone Gate
-    public class StoneGateBuildingSkin : GateBuildingSkinBase
+    public class StoneGateSkin : GateBuildingSkinBase
     {
         internal override string FriendlyName => "Stone Gate";
         internal override string UniqueName => "gate";
@@ -186,7 +189,7 @@ namespace ReskinEngine.API
 
     //Castle Stairs
     [Category("castle")]
-    public class CastleStairsBuildingSkin : BuildingSkin
+    public class CastleStairsSkin : BuildingSkin
     {
         internal override string FriendlyName => "Castle Stairs";
         internal override string UniqueName => "castlestairs";
@@ -224,7 +227,7 @@ namespace ReskinEngine.API
     //Archer Tower
     [Jobs(2)]
     [Category("castle")]
-    public class ArcherTowerBuildingSkin : BuildingSkin
+    public class ArcherTowerSkin : BuildingSkin
     {
         internal override string FriendlyName => "Archer Tower";
 
@@ -256,7 +259,7 @@ namespace ReskinEngine.API
     //Ballista Tower
     [Jobs(4)]
     [Category("castle")]
-    public class BallistaTowerBuildingSkin : BuildingSkin
+    public class BallistaTowerSkin : BuildingSkin
     {
         internal override string FriendlyName => "Ballista Tower";
         internal override string UniqueName => "ballista";
@@ -368,7 +371,7 @@ namespace ReskinEngine.API
 
     [Category("castle")]
     [Jobs(5)]
-    public class TreasureRoomBuildingSkin : GenericBuildingSkin
+    public class TreasureRoomSkin : GenericBuildingSkin
     {
         internal override string FriendlyName => "Treasure Room";
         internal override string UniqueName => "throneroom";
@@ -376,7 +379,7 @@ namespace ReskinEngine.API
 
     [Category("castle")]
     [Jobs(5)]
-    public class ChamberOfWarBuildingSkin : GenericBuildingSkin
+    public class ChamberOfWarSkin : GenericBuildingSkin
     {
         internal override string FriendlyName => "Chamber Of War";
         internal override string UniqueName => "chamberofwar";
@@ -385,7 +388,7 @@ namespace ReskinEngine.API
 
     [Category("castle")]
     [Jobs(3)]
-    public class GreatHallBuildingSkin : BuildingSkin
+    public class GreatHallSkin : GenericBuildingSkin
     {
         internal override string FriendlyName => "Great Hall";
         internal override string UniqueName => "greathall";
@@ -396,9 +399,9 @@ namespace ReskinEngine.API
     #region Training Buildings
 
     [Category("castle")]
-    [NotSupported]
+    //[NotSupported]
     [Jobs(8)]
-    public class BarracksBuildingSkin : BuildingSkin
+    public class BarracksSkin : GenericBuildingSkin
     {
         internal override string FriendlyName => "Barracks";
         internal override string UniqueName => "barracks";
@@ -407,7 +410,7 @@ namespace ReskinEngine.API
 
     [Category("castle")]
     [Jobs(8)]
-    public class ArcherSchoolBuildingSkin : BuildingSkin
+    public class ArcherSchoolSkin : GenericBuildingSkin
     {
         internal override string FriendlyName => "Archer School";
         internal override string UniqueName => "archerschool";
