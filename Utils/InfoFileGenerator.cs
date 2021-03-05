@@ -62,7 +62,12 @@ namespace ReskinEngine.API
                 if(type.GetCustomAttribute<HiddenAttribute>() != null)
                     continue;
 
-
+                if(type.GetCustomAttributes<NoteAttribute>().Count() > 0)
+                {
+                    result += $"Notes:\n";
+                    foreach (NoteAttribute note in type.GetCustomAttributes<NoteAttribute>())
+                        result += $"\t{note.description}\n";
+                }
 
                 if (type.IsSubclassOf(typeof(Skin)))
                 {
@@ -193,7 +198,7 @@ namespace ReskinEngine.API
 
                                 if (model.notes.Length > 0)
                                 {
-                                    modelsText += "\tNotes:\n"
+                                    modelsText += "\tNotes:\n";
                                     foreach (string note in model.notes)
                                         modelsText += $"\t{note}\n";
                                 }
