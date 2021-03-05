@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 2922787110
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 42ba9e3fed1705b66a58e893597247db
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cb5cff3a1350143ce413b676b0fb473f
+HashAppended: 1
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Mod/TPunkoModels/Prefabs/Houses/House2x1_1.prefab
+- Assets/Mod/TPunkoModels/Prefabs/Houses/House2x1_4.prefab
+- Assets/Mod/TPunkoModels/Prefabs/Houses/House2x1_2.prefab
+- Assets/Mod/TPunkoModels/Prefabs/Houses/House1x1.prefab
+- Assets/Mod/TPunkoModels/Prefabs/Houses/House2x1_3.prefab
+- Assets/Mod/TPunkoModels/Prefabs/Houses/House2x2.prefab
+Dependencies: []

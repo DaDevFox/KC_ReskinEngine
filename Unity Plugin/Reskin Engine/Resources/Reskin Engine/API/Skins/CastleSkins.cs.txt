@@ -9,6 +9,8 @@ namespace ReskinEngine.API
     
     [Category("castle")]
     [Jobs(3)]
+    [Note("All children of keep with cloth component will update to player/ai banner material")]
+    [Note("Mesh of root object of each respective upgrade will be used for collider of that upgrade (player cursor selection)")]
     ////Keep
     public class KeepSkin : BuildingSkin
     {
@@ -76,6 +78,7 @@ namespace ReskinEngine.API
             if (doorPrefab)
                 GameObject.Instantiate(doorPrefab, _base.transform).name = "doorPrefab";
 
+            AppendMaterial(_base, material, "material");
         }
 
 
@@ -122,6 +125,9 @@ namespace ReskinEngine.API
         [Seperator]
         [Model(description = "The door that appears on a castleblock when it connects to other castleblocks")]
         public GameObject doorPrefab;
+
+        [Material("Material the castleblocks will use, defaults to largehousetex if not used")]
+        public Material material;
     }
 
     //Wood Castle Block
@@ -147,19 +153,18 @@ namespace ReskinEngine.API
     [Category("castle")]
     public class GateBuildingSkinBase : BuildingSkin
     {
-        [Model(description = "The main model of the gate, excluding the porticulus", type = ModelAttribute.Type.Modular)]
+        [Model(description = "The main model of the gate, excluding the porticulus")]
         public GameObject gate;
-        [Model(description = "The part of the gate that moves up and down to show opening/closing", type = ModelAttribute.Type.Modular)]
+        [Model(description = "The part of the gate that moves up and down to show opening/closing")]
         public GameObject porticulus;
+
 
         protected override void PackageInternal(Transform target, GameObject _base)
         {
             base.PackageInternal(target, _base);
 
-            if (gate)
-                GameObject.Instantiate(gate, _base.transform).name = "gate";
-            if (porticulus)
-                GameObject.Instantiate(porticulus, _base.transform).name = "porticulus";
+            AppendModel(_base, gate, "gate");
+            AppendModel(_base, porticulus, "porticulus");
         }
 
     }

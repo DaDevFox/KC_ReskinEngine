@@ -32,6 +32,7 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
+
             Road r = building.GetComponent<Road>();
 
             if (straight)
@@ -42,6 +43,9 @@ namespace ReskinEngine.Engine
                 r.Intersection3.GetComponent<MeshFilter>().mesh = intersection3.GetComponent<MeshFilter>().mesh;
             if (intersection4)
                 r.Intersection4.GetComponent<MeshFilter>().mesh = intersection4.GetComponent<MeshFilter>().mesh;
+
+
+            base.BindToBuildingBase(building);
         }
 
         public override void BindToBuildingInstance(Building building)

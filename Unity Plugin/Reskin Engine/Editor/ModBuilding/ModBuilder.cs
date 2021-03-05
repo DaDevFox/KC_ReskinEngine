@@ -84,11 +84,11 @@ namespace ReskinEngine.Editor
 
         public static string OpenMainMethod() => "\t\tpublic void SceneLoaded(KCModHelper helper)\n\t\t{";
 
-        public static string MainMethodInit(Mod mod) => $"\t\t\t// KCModHelper\n\t\t\tMod.helper = helper;\n\n\t\t\t// Setup the ReskinProfile with a name and compatability identifier\n\t\t\tReskinProfile profile = new ReskinProfile(\"{mod.modName}\", \"{mod.compatabilityIdentifier}\");\n";
+        public static string MainMethodInit(Mod mod) => $"\t\t\t// KCModHelper\n\t\t\tMod.helper = helper;\n\n\t\t\t// Setup the ReskinProfile with a name and compatability identifier\n\t\t\tReskinProfile profile = new ReskinProfile(\"{mod.modName}\", \"{mod.compatabilityIdentifier}\");\n\t\t\ttry{{";
 
         public static string MainMethodConclude() => $"\n\t\t\tprofile.Register();\n\t\t\thelper.Log(\"Init\");";
 
-        public static string CloseMainMethod() => "\t\t}";
+        public static string CloseMainMethod() => "\n\t\t\t}catch(Exception ex){\n\t\t\t\thelper.Log(ex.ToString());\n\t\t\t}\n\t\t}";
 
         #region Collections
 
@@ -136,6 +136,10 @@ namespace ReskinEngine.Editor
                 {
                     BuildingSkin bSkin = skin as BuildingSkin;
 
+                    #region Person Positions
+
+                    //text += ";LAKDJF;ALKFJ;ASLKFJ;ALFKJAS;LKFJAD";
+
                     string personPositions = "";
                     if (bSkin.personPositions != null && bSkin.personPositions.Length > 0)
                     {
@@ -155,10 +159,60 @@ namespace ReskinEngine.Editor
                     }
 
                     text += $"\n\t\t\t{skinName}.personPositions = {personPositions};";
+
+                    #endregion
+
+                    #region Path Lists
+
+                    // Outline Meshes
+                    string outlineMeshes = "";
+                    if (bSkin.outlineMeshes != null && bSkin.outlineMeshes.Length > 0)
+                    {
+                        outlineMeshes = $"new string[{bSkin.outlineMeshes.Length}] {{";
+                        for(int i = 0; i < bSkin.outlineMeshes.Length; i++)
+                        {
+                            string path = bSkin.outlineMeshes[i];
+                            outlineMeshes += $"\"{path}\"";
+                            if (i != bSkin.outlineMeshes.Length - 1)
+                                outlineMeshes += ", ";
+                        }
+                        outlineMeshes += "}";
+                    }
+                    else
+                    {
+                        outlineMeshes = "new string[0]";
+                    }
+
+                    text += $"\n\t\t\t{skinName}.outlineMeshes = {outlineMeshes};";
+
+                    // Skinned Outline Meshes
+                    string outlineSkinnedMeshes = "";
+                    if (bSkin.outlineSkinnedMeshes != null && bSkin.outlineSkinnedMeshes.Length > 0)
+                    {
+                        outlineSkinnedMeshes = $"new string[{bSkin.outlineSkinnedMeshes.Length}] {{";
+                        for (int i = 0; i < bSkin.outlineSkinnedMeshes.Length; i++)
+                        {
+                            string path = bSkin.outlineSkinnedMeshes[i];
+                            outlineSkinnedMeshes += $"\"{path}\"";
+                            if (i != bSkin.outlineSkinnedMeshes.Length - 1)
+                                outlineSkinnedMeshes += ", ";
+                        }
+                        outlineSkinnedMeshes += "}";
+                    }
+                    else
+                    {
+                        outlineSkinnedMeshes = "new string[0]";
+                    }
+
+                    text += $"\n\t\t\t{skinName}.outlineSkinnedMeshes = {outlineSkinnedMeshes};";
+
+                    #endregion
+
                 }
 
                 // register skin
                 text += $"\n\t\t\tprofile.Add({skinName});\n\n";
+
             }
 
 

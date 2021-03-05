@@ -131,7 +131,7 @@ namespace ReskinEngine.Engine
 
         public abstract string UniqueName { get; }
 
-        public Vector3[] peoplePositions;
+        public Vector3[] personPositions;
         public string[] outlineMeshes;
         public string[] outlineSkinnedMeshes;
 
@@ -161,9 +161,18 @@ namespace ReskinEngine.Engine
         /// <param name="building"></param>
         public virtual void BindToBuildingBase(Building building)
         {
-            BindPersonPositions(building, this);
-            BindOutlineMeshes(building, this);
-            BindOutlineSkinnedMeshes(building, this);
+            if (building == null)
+            {
+                Engine.helper.Log("Requested bind to null object instead of building");
+                Engine.helper.Log(StackTraceUtility.ExtractStackTrace());
+                return;
+            }
+
+            BindPersonPositions(building);
+            BindOutlineMeshes(building);
+            BindOutlineSkinnedMeshes(building);
+
+            Engine.dLog(outlineMeshes.Length);
         }
 
         /// <summary>
@@ -192,8 +201,10 @@ namespace ReskinEngine.Engine
                 for (int i = 0; i < container.transform.childCount; i++)
                     positions.Add(container.GetChild(i).transform.position);
 
-                peoplePositions = positions.ToArray();
+                personPositions = positions.ToArray();
             }
+            else
+                personPositions = new Vector3[0];
         }
 
         /// <summary>
@@ -201,13 +212,18 @@ namespace ReskinEngine.Engine
         /// </summary>
         /// <param name="building"></param>
         /// <param name="binder"></param>
-        protected void BindPersonPositions(Building building, BuildingSkinBinder binder)
+        protected void BindPersonPositions(Building building)
         {
+            if (building.personPositions == null)
+                return;
+            if (personPositions == null)
+                return;
+
             for (int i = 0; i < building.personPositions.Length; i++)
             {
-                if (binder.peoplePositions.Length > i)
+                if (i < personPositions.Length && building.personPositions[i] != null)
                 {
-                    building.personPositions[i].localPosition = binder.peoplePositions[i];
+                    building.personPositions[i].localPosition = personPositions[i];
                 }
             }
         }
@@ -224,13 +240,17 @@ namespace ReskinEngine.Engine
                 string[] list = name[1].Split(',');
                 outlineMeshes = list;
             }
+            else
+                outlineMeshes = new string[0];
         }
 
-        protected void BindOutlineMeshes(Building building, BuildingSkinBinder binder)
+        protected void BindOutlineMeshes(Building building)
         {
+            if (outlineMeshes == null)
+                return;
             List<MeshRenderer> meshes = new List<MeshRenderer>();
-            foreach (string path in binder.outlineMeshes)
-                if(building.transform.Find(path) && building.transform.Find(path).GetComponent<MeshRenderer>())
+            foreach (string path in outlineMeshes)
+                if (building.transform.Find(path) && building.transform.Find(path).GetComponent<MeshRenderer>())
                     meshes.Add(building.transform.Find(path).GetComponent<MeshRenderer>());
             building.meshesRequiringOutline = meshes;
         }
@@ -247,12 +267,16 @@ namespace ReskinEngine.Engine
                 string[] list = name[1].Split(',');
                 outlineSkinnedMeshes = list;
             }
+            else
+                outlineSkinnedMeshes = new string[0];
         }
 
-        protected void BindOutlineSkinnedMeshes(Building building, BuildingSkinBinder binder)
+        protected void BindOutlineSkinnedMeshes(Building building)
         {
+            if (outlineSkinnedMeshes == null)
+                return;
             List<SkinnedMeshRenderer> meshes = new List<SkinnedMeshRenderer>();
-            foreach (string path in binder.outlineSkinnedMeshes)
+            foreach (string path in outlineSkinnedMeshes)
                 if (building.transform.Find(path) && building.transform.Find(path).GetComponent<SkinnedMeshRenderer>())
                     meshes.Add(building.transform.Find(path).GetComponent<SkinnedMeshRenderer>());
             building.skinnedMeshesRequiringOutline = meshes;
@@ -298,26 +322,12 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
-            Engine.helper.Log((building == null).ToString());
-
-            if (building == null)
-            {
-                Engine.helper.Log("Requested bind to null object instead of building");
-                Engine.helper.Log(StackTraceUtility.ExtractStackTrace());
-                return;
-            }
-
             Transform target = building.transform.GetChild(0).GetChild(0);
-
-            foreach (Transform t in building.transform)
-                Engine.helper.Log(t.ToString());
-
             if (!target)
             {
                 Engine.helper.Log("GenericBuildingSkinBinder bound to building that doesn't follow generic building architechture; aborting");
                 return;
             }
-
 
             if (baseModel)
             {
@@ -325,7 +335,7 @@ namespace ReskinEngine.Engine
                 GameObject.Instantiate(baseModel, target);
             }
 
-            //BindPersonPositions(building, this);
+            base.BindToBuildingBase(building);
         }
 
         public override void BindToBuildingInstance(Building building)

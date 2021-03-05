@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 2955602204
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: testmod_voxel_houses_42ba9e3fed1705b66a58e893597247db
+      Dependencies: {}
+    Info_1:
+      Name: testmod_voxel_castle_5c83f8a8ca77f59260a26640338f437a
+      Dependencies: {}

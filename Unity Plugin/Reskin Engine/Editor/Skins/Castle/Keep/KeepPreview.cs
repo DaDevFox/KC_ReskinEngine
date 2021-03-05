@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using ReskinEngine.Utils;
 
 #if UNITY_EDITOR
 
@@ -19,23 +20,43 @@ namespace ReskinEngine.Editor
 
             if (skin.keepUpgrade1)
             {
-                GameObject.DestroyImmediate(obj.transform.Find("Offset/SmallerKeep").gameObject);
-                GameObject.Instantiate(skin.keepUpgrade1, obj.transform.Find("Offset")).name = "SmallerKeep";
+                GameObject found = obj.transform.Find("Offset/SmallerKeep").gameObject;
+                found.transform.localScale = Vector3.one;
+                found.GetComponent<MeshFilter>().mesh = null;
+                found.ClearChildren();
+                if (skin.keepUpgrade1.GetComponent<MeshFilter>())
+                    found.GetComponent<MeshCollider>().sharedMesh = skin.keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
+                GameObject.Instantiate(skin.keepUpgrade1, found.transform).name = "inst";
             }
             if (skin.keepUpgrade2)
             {
-                GameObject.DestroyImmediate(obj.transform.Find("Offset/SmallKeep").gameObject);
-                GameObject.Instantiate(skin.keepUpgrade2, obj.transform.Find("Offset")).name = "SmallKeep";
+                GameObject found = obj.transform.Find("Offset/SmallKeep").gameObject;
+                found.transform.localScale = Vector3.one;
+                found.GetComponent<MeshFilter>().mesh = null;
+                found.ClearChildren();
+                if (skin.keepUpgrade1.GetComponent<MeshFilter>())
+                    found.GetComponent<MeshCollider>().sharedMesh = skin.keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
+                GameObject.Instantiate(skin.keepUpgrade1, found.transform).name = "inst";
             }
             if (skin.keepUpgrade3)
             {
-                GameObject.DestroyImmediate(obj.transform.Find("Offset/Keep").gameObject);
-                GameObject.Instantiate(skin.keepUpgrade3, obj.transform.Find("Offset")).name = "Keep";
+                GameObject found = obj.transform.Find("Offset/Keep").gameObject;
+                found.transform.localScale = Vector3.one;
+                found.GetComponent<MeshFilter>().mesh = null;
+                found.ClearChildren();
+                if (skin.keepUpgrade1.GetComponent<MeshFilter>())
+                    found.GetComponent<MeshCollider>().sharedMesh = skin.keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
+                GameObject.Instantiate(skin.keepUpgrade1, found.transform).name = "inst";
             }
             if (skin.keepUpgrade4)
             {
-                GameObject.DestroyImmediate(obj.transform.Find("Offset/MediumKeep").gameObject);
-                GameObject.Instantiate(skin.keepUpgrade4, obj.transform.Find("Offset")).name = "MediumKeep";
+                GameObject found = obj.transform.Find("Offset/MediumKeep").gameObject;
+                found.transform.localScale = Vector3.one;
+                found.GetComponent<MeshFilter>().mesh = null;
+                found.ClearChildren();
+                if (skin.keepUpgrade1.GetComponent<MeshFilter>())
+                    found.GetComponent<MeshCollider>().sharedMesh = skin.keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
+                GameObject.Instantiate(skin.keepUpgrade1, found.transform).name = "inst";
             }
 
             switch (upgrade)

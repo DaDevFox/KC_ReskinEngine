@@ -29,6 +29,8 @@ namespace ReskinEngine.Engine
 
         public override void Read(GameObject obj)
         {
+            base.Read(obj);
+
             if (obj.transform.Find("Open"))
                 Open = obj.transform.Find("Open").gameObject;
             if (obj.transform.Find("Closed"))
@@ -50,6 +52,8 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
+            
+
             CastleBlock block = building.GetComponent<CastleBlock>();
 
             if(Open)
@@ -70,6 +74,8 @@ namespace ReskinEngine.Engine
 
             if (material)
                 block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = material;
+
+            base.BindToBuildingBase(building);
         }
 
         public override void BindToBuildingInstance(Building building)
@@ -108,6 +114,8 @@ namespace ReskinEngine.Engine
 
         public override void Read(GameObject obj)
         {
+            base.Read(obj);
+
             if (obj.transform.Find("stairsFront"))
                 stairsFront = obj.transform.Find("stairsFront").gameObject;
             if (obj.transform.Find("stairsRight"))
@@ -121,6 +129,7 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
+
             CastleStairs stairs = building.GetComponent<CastleStairs>();
 
             if (stairsRight)
@@ -131,6 +140,8 @@ namespace ReskinEngine.Engine
                 stairs.north = stairsFront;
             if (stairsDown)
                 stairs.south = stairsDown;
+
+            base.BindToBuildingBase(building);
         }
 
     }
@@ -150,12 +161,15 @@ namespace ReskinEngine.Engine
 
         public override void Read(GameObject obj)
         {
+            base.Read(obj);
+
             ReadModel(obj, "gate");
             ReadModel(obj, "porticulus");
         }
 
         public override void BindToBuildingBase(Building building)
         {
+
             GameObject gateObj = building.transform.Find("Offset/Gate").gameObject;
             GameObject portculusObj = building.transform.Find("Offset/Portculus").gameObject;
             
@@ -170,6 +184,9 @@ namespace ReskinEngine.Engine
                 porticulus.GetComponent<MeshFilter>().mesh = null;
                 GameObject.Instantiate(porticulus, portculusObj.transform);
             }
+
+
+            base.BindToBuildingBase(building);
         }
 
         public override void BindToBuildingInstance(Building building)

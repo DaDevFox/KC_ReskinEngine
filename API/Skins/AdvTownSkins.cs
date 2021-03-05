@@ -16,7 +16,7 @@ namespace ReskinEngine.API
         internal override string FriendlyName => "Church";
     }
 
-    [Jobs(4)]
+    [Jobs(20)]
     [Category("advTown")]
     public class CathedralSkin : GenericBuildingSkin
     {

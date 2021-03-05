@@ -16,6 +16,8 @@ namespace ReskinEngine.Engine
 
         public override void Read(GameObject obj)
         {
+            base.Read(obj);
+
             if (obj.transform.Find("baseModel"))
                 baseModel = obj.transform.Find("baseModel").gameObject;
             if (obj.transform.Find("veteranModel"))
@@ -26,6 +28,7 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
+
             GameObject baseModel = building.transform.Find("Offset/1x1x5_archer").gameObject;
             GameObject veteranModel = building.transform.Find("Offset/archertower_veteran").gameObject;
 
@@ -44,7 +47,7 @@ namespace ReskinEngine.Engine
                 GameObject.Instantiate(this.veteranModel, veteranModel.transform);
             }
 
-            BindPersonPositions(building, this);
+            base.BindToBuildingBase(building);
         }
 
 
@@ -74,6 +77,7 @@ namespace ReskinEngine.Engine
 
         public override void Read(GameObject obj)
         {
+            base.Read(obj);
 
             if (obj.transform.Find("veteranModel"))
                 veteranModel = obj.transform.Find("veteranModel").gameObject;
@@ -110,6 +114,7 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
+
             // Objects
             GameObject baseModel = building.transform.Find("Offset/ballista").gameObject;
             GameObject veteranModel = building.transform.Find("Offset/ballistabase_veteran").gameObject;
@@ -219,8 +224,7 @@ namespace ReskinEngine.Engine
                 GameObject.Instantiate(this.flag, flag.transform);
             }
 
-            BindPersonPositions(building, this);
-
+            base.BindToBuildingBase(building);
         }
 
         public override void BindToBuildingInstance(Building building)

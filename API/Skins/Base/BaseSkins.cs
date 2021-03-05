@@ -185,6 +185,7 @@ namespace ReskinEngine.API
         
         internal string presetMatName;
         internal bool seperator;
+        internal string[] notes;
 
         public ModelAttribute()
         {
@@ -396,25 +397,25 @@ namespace ReskinEngine.API
                 }
             }
 
-            if(outlineMeshes.Length > 0)
+            if(outlineMeshes != null && outlineMeshes.Length > 0)
             {
                 string list = "";
                 foreach (string path in outlineMeshes)
                     list += path + ",";
                 
-                string name = $"outlineMeshes:";
+                string name = $"outlineMeshes:{list}";
 
                 GameObject obj = new GameObject(name);
                 obj.transform.SetParent(_base.transform);
             }
 
-            if (outlineSkinnedMeshes.Length > 0)
+            if (outlineSkinnedMeshes != null && outlineSkinnedMeshes.Length > 0)
             {
                 string list = "";
                 foreach (string path in outlineSkinnedMeshes)
                     list += path + ",";
 
-                string name = $"outlineSkinnedMeshes:";
+                string name = $"outlineSkinnedMeshes:{list}";
 
                 GameObject obj = new GameObject(name);
                 obj.transform.SetParent(_base.transform);

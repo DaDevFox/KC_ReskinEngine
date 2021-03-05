@@ -91,7 +91,7 @@ namespace ReskinEngine.API
 
     [Category("town")]
     [Jobs(4)]
-    public class ManorHouseSkin : GenericBuildingSkin
+    public class ManorSkin : GenericBuildingSkin
     {
         internal override string UniqueName => "manorhouse";
         internal override string FriendlyName => "Manor House";

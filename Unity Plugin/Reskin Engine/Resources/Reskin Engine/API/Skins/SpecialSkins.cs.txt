@@ -22,15 +22,9 @@ namespace ReskinEngine.API
         {
             base.PackageInternal(target, _base);
 
-            if (baseModel) 
-            {
-                GameObject.Instantiate(baseModel, _base.transform).name = "baseModel";
-                if (material)
-                {
-                    (_base.transform.Find("baseModel").GetComponent<MeshRenderer>() ?? _base.transform.Find("baseModel").gameObject.AddComponent<MeshRenderer>()).material = material;
-                    (new GameObject("materialFlag")).transform.SetParent(_base.transform);
-                }
-            }
+            AppendModel(_base, baseModel, "baseModel");
+            AppendMaterial(_base, material, "material");
+
         }
     }
 }

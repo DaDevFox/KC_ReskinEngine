@@ -130,6 +130,9 @@ namespace ReskinEngine.API
                                 if (field.GetCustomAttribute<PresetMaterialAttribute>() != null)
                                     attribute.presetMatName = field.GetCustomAttribute<PresetMaterialAttribute>().name;
 
+                                if (field.GetCustomAttributes<NoteAttribute>().Count() > 0)
+                                    attribute.notes = field.GetCustomAttributes<NoteAttribute>().Select((note) => note.description).ToArray();
+
                                 models.Add(attribute);
                             }
                         }
@@ -187,6 +190,14 @@ namespace ReskinEngine.API
 
                                 if (!String.IsNullOrEmpty(model.presetMatName))
                                     modelsText += $"\t[Preset Material ({model.presetMatName})]\n";
+
+                                if (model.notes.Length > 0)
+                                {
+                                    modelsText += "\tNotes:\n"
+                                    foreach (string note in model.notes)
+                                        modelsText += $"\t{note}\n";
+                                }
+
 
                                 modelsText += $"\t{string.Format("{0,-15}{1,15} | {2,8}", model.name + ":", model.type.ToString(), model.description)}{Environment.NewLine}";
                             }

@@ -48,6 +48,8 @@ namespace ReskinEngine.Engine
 
         public override void Read(GameObject obj)
         {
+            base.Read(obj);
+
             ReadModels(obj, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, "keepUpgrade1", "keepUpgrade2", "keepUpgrade3", "keepUpgrade4");
 
             ReadPersonPositions(obj);
@@ -55,8 +57,6 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingBase(Building building)
         {
-            Engine.dLog("keep bind begun");
-
             Keep keep = building.GetComponent<Keep>();
             Upgradeable upgradeable = keep.GetComponent<Upgradeable>();
 
@@ -101,6 +101,8 @@ namespace ReskinEngine.Engine
                     obj.GetComponent<MeshCollider>().sharedMesh = keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
                 GameObject.Instantiate(keepUpgrade1, obj.transform).name = "inst";
             }
+
+            base.BindToBuildingBase(building);
         }
 
         public override void BindToBuildingInstance(Building b)

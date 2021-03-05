@@ -1,0 +1,32 @@
+ManifestFileVersion: 0
+CRC: 3907797232
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5c83f8a8ca77f59260a26640338f437a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cb5cff3a1350143ce413b676b0fb473f
+HashAppended: 1
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/Mod/TPunkoModels/Models/Church/Church.prefab
+- Assets/Mod/TPunkoModels/Prefabs/Keeps/Keep-3.prefab
+- Assets/Mod/TPunkoModels/Models/Cathedral/Cathedral 2.prefab
+Dependencies: []
