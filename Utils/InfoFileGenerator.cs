@@ -62,13 +62,6 @@ namespace ReskinEngine.API
                 if(type.GetCustomAttribute<HiddenAttribute>() != null)
                     continue;
 
-                if(type.GetCustomAttributes<NoteAttribute>().Count() > 0)
-                {
-                    result += $"Notes:\n";
-                    foreach (NoteAttribute note in type.GetCustomAttributes<NoteAttribute>())
-                        result += $"\t{note.description}\n";
-                }
-
                 if (type.IsSubclassOf(typeof(Skin)))
                 {
                     if(type.GetCustomAttribute<CategoryAttribute>() != null)
@@ -135,7 +128,7 @@ namespace ReskinEngine.API
                                 if (field.GetCustomAttribute<PresetMaterialAttribute>() != null)
                                     attribute.presetMatName = field.GetCustomAttribute<PresetMaterialAttribute>().name;
 
-                                if (field.GetCustomAttributes<NoteAttribute>().Count() > 0)
+                                if (type.GetCustomAttributes<NoteAttribute>() != null && field.GetCustomAttributes<NoteAttribute>().Count() > 0)
                                     attribute.notes = field.GetCustomAttributes<NoteAttribute>().Select((note) => note.description).ToArray();
 
                                 models.Add(attribute);
@@ -196,7 +189,7 @@ namespace ReskinEngine.API
                                 if (!String.IsNullOrEmpty(model.presetMatName))
                                     modelsText += $"\t[Preset Material ({model.presetMatName})]\n";
 
-                                if (model.notes.Length > 0)
+                                if (model.notes != null && model.notes.Length > 0)
                                 {
                                     modelsText += "\tNotes:\n";
                                     foreach (string note in model.notes)
@@ -261,6 +254,13 @@ namespace ReskinEngine.API
                         }
 
                         result += materialsText;
+
+                        if (type.GetCustomAttributes<NoteAttribute>() != null && type.GetCustomAttributes<NoteAttribute>().Count() > 0)
+                        {
+                            result += $"Notes:\n";
+                            foreach (NoteAttribute note in type.GetCustomAttributes<NoteAttribute>())
+                                result += $"\t{note.description}\n";
+                        }
 
                         result += Environment.NewLine;
 

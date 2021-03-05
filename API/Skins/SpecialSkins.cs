@@ -10,7 +10,8 @@ namespace ReskinEngine.API
     [Category("environment")]
     public class TreeSkin : Skin
     {
-        public override string Name => "tree";
+        public override string Name => "Tree";
+        internal override string TypeIdentifier => "tree";
 
         [Model(ModelAttribute.Type.Modular, description = "Model of the tree")]
         public GameObject baseModel;
