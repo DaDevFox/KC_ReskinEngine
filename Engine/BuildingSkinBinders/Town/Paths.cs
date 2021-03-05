@@ -18,20 +18,16 @@ namespace ReskinEngine.Engine
         public GameObject intersection4;
 
 
-        public override SkinBinder Create(GameObject obj)
+        public override void Read(GameObject obj)
         {
-            var inst = new PathSkinBinderBase();
-
             if (obj.transform.Find("straight"))
-                inst.straight = obj.transform.Find("straight").gameObject;
+                straight = obj.transform.Find("straight").gameObject;
             if (obj.transform.Find("elbow"))
-                inst.elbow = obj.transform.Find("elbow").gameObject;
+                elbow = obj.transform.Find("elbow").gameObject;
             if (obj.transform.Find("intersection3"))
-                inst.intersection3 = obj.transform.Find("intersection3").gameObject;
+                intersection3 = obj.transform.Find("intersection3").gameObject;
             if (obj.transform.Find("intersection4"))
-                inst.intersection4 = obj.transform.Find("intersection4").gameObject;
-
-            return inst;
+                intersection4 = obj.transform.Find("intersection4").gameObject;
         }
 
         public override void BindToBuildingBase(Building building)

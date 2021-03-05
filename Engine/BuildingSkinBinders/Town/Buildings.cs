@@ -11,41 +11,41 @@ namespace ReskinEngine.Engine
     {
         public override string UniqueName => "smallhouse";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<HovelSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<HovelSkinBinder>(obj);
     }
 
     public class CottageSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "largehouse";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<CottageSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<CottageSkinBinder>(obj);
     }
 
     public class ManorSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "manorhouse";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<ManorSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<ManorSkinBinder>(obj);
     }
 
     public class WellSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "well";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<WellSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<WellSkinBinder>(obj);
     }
 
     public class TavernSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "tavern";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<TavernSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<TavernSkinBinder>(obj);
     }
 
     public class FireBrigadeSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "firehouse";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<FireBrigadeSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<FireBrigadeSkinBinder>(obj);
     }
 }

@@ -11,12 +11,12 @@ namespace ReskinEngine.Engine
     {
         public override string UniqueName => "church";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<ChurchSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<ChurchSkinBinder>(obj);
     }
 
     public class CathedralSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "cathedral";
-        public override SkinBinder Create(GameObject obj) => base.Create<CathedralSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<CathedralSkinBinder>(obj);
     }
 }

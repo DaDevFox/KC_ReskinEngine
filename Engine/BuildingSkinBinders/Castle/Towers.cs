@@ -14,18 +14,14 @@ namespace ReskinEngine.Engine
         public GameObject baseModel;
         public GameObject veteranModel;
 
-        public override SkinBinder Create(GameObject obj)
+        public override void Read(GameObject obj)
         {
-            ArcherTowerSkinBinder inst = new ArcherTowerSkinBinder();
-
             if (obj.transform.Find("baseModel"))
-                inst.baseModel = obj.transform.Find("baseModel").gameObject;
+                baseModel = obj.transform.Find("baseModel").gameObject;
             if (obj.transform.Find("veteranModel"))
-                inst.veteranModel = obj.transform.Find("veteranModel").gameObject;
+                veteranModel = obj.transform.Find("veteranModel").gameObject;
 
-            ApplyPersonPositions(inst, obj);
-
-            return inst;
+            ReadPersonPositions(obj);
         }
 
         public override void BindToBuildingBase(Building building)
@@ -76,43 +72,40 @@ namespace ReskinEngine.Engine
 
         public GameObject flag;
 
-        public override SkinBinder Create(GameObject obj)
+        public override void Read(GameObject obj)
         {
-            BallistaTowerSkinBinder inst = new BallistaTowerSkinBinder();
 
             if (obj.transform.Find("veteranModel"))
-                inst.veteranModel = obj.transform.Find("veteranModel").gameObject;
+                veteranModel = obj.transform.Find("veteranModel").gameObject;
             if (obj.transform.Find("baseModel"))
-                inst.baseModel = obj.transform.Find("baseModel").gameObject;
+                baseModel = obj.transform.Find("baseModel").gameObject;
             if (obj.transform.Find("topBase"))
-                inst.topBase = obj.transform.Find("topBase").gameObject;
+                topBase = obj.transform.Find("topBase").gameObject;
 
             if (obj.transform.Find("armR"))
-                inst.armR = obj.transform.Find("armR").gameObject;
+                armR = obj.transform.Find("armR").gameObject;
             if (obj.transform.Find("armREnd"))
-                inst.armREnd = obj.transform.Find("armREnd");
+                armREnd = obj.transform.Find("armREnd");
 
             if (obj.transform.Find("armL"))
-                inst.armL = obj.transform.Find("armL").gameObject;
+                armL = obj.transform.Find("armL").gameObject;
             if (obj.transform.Find("armLEnd"))
-                inst.armLEnd = obj.transform.Find("armLEnd");
+                armLEnd = obj.transform.Find("armLEnd");
 
             if (obj.transform.Find("stringR"))
-                inst.stringR = obj.transform.Find("stringR").gameObject;
+                stringR = obj.transform.Find("stringR").gameObject;
             if (obj.transform.Find("stringL"))
-                inst.stringL = obj.transform.Find("stringL").gameObject;
+                stringL = obj.transform.Find("stringL").gameObject;
 
             if (obj.transform.Find("projectile"))
-                inst.projectile = obj.transform.Find("projectile").gameObject;
+                projectile = obj.transform.Find("projectile").gameObject;
             if (obj.transform.Find("projectileEnd"))
-                inst.projectileEnd = obj.transform.Find("projectileEnd");
+                projectileEnd = obj.transform.Find("projectileEnd");
 
             if (obj.transform.Find("flag"))
-                inst.flag = obj.transform.Find("flag").gameObject;
+                flag = obj.transform.Find("flag").gameObject;
 
-            ApplyPersonPositions(inst, obj);
-
-            return inst;
+            ReadPersonPositions(obj);
         }
 
         public override void BindToBuildingBase(Building building)

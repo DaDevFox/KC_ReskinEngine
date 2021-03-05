@@ -197,6 +197,9 @@ namespace ReskinEngine.API
         }
     }
 
+    /// <summary>
+    /// Represents a Vector3 field that represents a transform's position
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field, Inherited = true)]
     public class AnchorAttribute : Attribute
     {
@@ -228,7 +231,12 @@ namespace ReskinEngine.API
     }
 
     
-
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
+    public class NoteAttribute : Attribute
+    {
+        public string description;
+        public NoteAttribute(string description) => this.description = description;
+    }
 
 
     /// <summary>
@@ -278,6 +286,7 @@ namespace ReskinEngine.API
 
         /// <summary>
         /// Package data pertaining to this skin in GameObject form
+        /// <para>Will eveuntually be read by a SkinBinder Engine-side</para>
         /// </summary>
         /// <param name="dropoff">dropoff target object</param>
         /// <param name="_base">skin target object</param>
@@ -331,10 +340,10 @@ namespace ReskinEngine.API
         /// <param name="name"></param>
         protected void AppendMaterial(GameObject _base, Material mat, string name)
         {
-            GameObject flag = new GameObject(name);
-            flag.transform.SetParent(_base.transform);
-            flag.AddComponent<MeshFilter>();
-            flag.AddComponent<MeshRenderer>().material = mat;
+            GameObject material = new GameObject(name);
+            material.transform.SetParent(_base.transform);
+            material.AddComponent<MeshFilter>();
+            material.AddComponent<MeshRenderer>().material = mat;
         }
 
         #endregion
@@ -358,11 +367,19 @@ namespace ReskinEngine.API
         /// <para>If left null this field will be set to its default value;</para>
         /// </summary>
         public Vector3[] personPositions = new Vector3[0];
+        ///<summary>
+        /// Paths relative to the building root to all the meshes that will be included in the outline effect when selecting the building (each item in list requires MeshRenderer component)
+        /// </summary>
+        public string[] outlineMeshes;
+        /// <summary>
+        /// Paths relative to the building root to all the skinned mesh renderers that will be included in the outline effect when selecting the building (each item in list requires SkinnedMeshRenderer component)
+        /// </summary>
+        public string[] outlineSkinnedMeshes;
 
 
-        protected override void PackageInternal(Transform target, GameObject _base)
+        protected override void PackageInternal(Transform dropoff, GameObject _base)
         {
-            base.PackageInternal(target, _base);
+            base.PackageInternal(dropoff, _base);
 
 
             if (personPositions.Length > 0)
@@ -377,6 +394,30 @@ namespace ReskinEngine.API
                     position.transform.SetParent(obj.transform);
                     position.transform.position = personPosition;
                 }
+            }
+
+            if(outlineMeshes.Length > 0)
+            {
+                string list = "";
+                foreach (string path in outlineMeshes)
+                    list += path + ",";
+                
+                string name = $"outlineMeshes:";
+
+                GameObject obj = new GameObject(name);
+                obj.transform.SetParent(_base.transform);
+            }
+
+            if (outlineSkinnedMeshes.Length > 0)
+            {
+                string list = "";
+                foreach (string path in outlineSkinnedMeshes)
+                    list += path + ",";
+
+                string name = $"outlineSkinnedMeshes:";
+
+                GameObject obj = new GameObject(name);
+                obj.transform.SetParent(_base.transform);
             }
         }
     }
@@ -395,11 +436,11 @@ namespace ReskinEngine.API
         [Model(description = "The base model that will replace the building")]
         public GameObject baseModel;
 
-        protected override void PackageInternal(Transform target, GameObject _base)
+        protected override void PackageInternal(Transform dropoff, GameObject _base)
         {
             //Mod.helper.Log($"packaging generic skin for {UniqueName}");
 
-            base.PackageInternal(target, _base);
+            base.PackageInternal(dropoff, _base);
 
             //Mod.helper.Log("2");
 

@@ -14,14 +14,10 @@ namespace ReskinEngine.Engine
         public GameObject baseModel;
         public Material material;
 
-        public override SkinBinder Create(GameObject obj) 
+        public override void Read(GameObject obj) 
         {
-            TreeSkinBinder binder = new TreeSkinBinder();
-
-            ApplyModel(binder, obj, "baseModel");
-            ApplyMaterial(binder, obj, "material");
-
-            return binder;
+            ReadModel(obj, "baseModel");
+            ReadMaterial(obj, "material");
         }
 
         public override void Bind()

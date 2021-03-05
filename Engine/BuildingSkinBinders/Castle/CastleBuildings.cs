@@ -4,6 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using ReskinEngine.Engine.Utils;
+
+namespace ReskinEngine.Engine.Utils
+{
+    public static class GameObjectExtensions
+    {
+        public static void ClearChildren(this GameObject obj)
+        {
+            for (int i = 0; i < obj.transform.childCount; i++)
+                GameObject.Destroy(obj.transform.GetChild(i));
+        }
+
+        public static void ClearChildren(this MonoBehaviour obj)
+        {
+            for (int i = 0; i < obj.transform.childCount; i++)
+                GameObject.Destroy(obj.transform.GetChild(i));
+        }
+        public static void ClearChildren(this Transform transform)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+                GameObject.Destroy(transform.GetChild(i));
+        }
+    }
+
+}
 
 namespace ReskinEngine.Engine
 {
@@ -21,22 +46,11 @@ namespace ReskinEngine.Engine
         public GameObject banner1;
         public GameObject banner2;
 
-        public override SkinBinder Create(GameObject obj)
+        public override void Read(GameObject obj)
         {
-            KeepSkinBinder inst = new KeepSkinBinder();
+            ReadModels(obj, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, "keepUpgrade1", "keepUpgrade2", "keepUpgrade3", "keepUpgrade4");
 
-            if (obj.transform.Find("keepUpgrade1"))
-                inst.keepUpgrade1 = obj.transform.Find("keepUpgrade1").gameObject;
-            if (obj.transform.Find("keepUpgrade2"))
-                inst.keepUpgrade2 = obj.transform.Find("keepUpgrade2").gameObject;
-            if (obj.transform.Find("keepUpgrade3"))
-                inst.keepUpgrade3 = obj.transform.Find("keepUpgrade3").gameObject;
-            if (obj.transform.Find("keepUpgrade4"))
-                inst.keepUpgrade4 = obj.transform.Find("keepUpgrade4").gameObject;
-
-            ApplyPersonPositions(inst, obj);
-
-            return inst;
+            ReadPersonPositions(obj);
         }
 
         public override void BindToBuildingBase(Building building)
@@ -49,38 +63,44 @@ namespace ReskinEngine.Engine
             // Upgrades
             if (keepUpgrade1)
             {
-                GameObject.Destroy(upgradeable.upgrades[0].model);
-                upgradeable.upgrades[0] = new Upgrade()
-                {
-                    model = GameObject.Instantiate(keepUpgrade1, building.transform)
-                };
+                GameObject obj = building.transform.Find("Offset/SmallerKeep").gameObject;
+                obj.transform.localScale = Vector3.one;
+                obj.GetComponent<MeshFilter>().mesh = null;
+                obj.ClearChildren();
+                if (keepUpgrade1.GetComponent<MeshFilter>())
+                    obj.GetComponent<MeshCollider>().sharedMesh = keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
+                GameObject.Instantiate(keepUpgrade1, obj.transform).name = "inst";
             }
             if (keepUpgrade2)
             {
-                GameObject.Destroy(upgradeable.upgrades[1].model);
-                upgradeable.upgrades[1] = new Upgrade()
-                {
-                    model = GameObject.Instantiate(keepUpgrade2, building.transform)
-                };
+                GameObject obj = building.transform.Find("Offset/SmallKeep").gameObject;
+                obj.transform.localScale = Vector3.one;
+                obj.GetComponent<MeshFilter>().mesh = null;
+                obj.ClearChildren();
+                if (keepUpgrade1.GetComponent<MeshFilter>())
+                    obj.GetComponent<MeshCollider>().sharedMesh = keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
+                GameObject.Instantiate(keepUpgrade1, obj.transform).name = "inst";
             }
             if (keepUpgrade3)
             {
-                GameObject.Destroy(upgradeable.upgrades[2].model);
-                upgradeable.upgrades[2] = new Upgrade()
-                {
-                    model = GameObject.Instantiate(keepUpgrade3, building.transform)
-                };
+                GameObject obj = building.transform.Find("Offset/Keep").gameObject;
+                obj.transform.localScale = Vector3.one;
+                obj.GetComponent<MeshFilter>().mesh = null;
+                obj.ClearChildren();
+                if (keepUpgrade1.GetComponent<MeshFilter>())
+                    obj.GetComponent<MeshCollider>().sharedMesh = keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
+                GameObject.Instantiate(keepUpgrade1, obj.transform).name = "inst";
             }
             if (keepUpgrade4)
             {
-                GameObject.Destroy(upgradeable.upgrades[3].model);
-                upgradeable.upgrades[3] = new Upgrade()
-                {
-                    model = GameObject.Instantiate(keepUpgrade4, building.transform)
-                };
+                GameObject obj = building.transform.Find("Offset/MediumKeep").gameObject;
+                obj.transform.localScale = Vector3.one;
+                obj.GetComponent<MeshFilter>().mesh = null;
+                obj.ClearChildren();
+                if (keepUpgrade1.GetComponent<MeshFilter>())
+                    obj.GetComponent<MeshCollider>().sharedMesh = keepUpgrade1.GetComponent<MeshFilter>().sharedMesh;
+                GameObject.Instantiate(keepUpgrade1, obj.transform).name = "inst";
             }
-
-            BindPersonPositions(building, this);
         }
 
         public override void BindToBuildingInstance(Building b)
@@ -100,14 +120,14 @@ namespace ReskinEngine.Engine
     {
         public override string UniqueName => "archerschool";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<ArcherSchoolSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<ArcherSchoolSkinBinder>(obj);
     }
 
     public class BarracksSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "barracks";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<BarracksSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<BarracksSkinBinder>(obj);
     }
 
     #endregion
@@ -118,7 +138,7 @@ namespace ReskinEngine.Engine
     {
         public override string UniqueName => "throneroom";
 
-        public override SkinBinder Create(GameObject obj) => base.Create<TreasureRoomSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<TreasureRoomSkinBinder>(obj);
 
     }
 
@@ -126,32 +146,17 @@ namespace ReskinEngine.Engine
     public class ChamberOfWarSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "chamberofwar";
-        public override SkinBinder Create(GameObject obj) => base.Create<ChamberOfWarSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<ChamberOfWarSkinBinder>(obj);
 
     }
 
     public class GreatHallSkinBinder : GenericBuildingSkinBinder
     {
         public override string UniqueName => "greathall";
-        public override SkinBinder Create(GameObject obj) => base.Create<GreatHallSkinBinder>(obj);
+        public override void Read(GameObject obj) => base.Read<GreatHallSkinBinder>(obj);
 
     }
 
 
     #endregion
-
-
-
-
-    // Great Hall
-
-
-
-
-
-    // Barracks
-
-    // Archer School
-
-
 }

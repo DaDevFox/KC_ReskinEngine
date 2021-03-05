@@ -27,32 +27,25 @@ namespace ReskinEngine.Engine
 
         public Material material;
 
-        public override SkinBinder Create(GameObject obj)
+        public override void Read(GameObject obj)
         {
-            var inst = new CastleBlockSkinBinderBase();
-
-            //ApplyModels(inst, obj, BindingFlags.Instance | BindingFlags.Public,
-            //    "Open", "Closed", "Single", "Opposite", "Adjacent", "Threeside");
-
             if (obj.transform.Find("Open"))
-                inst.Open = obj.transform.Find("Open").gameObject;
+                Open = obj.transform.Find("Open").gameObject;
             if (obj.transform.Find("Closed"))
-                inst.Closed = obj.transform.Find("Closed").gameObject;
+                Closed = obj.transform.Find("Closed").gameObject;
             if (obj.transform.Find("Single"))
-                inst.Single = obj.transform.Find("Single").gameObject;
+                Single = obj.transform.Find("Single").gameObject;
             if (obj.transform.Find("Opposite"))
-                inst.Opposite = obj.transform.Find("Opposite").gameObject;
+                Opposite = obj.transform.Find("Opposite").gameObject;
             if (obj.transform.Find("Adjacent"))
-                inst.Adjacent = obj.transform.Find("Adjacent").gameObject;
+                Adjacent = obj.transform.Find("Adjacent").gameObject;
             if (obj.transform.Find("Threeside"))
-                inst.Threeside = obj.transform.Find("Threeside").gameObject;
+                Threeside = obj.transform.Find("Threeside").gameObject;
 
             if (obj.transform.Find("doorPrefab"))
-                inst.doorPrefab = obj.transform.Find("doorPrefab").gameObject;
+                doorPrefab = obj.transform.Find("doorPrefab").gameObject;
 
-            ApplyMaterial(inst, obj, "material");
-
-            return inst;
+            ReadMaterial(obj, "material");
         }
 
         public override void BindToBuildingBase(Building building)
@@ -113,20 +106,17 @@ namespace ReskinEngine.Engine
 
 
 
-        public override SkinBinder Create(GameObject obj)
+        public override void Read(GameObject obj)
         {
-            CastleStairsSkinBinder inst = new CastleStairsSkinBinder();
-
             if (obj.transform.Find("stairsFront"))
-                inst.stairsFront = obj.transform.Find("stairsFront").gameObject;
+                stairsFront = obj.transform.Find("stairsFront").gameObject;
             if (obj.transform.Find("stairsRight"))
-                inst.stairsRight = obj.transform.Find("stairsRight").gameObject;
+                stairsRight = obj.transform.Find("stairsRight").gameObject;
             if (obj.transform.Find("stairsDown"))
-                inst.stairsDown = obj.transform.Find("stairsDown").gameObject;
+                stairsDown = obj.transform.Find("stairsDown").gameObject;
             if (obj.transform.Find("stairsLeft"))
-                inst.stairsLeft = obj.transform.Find("stairsLeft").gameObject;
+                stairsLeft = obj.transform.Find("stairsLeft").gameObject;
 
-            return inst;
         }
 
         public override void BindToBuildingBase(Building building)
@@ -158,14 +148,10 @@ namespace ReskinEngine.Engine
         public GameObject gate;
         public GameObject porticulus;
 
-        public override SkinBinder Create(GameObject obj)
+        public override void Read(GameObject obj)
         {
-            var inst = new GateSkinBinderBase();
-
-            ApplyModel(inst, obj, "gate");
-            ApplyModel(inst, obj, "porticulus");
-
-            return inst;
+            ReadModel(obj, "gate");
+            ReadModel(obj, "porticulus");
         }
 
         public override void BindToBuildingBase(Building building)

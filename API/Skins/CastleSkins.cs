@@ -9,6 +9,8 @@ namespace ReskinEngine.API
     
     [Category("castle")]
     [Jobs(3)]
+    [Note("All children of keep with cloth component will update to player/ai banner material")]
+    [Note("Mesh of root object of each respective upgrade will be used for collider of that upgrade (player cursor selection)")]
     ////Keep
     public class KeepSkin : BuildingSkin
     {

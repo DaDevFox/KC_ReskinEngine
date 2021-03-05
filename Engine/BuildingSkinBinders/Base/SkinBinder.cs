@@ -9,6 +9,9 @@ using System.Reflection;
 
 namespace ReskinEngine.Engine
 {
+    /// <summary>
+    /// The Engine-side receiver of API data that applies a skin's data to the game
+    /// </summary>
     public abstract class SkinBinder
     {
         /// <summary>
@@ -57,8 +60,9 @@ namespace ReskinEngine.Engine
             }
 
 
-            SkinBinder instance = original.Create(obj);
+            SkinBinder instance = Activator.CreateInstance(original.GetType()) as SkinBinder;
 
+            instance.Read(obj);
             
             instance.CompatabilityIdentifier = compatabilityIdentifier;
             instance.ModName = mod;
@@ -68,25 +72,25 @@ namespace ReskinEngine.Engine
         }
 
         /// <summary>
-        /// Using the GameObject packaged by the API-side, this method create a new SkinBinder with the fields that correspond to the GameObjects children assigned
+        /// Read the GameObject packaged by the API-side and apply it to the fields of this SkinBinder
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public abstract SkinBinder Create(GameObject obj);
+        public abstract void Read(GameObject obj);
 
 
         /// <summary>
-        /// Use to bind this skin using any data recieved from the data GameObject
+        /// Use to apply this skin using any data recieved from the data GameObject
         /// </summary>
         public virtual void Bind()
         {
 
         }
 
-        protected void ApplyModels(SkinBinder binder, GameObject _base, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance, params string[] models)
+        protected void ReadModels(GameObject _base, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance, params string[] models)
         {
             foreach (string model in models)
-                ApplyModel(binder, _base, model, flags);
+                ReadModel( _base, model, flags);
         }
 
         /// <summary>
@@ -97,27 +101,26 @@ namespace ReskinEngine.Engine
         /// <param name="_base"></param>
         /// <param name="modelName"></param>
         /// <param name="flags"></param>
-        protected void ApplyModel(SkinBinder binder, GameObject _base, string modelName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
+        protected void ReadModel(GameObject _base, string modelName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
         {
             if (_base.transform.Find(modelName))
-                if (binder.GetType().GetField(modelName) != null)
-                    binder.GetType().GetField(modelName, flags).SetValue(binder, _base.transform.Find(modelName).gameObject);
+                if (GetType().GetField(modelName) != null)
+                    GetType().GetField(modelName, flags).SetValue(this, _base.transform.Find(modelName).gameObject);
         }
 
-        protected bool MaterialFlag(GameObject _base, string materialName) => _base.transform.Find($"{materialName}Flag");
+        protected bool ReadMaterialFlag(GameObject _base, string materialName) => _base.transform.Find($"{materialName}Flag");
 
-        protected void ApplyMaterial(SkinBinder binder, GameObject _base, string materialName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
+        protected void ReadMaterial(GameObject _base, string materialName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
         {
             if (_base.transform.Find(materialName))
-                if (binder.GetType().GetField(materialName) != null)
-                    binder.GetType().GetField(materialName, flags).SetValue(binder, _base.transform.Find(materialName).GetComponent<MeshRenderer>().material);
+                if (GetType().GetField(materialName) != null)
+                    GetType().GetField(materialName, flags).SetValue(this, _base.transform.Find(materialName).GetComponent<MeshRenderer>().material);
         }
 
     }
 
     /// <summary>
     /// An implementation of SkinBinder designed specifically for buildings and supports skin variation on building placement
-    /// <para>Inherit from this to create a skin for buildings that can have variations on placement</para>
     /// </summary>
     public abstract class BuildingSkinBinder : SkinBinder
     {
@@ -129,6 +132,8 @@ namespace ReskinEngine.Engine
         public abstract string UniqueName { get; }
 
         public Vector3[] peoplePositions;
+        public string[] outlineMeshes;
+        public string[] outlineSkinnedMeshes;
 
 
         /// <summary>
@@ -143,13 +148,22 @@ namespace ReskinEngine.Engine
             }
         }
 
+        public override void Read(GameObject obj)
+        {
+            ReadPersonPositions(obj);
+            ReadOutlineMeshes(obj);
+            ReadOutlineSkinnedMeshes(obj);
+        }
+
         /// <summary>
         /// Use this to bind the skin to the base building that will be duplicated every time a building is placed with the given unique name
         /// </summary>
         /// <param name="building"></param>
         public virtual void BindToBuildingBase(Building building)
         {
-
+            BindPersonPositions(building, this);
+            BindOutlineMeshes(building, this);
+            BindOutlineSkinnedMeshes(building, this);
         }
 
         /// <summary>
@@ -169,7 +183,7 @@ namespace ReskinEngine.Engine
         /// </summary>
         /// <param name="binder"></param>
         /// <param name="_base"></param>
-        protected void ApplyPersonPositions(BuildingSkinBinder binder, GameObject _base)
+        protected void ReadPersonPositions(GameObject _base)
         {
             Transform container = _base.transform.Find("personPositions");
             if (container)
@@ -178,7 +192,7 @@ namespace ReskinEngine.Engine
                 for (int i = 0; i < container.transform.childCount; i++)
                     positions.Add(container.GetChild(i).transform.position);
 
-                binder.peoplePositions = positions.ToArray();
+                peoplePositions = positions.ToArray();
             }
         }
 
@@ -196,6 +210,52 @@ namespace ReskinEngine.Engine
                     building.personPositions[i].localPosition = binder.peoplePositions[i];
                 }
             }
+        }
+
+        protected void ReadOutlineMeshes(GameObject _base)
+        {
+            GameObject info = null;
+            for (int i = 0; i < _base.transform.childCount; i++)
+                if (_base.transform.GetChild(i).name.Contains("outlineMeshes:"))
+                    info = _base.transform.GetChild(i).gameObject;
+            if (info)
+            {
+                string[] name = info.name.Split(':');
+                string[] list = name[1].Split(',');
+                outlineMeshes = list;
+            }
+        }
+
+        protected void BindOutlineMeshes(Building building, BuildingSkinBinder binder)
+        {
+            List<MeshRenderer> meshes = new List<MeshRenderer>();
+            foreach (string path in binder.outlineMeshes)
+                if(building.transform.Find(path) && building.transform.Find(path).GetComponent<MeshRenderer>())
+                    meshes.Add(building.transform.Find(path).GetComponent<MeshRenderer>());
+            building.meshesRequiringOutline = meshes;
+        }
+
+        protected void ReadOutlineSkinnedMeshes(GameObject _base)
+        {
+            GameObject info = null;
+            for (int i = 0; i < _base.transform.childCount; i++)
+                if (_base.transform.GetChild(i).name.Contains("outlineSkinnedMeshes:"))
+                    info = _base.transform.GetChild(i).gameObject;
+            if (info)
+            {
+                string[] name = info.name.Split(':');
+                string[] list = name[1].Split(',');
+                outlineSkinnedMeshes = list;
+            }
+        }
+
+        protected void BindOutlineSkinnedMeshes(Building building, BuildingSkinBinder binder)
+        {
+            List<SkinnedMeshRenderer> meshes = new List<SkinnedMeshRenderer>();
+            foreach (string path in binder.outlineSkinnedMeshes)
+                if (building.transform.Find(path) && building.transform.Find(path).GetComponent<SkinnedMeshRenderer>())
+                    meshes.Add(building.transform.Find(path).GetComponent<SkinnedMeshRenderer>());
+            building.skinnedMeshesRequiringOutline = meshes;
         }
 
         #endregion
@@ -218,21 +278,22 @@ namespace ReskinEngine.Engine
 
     }
 
+    /// <summary>
+    /// Skin Binder that applies generically to most buildings in the game
+    /// </summary>
     [Unregistered]
     public abstract class GenericBuildingSkinBinder : BuildingSkinBinder
     {
         public GameObject baseModel;
 
-        protected SkinBinder Create<T>(GameObject obj) where T : GenericBuildingSkinBinder, new()
+        // TODO: Remove T generic type param
+        protected void Read<T>(GameObject obj) where T : GenericBuildingSkinBinder, new()
         {
-            var inst = new T();
+            base.Read(obj);
 
             if (obj.transform.Find("baseModel"))
-                inst.baseModel = obj.transform.Find("baseModel").gameObject;
+                baseModel = obj.transform.Find("baseModel").gameObject;
 
-            ApplyPersonPositions(inst, obj);
-
-            return inst;
         }
 
         public override void BindToBuildingBase(Building building)
