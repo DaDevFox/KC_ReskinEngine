@@ -1,7 +1,13 @@
  -- Environment -- 
 -------------------
 
--- tree --
+-- Tree --
+Name: Tree
+SkinID: tree
+Models: 
+	baseModel:			Modular | model all trees will use (per-tree scale, rotation, and position will vary)
+Materials: 
+	material:		Material all trees will use
 
  -- Castle -- 
 --------------

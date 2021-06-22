@@ -76,11 +76,11 @@ namespace ReskinEngine.Editor
 
                 importSelectedSkin = (Skin)EditorGUILayout.ObjectField(importSelectedSkin, typeof(Skin));
 
-                if (importSelectedSkin != null && !collection.implementedSkins.Contains(importSelectedSkin))
+                if (importSelectedSkin != null && !collection.Contains(importSelectedSkin))
                     if (GUILayout.Button("Import"))
-                        collection.implementedSkins.Add(importSelectedSkin);
+                        collection.Add(importSelectedSkin);
 
-                if (importSelectedSkin != null && collection.implementedSkins.Contains(importSelectedSkin))
+                if (importSelectedSkin != null && collection.Contains(importSelectedSkin))
                     GUILayout.Label("Collection already contains item");
             }
 
@@ -141,15 +141,13 @@ namespace ReskinEngine.Editor
 
             if (showSkins)
             {
-                collection.implementedSkins.RemoveAll((skin) => skin == null);
-
-                if (collection.implementedSkins.Count > 0)
+                if (collection.skins.Length > 0)
                 {
                     EditorGUILayout.LabelField("Implemented Skins");
 
-                    for (int i = 0; i < collection.implementedSkins.Count; i++)
+                    for (int i = 0; i < collection.skins.Length; i++)
                     {
-                        Skin skin = collection.implementedSkins[i];
+                        Skin skin = collection.skins[i];
 
                         if (skin != null)
                         {
@@ -163,8 +161,8 @@ namespace ReskinEngine.Editor
                             {
                                 //EditorGUILayout.ObjectField(skin, typeof(Skin), false);
 
-                                collection.implementedSkins[i] = EditorGUILayout.ObjectField(skin, skin.GetType()) as Skin;
-                                skin = collection.implementedSkins[i];
+                                collection.skins[i] = EditorGUILayout.ObjectField(skin, skin.GetType()) as Skin;
+                                skin = collection.skins[i];
 
 
                                 UnityEditor.Editor editor = CreateEditor(skin);
@@ -174,15 +172,9 @@ namespace ReskinEngine.Editor
                                 if (preview != null)
                                     preview.UI();
 
-                                if (GUILayout.Button("Delete"))
-                                    collection.implementedSkins.RemoveAt(i);
-
-                                
+                                if (GUILayout.Button("Remove"))
+                                    collection.Remove(i);
                             }
-                        }
-                        else
-                        {
-                            collection.implementedSkins.RemoveAt(i);
                         }
                     }
                 }
@@ -274,7 +266,7 @@ namespace ReskinEngine.Editor
 
         private void UpdateShowSkinIndex()
         {
-            foreach(Skin skin in ((Collection)target).implementedSkins)
+            foreach(Skin skin in ((Collection)target).skins)
             {
                 if(skin)
                     if (!showSkinIndex.ContainsKey(skin))
@@ -284,7 +276,7 @@ namespace ReskinEngine.Editor
             foreach(Skin skin in showSkinIndex.Keys)
             {
                 if(skin)
-                    if (!((Collection)target).implementedSkins.Contains(skin))
+                    if (!((Collection)target).Contains(skin))
                         showSkinIndex.Remove(skin);
             }
         }
@@ -348,7 +340,6 @@ namespace ReskinEngine.Editor
 
         private string GetDescription(string friendlyName)
         {
-
             TextAsset document = Resources.Load<TextAsset>(infoDocumentPath);
             string docText = document.text;
 

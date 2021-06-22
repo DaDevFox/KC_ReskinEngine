@@ -1,0 +1,27 @@
+COLORSETS
+---------
+
+> The folloing information is relevant exclusively to the alpha build. 
+
+Colorsets are the sets of different colors, textures, and materials used by different kindgoms in the alpha branch of the game. The game calls these *liveries* (*livery* singular). By the game's definition, a livery consists of one of each of the following:
+
+- banner texture
+- banner material
+- banner color
+- map color
+
+- various materials:
+ - unimaterial (univeral material)
+ - cracked unimaterial (for cracked buildings)
+ - building material
+ - army material
+ - build UI material
+ - flag material
+
+All of these elements have been extracted from the game and placed in this project for a reference to make models against, and they are as up to date as possible, though the format and content of these liveries may change in future. 
+Although all of these elements are present in every livery, all of the materials' associated textures except the banner material appear to be the exact same. Recognizing this, the simplified folder contains all the liveries' contents but with redundencies cut out, versus the detailed folder which has been extracted directly. The extraction process I used only supports textures and materials since they contain textures, and therefore the banner color and map color cannot be extracted; however they should not affect the modelling process for buildings. 
+
+IMPORTANT 
+---------
+All buildings that utilize a mesh renderer using the building shader and registered as such will have those meshes' material set to the appropriate material from the livery of the player/ai using the building. 
+

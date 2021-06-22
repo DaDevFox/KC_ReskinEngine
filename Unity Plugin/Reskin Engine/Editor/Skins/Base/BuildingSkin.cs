@@ -32,6 +32,10 @@ namespace ReskinEngine.Editor
         public string[] outlineMeshes;
         [Tooltip("Paths relative to the building root to all the skinned mesh renderers that will be included in the outline effect when selecting the building (each item in list requires SkinnedMeshRenderer component)")]
         public string[] outlineSkinnedMeshes;
+        [Tooltip("Paths to the colliders used for building selection")]
+        public string[] colliders;
+        [Tooltip("Renderers that use the building shader; all renderers tagged as such will become involved with game effects targeted at buildings like the happiness overlay, snow, and damage however they will also have their material set to the unimaterial specified in the alpha version of the game (see colorsets and alpha compatability)")]
+        public string[] renderersWithBuildingShader;
     }
 
 

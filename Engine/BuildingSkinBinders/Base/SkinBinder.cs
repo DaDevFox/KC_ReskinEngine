@@ -9,6 +9,22 @@ using System.Reflection;
 
 namespace ReskinEngine.Engine
 {
+    public static class GameObjectExtensions
+    {
+        public static void CopyValues<T>(this T sourceComp, T targetComp)
+        {
+            FieldInfo[] sourceFields = sourceComp.GetType().GetFields(BindingFlags.Public |
+                                                             BindingFlags.NonPublic |
+                                                             BindingFlags.Instance);
+            int i = 0;
+            for (i = 0; i < sourceFields.Length; i++)
+            {
+                var value = sourceFields[i].GetValue(sourceComp);
+                sourceFields[i].SetValue(targetComp, value);
+            }
+        }
+    }
+
     /// <summary>
     /// The Engine-side receiver of API data that applies a skin's data to the game
     /// </summary>
@@ -116,7 +132,6 @@ namespace ReskinEngine.Engine
                 if (GetType().GetField(materialName) != null)
                     GetType().GetField(materialName, flags).SetValue(this, _base.transform.Find(materialName).GetComponent<MeshRenderer>().material);
         }
-
     }
 
     /// <summary>
@@ -124,17 +139,28 @@ namespace ReskinEngine.Engine
     /// </summary>
     public abstract class BuildingSkinBinder : SkinBinder
     {
+        public static Dictionary<string, List<GameObject>> originalModels { get; private set; } = new Dictionary<string, List<GameObject>>();
+
+        public static GameObject hiddenCache = null;
+
         /// <summary>
         /// Do not override for BuildingSkinBindres
         /// </summary>
         public sealed override string TypeIdentifier => $"building_{UniqueName}";
 
+        public string FullIdentifier => $"[{TypeIdentifier}:{Identifier}]";
+
         public abstract string UniqueName { get; }
 
         public Vector3[] personPositions;
+
         public string[] outlineMeshes;
         public string[] outlineSkinnedMeshes;
+        
+        public string[] colliders;
 
+        public string[] renderersWithBuildingShader;
+        public Material[] fullMaterials;
 
         /// <summary>
         /// Do not override for BuildingSkinBinders
@@ -143,16 +169,33 @@ namespace ReskinEngine.Engine
         {
             if (UniqueName != "unregistered" && UniqueName != "hidden")
             {
-                Engine.helper.Log(UniqueName);
-                BindToBuildingBase(GameState.inst.GetPlaceableByUniqueName(UniqueName));
+                // FOR VARIATION TYPE PREBAKED; NOT ON-INSTANCE
+
+                if (hiddenCache == null)
+                {
+                    hiddenCache = new GameObject("ReskinnedBuildingCache");
+                    hiddenCache.SetActive(false);
+                }
+
+                Engine.dLog($"Binding {UniqueName}");
+                if (!originalModels.ContainsKey(UniqueName))
+                    originalModels.Add(UniqueName, new List<GameObject>());
+
+                int index = originalModels[UniqueName].Count;
+                GameObject instance = GameObject.Instantiate(GameState.inst.GetPlaceableByUniqueName(UniqueName).gameObject, hiddenCache.transform);
+
+                originalModels[UniqueName].Add(instance);
+                BindToBuildingBase(originalModels[UniqueName][index].GetComponent<Building>());
             }
         }
 
         public override void Read(GameObject obj)
         {
+            ReadColliders(obj);
             ReadPersonPositions(obj);
             ReadOutlineMeshes(obj);
             ReadOutlineSkinnedMeshes(obj);
+            ReadRenderersWithBuildingShader(obj);
         }
 
         /// <summary>
@@ -163,16 +206,16 @@ namespace ReskinEngine.Engine
         {
             if (building == null)
             {
-                Engine.helper.Log("Requested bind to null object instead of building");
-                Engine.helper.Log(StackTraceUtility.ExtractStackTrace());
+                Engine.Log("Requested bind to null object instead of building");
+                Engine.Log(StackTraceUtility.ExtractStackTrace());
                 return;
             }
 
+            BindColliders(building);
             BindPersonPositions(building);
             BindOutlineMeshes(building);
             BindOutlineSkinnedMeshes(building);
-
-            Engine.dLog(outlineMeshes.Length);
+            BindRenderersWithBuildingShader(building);
         }
 
         /// <summary>
@@ -181,7 +224,20 @@ namespace ReskinEngine.Engine
         /// <param name="building"></param>
         public virtual void BindToBuildingInstance(Building building)
         {
+            if (building == null)
+            {
+                Engine.Log("Requested bind to null object instead of building");
+                Engine.Log(StackTraceUtility.ExtractStackTrace());
+                return;
+            }
 
+            BindColliders(building);
+            BindPersonPositions(building);
+            BindOutlineMeshes(building);
+            BindOutlineSkinnedMeshes(building);
+
+            building.highlight.Release();
+            building.highlight = Assets.ObjectHighlighter.SetupOutlines(building.gameObject, building.meshesRequiringOutline, building.skinnedMeshesRequiringOutline);
         }
 
         #region Util Functions
@@ -199,7 +255,7 @@ namespace ReskinEngine.Engine
             {
                 List<Vector3> positions = new List<Vector3>();
                 for (int i = 0; i < container.transform.childCount; i++)
-                    positions.Add(container.GetChild(i).transform.position);
+                    positions.Add(container.GetChild(i).transform.localPosition);
 
                 personPositions = positions.ToArray();
             }
@@ -230,56 +286,167 @@ namespace ReskinEngine.Engine
 
         protected void ReadOutlineMeshes(GameObject _base)
         {
-            GameObject info = null;
-            for (int i = 0; i < _base.transform.childCount; i++)
-                if (_base.transform.GetChild(i).name.Contains("outlineMeshes:"))
-                    info = _base.transform.GetChild(i).gameObject;
-            if (info)
-            {
-                string[] name = info.name.Split(':');
-                string[] list = name[1].Split(',');
-                outlineMeshes = list;
-            }
-            else
-                outlineMeshes = new string[0];
+            ReadStringArray(_base, "outlineMeshes");
+            Engine.dLog($"outlineMeshes: {outlineMeshes.Length}");
         }
 
         protected void BindOutlineMeshes(Building building)
         {
-            if (outlineMeshes == null)
+            if (outlineMeshes == null || outlineMeshes.Length == 0)
                 return;
+
+            // search
             List<MeshRenderer> meshes = new List<MeshRenderer>();
             foreach (string path in outlineMeshes)
                 if (building.transform.Find(path) && building.transform.Find(path).GetComponent<MeshRenderer>())
                     meshes.Add(building.transform.Find(path).GetComponent<MeshRenderer>());
-            building.meshesRequiringOutline = meshes;
+            
+            // assignment
+            if (building.meshesRequiringOutline.Count > meshes.Count)
+                for (int i = 0; i < meshes.Count; i++)
+                    building.meshesRequiringOutline[i] = meshes[i];
+            else
+                building.meshesRequiringOutline = meshes;
+
+            Engine.dLog($"bound {meshes.Count} outline meshes");
         }
 
         protected void ReadOutlineSkinnedMeshes(GameObject _base)
         {
-            GameObject info = null;
-            for (int i = 0; i < _base.transform.childCount; i++)
-                if (_base.transform.GetChild(i).name.Contains("outlineSkinnedMeshes:"))
-                    info = _base.transform.GetChild(i).gameObject;
-            if (info)
-            {
-                string[] name = info.name.Split(':');
-                string[] list = name[1].Split(',');
-                outlineSkinnedMeshes = list;
-            }
-            else
-                outlineSkinnedMeshes = new string[0];
+            ReadStringArray(_base, "outlineSkinnedMeshes");
+            Engine.dLog($"outlineSkinnedMeshes: {outlineSkinnedMeshes.Length}");
         }
 
         protected void BindOutlineSkinnedMeshes(Building building)
         {
-            if (outlineSkinnedMeshes == null)
+            if (outlineSkinnedMeshes == null || outlineSkinnedMeshes.Length == 0)
                 return;
             List<SkinnedMeshRenderer> meshes = new List<SkinnedMeshRenderer>();
             foreach (string path in outlineSkinnedMeshes)
                 if (building.transform.Find(path) && building.transform.Find(path).GetComponent<SkinnedMeshRenderer>())
                     meshes.Add(building.transform.Find(path).GetComponent<SkinnedMeshRenderer>());
             building.skinnedMeshesRequiringOutline = meshes;
+        }
+
+        protected void ReadColliders(GameObject _base)
+        {
+            ReadStringArray(_base, "colliders");
+            Engine.dLog($"colliders: {colliders.Length}");
+        }
+
+        protected void BindColliders(Building building)
+        {
+            if (colliders == null || colliders.Length == 0)
+                return;
+
+            int count = 0;
+
+            // Attach BuildingColliders to all requested collider paths
+            foreach (string path in colliders)
+            {
+                if (building.transform.Find(path) == null)
+                {
+                    Engine.dLog($"could not found path {path}");
+                    continue;
+                }
+
+                if (building.transform.Find(path).GetComponent<Collider>())
+                {
+                    building.transform.Find(path).gameObject.AddComponent<BuildingCollider>();
+                    count++;
+                }
+            }
+
+            if (count == 0)
+                return;
+
+            // Delete pre-existing BuildingColliders
+            foreach (BuildingCollider collider in Util.ComponentsInNodeAndAllDescendants<BuildingCollider>(building.gameObject))
+                collider.EnableColliders(false);
+
+            Engine.dLog($"bound {count} colliders");
+        }
+
+        protected void ReadRenderersWithBuildingShader(GameObject _base)
+        {
+            ReadStringArray(_base, "renderersWithBuildingShader");
+            Engine.dLog($"renderersWithBuildingShader: {colliders.Length}");
+        }
+
+        protected void BindRenderersWithBuildingShader(Building building)
+        {
+            int count = 0;
+
+            foreach (string path in outlineSkinnedMeshes)
+            {
+                if (building.transform.Find(path) && building.transform.Find(path).GetComponent<MeshRenderer>())
+                {
+                    MeshRenderer renderer = building.transform.Find(path).GetComponent<MeshRenderer>();
+                    if (renderer.sharedMaterial != null && renderer.sharedMaterial.shader.name == "Custom/Building")
+                    {
+                        Material material = renderer.material;
+                        LandmassOwner landmassOwner = World.GetLandmassOwner(building.LandMass());
+                        if (landmassOwner == null)
+                        {
+                            landmassOwner = Player.inst.PlayerLandmassOwner;
+                        }
+                        material = new Material(landmassOwner.BuildingMaterial);
+                        material.SetFloat("_Disabled", 0f);
+                        material.SetFloat("_Invalid", 0f);
+                        material.SetFloat("_WallProgress", 1f);
+                        material.SetFloat("_MinHeight", float.MinValue);
+                        material.SetFloat("_MaxHeight", float.MaxValue);
+                        material.SetVector("_BreakPoint", Vector4.zero);
+                        material.SetVector("_BreakOffset", Vector4.zero);
+                        material.SetFloat("_MinYAdjustment", building.BuildShaderMinYAdjustment);
+                        material.SetFloat("_MaxYAdjustment", building.BuildShaderMaxYAdjustment);
+                        material.SetFloat("_Width", (float)World.inst.GridWidth);
+                        material.SetFloat("_Height", (float)World.inst.GridHeight);
+                        building.renderersWithBuildingShader.Add(renderer);
+                        building.fullMaterial.Add(material);
+
+                        count++;
+                    }
+                }
+            }
+
+            building.UpdateShaderHeight();
+            Engine.dLog($"bound {count} building shader renderers");
+        }
+
+        protected void ReadString(GameObject _base, string fieldName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
+        {
+            GameObject info = null;
+            for (int i = 0; i < _base.transform.childCount; i++)
+                if (_base.transform.GetChild(i).name.Contains(fieldName))
+                    info = _base.transform.GetChild(i).gameObject;
+
+            string value = "";
+            if (info != null)
+                value = info.name.Split(':')[1];
+
+            if (GetType().GetField(fieldName) != null)
+                GetType().GetField(fieldName, flags).SetValue(this, value);
+        }
+
+        protected void ReadStringArray(GameObject _base, string fieldName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
+        {
+            string[] array;
+            GameObject info = null;
+            for (int i = 0; i < _base.transform.childCount; i++)
+                if (_base.transform.GetChild(i).name.Contains(fieldName))
+                    info = _base.transform.GetChild(i).gameObject;
+            if (info)
+            {
+                string[] name = info.name.Split(':');
+                string[] list = name[1].Split(',');
+                array = list;
+            }
+            else
+                array = new string[0];
+
+            if (GetType().GetField(fieldName) != null)
+                GetType().GetField(fieldName, flags).SetValue(this, array);
         }
 
         #endregion
@@ -289,15 +456,97 @@ namespace ReskinEngine.Engine
         {
             static void Postfix(Building PendingObj)
             {
-                SkinBinder s = Engine.GetRandomBinderFromActive("building_" + PendingObj.UniqueName);
-                if(s as BuildingSkinBinder != null)
-                {
-                    BuildingSkinBinder binder = s as BuildingSkinBinder;
-                    binder.BindToBuildingInstance(PendingObj);
+                if (Settings.variationType != Settings.VariationType.OnPlace)
+                    return;
 
-                    Engine.helper.Log($"binding building skin [{binder.TypeIdentifier}:{binder.Identifier}] to {binder.UniqueName}");
+                SkinBinder skinBinder = Engine.GetRandomBinderFromActive("building_" + PendingObj.UniqueName);
+                if (skinBinder as BuildingSkinBinder != null)
+                {
+                    if (Engine.GetPriority(skinBinder.TypeIdentifier).NumBinders(skinBinder.TypeIdentifier) > 1)
+                    {
+                        GameObject obj =
+                            PendingObj.gameObject;
+                        //GameObject.Instantiate(originalModels[PendingObj.UniqueName]);
+
+                        if (obj)
+                        {
+                            //obj.transform.position = PendingObj.transform.position;
+                            //obj.transform.rotation = PendingObj.transform.rotation;
+                            //obj.transform.localScale = PendingObj.transform.localScale;
+
+
+                            BuildingSkinBinder binder = skinBinder as BuildingSkinBinder;
+                            binder.BindToBuildingInstance(obj.GetComponent<Building>());
+                            //GameObject.Destroy(PendingObj);
+
+                            Engine.helper.Log($"bound building skin [{binder.TypeIdentifier}:{binder.Identifier}] to {binder.UniqueName}");
+                        }
+                    }
+                    else
+                    {
+                        BuildingSkinBinder binder = skinBinder as BuildingSkinBinder;
+                        binder.BindToBuildingInstance(PendingObj);
+
+                        Engine.helper.Log($"bound building skin [{binder.TypeIdentifier}:{binder.Identifier}] to {binder.UniqueName}");
+                    }
                 }
             }
+        }
+
+        [HarmonyPatch(typeof(GameUI), "InstantiateFromPrefab")]
+        static class BuildingInstantiatePatch
+        {
+            static void Postfix(ref Building __result, Building building)
+            {
+                if (Settings.variationType != Settings.VariationType.Prebaked)
+                    return;
+
+                if (!originalModels.ContainsKey(building.UniqueName))
+                    return;
+
+                GameObject.DestroyImmediate(__result.gameObject);
+
+                GameObject prefab = originalModels[building.UniqueName][SRand.Range(0, originalModels[building.UniqueName].Count)];
+                Building building2 = UnityEngine.Object.Instantiate<Building>(prefab.GetComponent<Building>());
+                building2.transform.parent = Player.inst.buildingContainer.transform;
+                building2.transform.position = GameUI.inst.GridPointerIntersection();
+                building2.Init();
+                __result = building2;
+            }
+        }
+
+        [HarmonyPatch(typeof(GameState), "GetPlaceableByUniqueName")]
+        static class InternalPrefabPatch
+        {
+            static void Postfix(ref Building __result, string UniqueName)
+            {
+                if (Settings.variationType != Settings.VariationType.Prebaked)
+                    return;
+
+                if (!originalModels.ContainsKey(UniqueName))
+                    return;
+
+                GameObject prefab = originalModels[UniqueName][SRand.Range(0, originalModels[UniqueName].Count)];
+                __result = prefab.GetComponent<Building>();
+            }
+        }
+
+        public static void BindGameInternalPrefabs()
+        {
+            if (Settings.variationType != Settings.VariationType.Prebaked)
+                return;
+
+            var pool = Engine.GetActivePool();
+            foreach (string id in pool.Keys)
+            {
+                if (pool[id].Count > 0 && pool[id][0] as BuildingSkinBinder != null)
+                {
+                    BuildingSkinBinder binder = Engine.GetRandomBinderFromActive(id) as BuildingSkinBinder;
+                    binder.BindToBuildingBase(GameState.inst.GetPlaceableByUniqueName(binder.UniqueName));
+                }
+            }
+
+            Engine.dLog("Binding GameState internalPrefabs");
         }
 
     }
@@ -315,8 +564,9 @@ namespace ReskinEngine.Engine
         {
             base.Read(obj);
 
-            if (obj.transform.Find("baseModel"))
-                baseModel = obj.transform.Find("baseModel").gameObject;
+            ReadModel(obj, "baseModel");
+            //if (obj.transform.Find("baseModel"))
+            //    baseModel = obj.transform.Find("baseModel").gameObject;
 
         }
 
@@ -325,14 +575,20 @@ namespace ReskinEngine.Engine
             Transform target = building.transform.GetChild(0).GetChild(0);
             if (!target)
             {
-                Engine.helper.Log("GenericBuildingSkinBinder bound to building that doesn't follow generic building architechture; aborting");
+                Engine.Log($"GenericBuildingSkinBinder bound to building that doesn't follow generic building architechture; aborting\nbuilding: {building.UniqueName}, skin: [{TypeIdentifier}:{Identifier}]");
                 return;
             }
 
             if (baseModel)
             {
+                // Reset Mesh
                 target.GetComponent<MeshFilter>().mesh = null;
-                GameObject.Instantiate(baseModel, target);
+                if(target.transform.Find("baseModel"))
+                {
+                    GameObject.Destroy(target.transform.Find("baseModel").gameObject);
+                }
+                GameObject model = GameObject.Instantiate(baseModel, target);
+                model.name = "baseModel";
             }
 
             base.BindToBuildingBase(building);
@@ -340,7 +596,26 @@ namespace ReskinEngine.Engine
 
         public override void BindToBuildingInstance(Building building)
         {
-            this.BindToBuildingBase(building);
+            Transform target = building.transform.GetChild(0).GetChild(0);
+            if (!target)
+            {
+                Engine.Log($"GenericBuildingSkinBinder bound to building that doesn't follow generic building architechture; aborting\nbuilding: {building.UniqueName}, skin: [{TypeIdentifier}:{Identifier}]");
+                return;
+            }
+
+            if (baseModel)
+            {
+                // Reset Mesh
+                target.GetComponent<MeshFilter>().mesh = null;
+                if (target.transform.Find("baseModel"))
+                {
+                    GameObject.Destroy(target.transform.Find("baseModel").gameObject);
+                }
+                GameObject model = GameObject.Instantiate(baseModel, target);
+                model.name = "baseModel";
+            }
+
+            base.BindToBuildingInstance(building);
         }
     }
 

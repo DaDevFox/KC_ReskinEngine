@@ -10,7 +10,8 @@ namespace ReskinEngine.API
     [Category("environment")]
     public class TreeSkin : Skin
     {
-        public override string Name => "tree";
+        public override string Name => "Tree";
+        internal override string TypeIdentifier => "tree";
 
         [Model(ModelAttribute.Type.Modular, description = "Model of the tree")]
         public GameObject baseModel;
@@ -25,6 +26,28 @@ namespace ReskinEngine.API
             AppendModel(_base, baseModel, "baseModel");
             AppendMaterial(_base, material, "material");
 
+        }
+    }
+
+    [Category("maritime")]
+    public class FishinShipSkin : Skin
+    {
+        public override string Name => "Fishin Ship";
+        internal override string TypeIdentifier => "fishingship";
+
+
+        [Model(ModelAttribute.Type.Modular, description = "Modular model all fishing ships will use")]
+        public GameObject baseModel;
+
+        [Material("Material the ship model will use")]
+        public Material material;
+
+        protected override void PackageInternal(Transform dropoff, GameObject _base)
+        {
+            base.PackageInternal(dropoff, _base);
+
+            AppendModel(_base, baseModel, "baseModel");
+            AppendMaterial(_base, material, "material");
         }
     }
 }

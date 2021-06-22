@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 #if UNITY_EDITOR
 
 namespace ReskinEngine.Editor
 {
+    [Serializable]
     public abstract class Skin : ScriptableObject
     {
         public abstract string typeId { get; }

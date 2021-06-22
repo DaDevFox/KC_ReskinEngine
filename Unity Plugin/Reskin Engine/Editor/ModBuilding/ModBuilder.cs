@@ -48,6 +48,17 @@ namespace ReskinEngine.Editor
         #region Constants
 
         public static string APIFolderLocation { get; } = "Reskin Engine/API";
+        private static int indent = 0;
+        private static string _t 
+        {
+            get
+            {
+                String full = "";
+                for (int i = 0; i < indent; i++)
+                    full += "\t";
+                return full;
+            }
+        }
 
         #endregion
 
@@ -64,14 +75,12 @@ namespace ReskinEngine.Editor
             return $"\nnamespace {mod.@namespace}" + "\n{";
         }
 
-        private static string Class()
-        {
-            return "\tpublic class Mod\n\t{";
-        }
+        private static string Class() => $"{_t}public class Mod\n{_t}{{";
+        
 
         private static string CloseNamespace() => ClosingBrace();
 
-        private static string CloseClass() => $"\t{ClosingBrace()}";
+        private static string CloseClass() => $"{_t}{ClosingBrace()}";
 
         private static string ClosingBrace() => "}";
 
@@ -80,15 +89,20 @@ namespace ReskinEngine.Editor
 
         #region Class Body
 
-        public static string ClassVars() => "\t\tpublic static KCModHelper helper;\n";
+        public static string ClassVars() => $"{_t}public static KCModHelper helper;\n";
 
-        public static string OpenMainMethod() => "\t\tpublic void SceneLoaded(KCModHelper helper)\n\t\t{";
+        public static string OpenMainMethod() => $"{_t}public void SceneLoaded(KCModHelper helper)\n{_t}{{";
 
-        public static string MainMethodInit(Mod mod) => $"\t\t\t// KCModHelper\n\t\t\tMod.helper = helper;\n\n\t\t\t// Setup the ReskinProfile with a name and compatability identifier\n\t\t\tReskinProfile profile = new ReskinProfile(\"{mod.modName}\", \"{mod.compatabilityIdentifier}\");\n\t\t\ttry{{";
+        public static string MainMethodInit(Mod mod) => $"{_t}// KCModHelper\n{_t}Mod.helper = helper;\n\n{_t}// Setup the ReskinProfile with a name and compatability identifier\n{_t}ReskinProfile profile = new ReskinProfile(\"{mod.modName}\", \"{mod.compatabilityIdentifier}\");\n";
 
-        public static string MainMethodConclude() => $"\n\t\t\tprofile.Register();\n\t\t\thelper.Log(\"Init\");";
+        public static string OpenTryCatch() => $"\n{_t}try{{\n";
 
-        public static string CloseMainMethod() => "\n\t\t\t}catch(Exception ex){\n\t\t\t\thelper.Log(ex.ToString());\n\t\t\t}\n\t\t}";
+        public static string MainMethodConclude() => $"\n{_t}profile.Register();\n{_t}helper.Log(\"Init\");";
+
+
+        public static string CloseTryCatch() => $"\n\n{_t}}}catch(Exception ex){{\n{_t}\thelper.Log(ex.ToString());\n{_t}}}";
+
+        public static string CloseMainMethod() => $"\n{_t}}}";
 
         #region Collections
 
@@ -96,12 +110,12 @@ namespace ReskinEngine.Editor
             string assetBundleName = Util.AssetBundleName($"{mod.name}_{collection.name}");
             string bundleVarName = $"{collection.name}_bundle";
 
-            string text = $"\t\t\t//{collection.name}\n\t\t\tAssetBundle {bundleVarName} = KCModHelper.LoadAssetBundle(helper.modPath + \"/assetbundle/\", \"{assetBundleName}\");";
+            string text = $"{_t}#region {collection.name}\n\n{_t}AssetBundle {bundleVarName} = KCModHelper.LoadAssetBundle(helper.modPath + \"/assetbundle/\", \"{assetBundleName}\");";
 
-            text += "\n\n\n";
+            text += "\n";
 
             // iterate skins
-            foreach (Skin skin in collection.implementedSkins)
+            foreach (Skin skin in collection.skins)
             {
                 // import assets
                 foreach(FieldInfo field in skin.GetType().GetFields())
@@ -110,7 +124,7 @@ namespace ReskinEngine.Editor
                     if (field.GetValue(skin) as UnityEngine.Object != null)
                     {
                         UnityEngine.Object value = field.GetValue(skin) as UnityEngine.Object;
-                        text += $"\t\t\t// {skin.name} \n\t\t\t{fieldType} {skin.typeId}_{skin.name}_{field.Name} = {bundleVarName}.LoadAsset<{fieldType}>(\"{AssetDatabase.GetAssetPath(value)}\");";
+                        text += $"\n{_t}// {skin.name} \n{_t}{fieldType} {skin.typeId}_{skin.name}_{field.Name} = {bundleVarName}.LoadAsset<{fieldType}>(\"{AssetDatabase.GetAssetPath(value)}\");";
                     }
                 }
 
@@ -120,14 +134,18 @@ namespace ReskinEngine.Editor
                 string skinName = Util.SnakeCase(skin.name);
 
                 // create skin
-                text += $"\n\t\t\t{skinAPIEquivalent} {skinName} = new {skinAPIEquivalent}();\n";
+                text += $"\n{_t}{skinAPIEquivalent} {skinName} = new {skinAPIEquivalent}();\n";
 
                 // assign assets to fields
                 foreach (FieldInfo field in skin.GetType().GetFields())
                 {
                     string fieldType = field.FieldType.Name;
+                    // if it's a UnityEngine.Object, it got packaged into the assetbundle so unpack it from there
                     if (field.GetValue(skin) as UnityEngine.Object != null)
-                        text += $"\t\t\t{skinName}.{field.Name} = {skin.typeId}_{skin.name}_{field.Name};\n";
+                        text += $"{_t}{skinName}.{field.Name} = {skin.typeId}_{skin.name}_{field.Name};\n";
+                    // strings can be directly transfered
+                    if (field.GetValue(skin) is String)
+                        text += $"{_t}{skinName}.{field.Name} = \"{field.GetValue(skin)}\";\n";
                 }
 
 
@@ -137,8 +155,6 @@ namespace ReskinEngine.Editor
                     BuildingSkin bSkin = skin as BuildingSkin;
 
                     #region Person Positions
-
-                    //text += ";LAKDJF;ALKFJ;ASLKFJ;ALFKJAS;LKFJAD";
 
                     string personPositions = "";
                     if (bSkin.personPositions != null && bSkin.personPositions.Length > 0)
@@ -158,7 +174,7 @@ namespace ReskinEngine.Editor
                         personPositions = "new Vector3[0]";
                     }
 
-                    text += $"\n\t\t\t{skinName}.personPositions = {personPositions};";
+                    text += $"\n{_t}{skinName}.personPositions = {personPositions};";
 
                     #endregion
 
@@ -183,7 +199,7 @@ namespace ReskinEngine.Editor
                         outlineMeshes = "new string[0]";
                     }
 
-                    text += $"\n\t\t\t{skinName}.outlineMeshes = {outlineMeshes};";
+                    text += $"\n{_t}{skinName}.outlineMeshes = {outlineMeshes};";
 
                     // Skinned Outline Meshes
                     string outlineSkinnedMeshes = "";
@@ -204,17 +220,60 @@ namespace ReskinEngine.Editor
                         outlineSkinnedMeshes = "new string[0]";
                     }
 
-                    text += $"\n\t\t\t{skinName}.outlineSkinnedMeshes = {outlineSkinnedMeshes};";
+                    text += $"\n{_t}{skinName}.outlineSkinnedMeshes = {outlineSkinnedMeshes};";
+
+                    // Colliders
+                    string colliders = "";
+                    if (bSkin.colliders != null && bSkin.colliders.Length > 0)
+                    {
+                        colliders = $"new string[{bSkin.colliders.Length}] {{";
+                        for (int i = 0; i < bSkin.colliders.Length; i++)
+                        {
+                            string path = bSkin.colliders[i];
+                            colliders += $"\"{path}\"";
+                            if (i != bSkin.colliders.Length - 1)
+                                colliders += ", ";
+                        }
+                        colliders += "}";
+                    }
+                    else
+                    {
+                        colliders = "new string[0]";
+                    }
+
+                    text += $"\n{_t}{skinName}.colliders = {colliders};";
+
+                    // Building shader renderers
+                    string renderersWithBuildingShader = "";
+                    if (bSkin.renderersWithBuildingShader != null && bSkin.renderersWithBuildingShader.Length > 0)
+                    {
+                        renderersWithBuildingShader = $"new string[{bSkin.renderersWithBuildingShader.Length}] {{";
+                        for (int i = 0; i < bSkin.renderersWithBuildingShader.Length; i++)
+                        {
+                            string path = bSkin.renderersWithBuildingShader[i];
+                            renderersWithBuildingShader += $"\"{path}\"";
+                            if (i != bSkin.renderersWithBuildingShader.Length - 1)
+                                renderersWithBuildingShader += ", ";
+                        }
+                        renderersWithBuildingShader += "}";
+                    }
+                    else
+                    {
+                        renderersWithBuildingShader = "new string[0]";
+                    }
+
+                    text += $"\n{_t}{skinName}.renderersWithBuildingShader = {renderersWithBuildingShader};";
 
                     #endregion
 
                 }
 
                 // register skin
-                text += $"\n\t\t\tprofile.Add({skinName});\n\n";
+                text += $"\n{_t}profile.Add({skinName});\n";
 
             }
 
+            text += $"\n{_t}#endregion\n";
 
             return text;
         }
@@ -273,7 +332,7 @@ namespace ReskinEngine.Editor
                     AssetImporter.GetAtPath(path).assetBundleName = "";
 
                 // add all skin dependencies to asset bundle
-                foreach (Skin skin in collection.implementedSkins)
+                foreach (Skin skin in collection.skins)
                 {
                     foreach (FieldInfo field in skin.GetType().GetFields())
                     {
@@ -310,12 +369,15 @@ namespace ReskinEngine.Editor
             
             foreach(TextAsset sourceFile in assets)
             {
+                string properExtension = ".cs";
+
+                if(sourceFile.name == "version")
+                    properExtension = ".txt";
+
                 string relativePath = Path.GetFileNameWithoutExtension(sourceFile.name);
-                FileStream stream = File.Create($"{outputPath}/API/{relativePath}.cs");
+                FileStream stream = File.Create($"{outputPath}/API/{relativePath}{properExtension}");
                 stream.Write(sourceFile.bytes, 0, sourceFile.bytes.Length);
                 stream.Close();
-
-                //AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(sourceFile), $"{outputPath}/API/{relativePath}.cs");
             }
         }
 
@@ -331,7 +393,7 @@ namespace ReskinEngine.Editor
 
             script.WriteLine(Usings());
 
-
+            indent = 1;
             script.WriteLine(Namespace(mod));
             script.WriteLine(Class());
 
@@ -339,8 +401,14 @@ namespace ReskinEngine.Editor
 
             #region Body
 
+            indent = 2;
             script.WriteLine(ClassVars());
             script.WriteLine(OpenMainMethod());
+
+            indent = 3;
+            script.WriteLine(OpenTryCatch());
+
+            indent = 4;
             script.WriteLine(MainMethodInit(mod));
 
             foreach (Collection collection in mod.collections)
@@ -348,13 +416,21 @@ namespace ReskinEngine.Editor
 
 
             script.WriteLine(MainMethodConclude());
+
+            indent = 3;
+            script.WriteLine(CloseTryCatch());
+
+            indent = 2;
             script.WriteLine(CloseMainMethod());
 
             #endregion
 
             #region Close Heading
 
+            indent = 1;
             script.WriteLine(CloseClass());
+
+            indent = 0;
             script.WriteLine(CloseNamespace());
 
             #endregion
@@ -371,13 +447,47 @@ namespace ReskinEngine.Editor
     [CustomEditor(typeof(Mod))]
     public class ModEditor : UnityEditor.Editor 
     {
+        private static string APIVersionPath { get; } = "Reskin Engine/API/version";
+        private static string PluginVersionPath { get; } = "Reskin Engine/version";
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+            GUILayout.Label(GetVersionText(), new GUIStyle() {
+                richText = true
+            });
             if (GUILayout.Button("build"))
             {
                 ModBuilder.Build(target as Mod);
             }
+        }
+
+        private string GetVersionText()
+        {
+            TextAsset APIVersionDoc = Resources.Load<TextAsset>(APIVersionPath);
+            string APIVersion = APIVersionDoc.text;
+
+
+            TextAsset PluginVersionDoc = Resources.Load<TextAsset>(PluginVersionPath);
+            string PluginVersion = PluginVersionDoc.text;
+
+            string[] APIVersions = APIVersion.Split('\n');
+            string minorVersionAPI = APIVersions[1].Trim().ToLower();
+            string majorVersionAPI = APIVersions[0].Trim().ToLower();
+
+            string[] PluginVersions = PluginVersion.Split('\n');
+            string minorVersionPlugin = PluginVersions[1].Trim().ToLower();
+            string majorVersionPlugin = PluginVersions[0].Trim().ToLower();
+
+            string color = "blue";
+            if(majorVersionAPI != majorVersionPlugin)
+                color = "red";
+            else if (minorVersionAPI != minorVersionPlugin)
+                color = "#FF5900";
+
+            string text = $"\nAPI Version: \n<b><color={color}>{APIVersion}</color></b>\nEditor Version: \n<b><color={color}>{PluginVersion}</color></b>";
+
+            return text;
         }
     }
 }

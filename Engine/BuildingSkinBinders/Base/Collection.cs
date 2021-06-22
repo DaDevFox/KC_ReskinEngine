@@ -12,6 +12,8 @@ namespace ReskinEngine.Engine
         public string ModName { get; internal set; }
         public string CompatabilityIdentifier { get; internal set; }
 
+        public int Priority { get; internal set; } = 0;
+
         public Dictionary<string, List<SkinBinder>> Binders { get; private set; } = new Dictionary<string, List<SkinBinder>>();
 
         public static Mod Create(string name, string compatabilityIdentifier)
@@ -30,14 +32,26 @@ namespace ReskinEngine.Engine
                 Binders.Add(binder.TypeIdentifier, new List<SkinBinder>() { binder });
         }
 
-        public void Bind()
+        public SkinBinder Get(string identifier)
         {
-            foreach(SkinBinder binder in this)
-            {
+            if (!Binders.ContainsKey(identifier))
+                return null;
 
+            List<SkinBinder> binders = Binders[identifier];
 
-            }
+            return binders.Count > 0 ? binders[SRand.Range(0, binders.Count - 1)] : null;
         }
+
+        public int NumBinders(string identifier) => Binders.ContainsKey(identifier) ? Binders[identifier].Count : 0;
+
+        //public void Bind()
+        //{
+        //    foreach(SkinBinder binder in this)
+        //    {
+
+
+        //    }
+        //}
 
         #region IEnumerable Implementation
 

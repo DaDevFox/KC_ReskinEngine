@@ -96,7 +96,7 @@ namespace ReskinEngine.Editor
 
     public abstract class BuildingPreview<T> : PrefabPreview<T> where T : BuildingSkin
     {
-        public static string personPreviewPath = "Reskin Engine/Person 1";
+        public static string personPreviewPath = "Reskin Engine/Environment/Person 1";
 
         public abstract override string path { get; }
 

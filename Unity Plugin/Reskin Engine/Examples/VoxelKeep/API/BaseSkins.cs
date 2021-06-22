@@ -61,6 +61,12 @@ namespace ReskinEngine.API
         public override int position => 1;
     }
 
+    public class UnitsCategory : Category
+    {
+        public override string id => "units";
+        public override int position => 2;
+    }
+
     #endregion
 
     #region Buildings
@@ -68,45 +74,45 @@ namespace ReskinEngine.API
     public class CastleCategory : Category
     {
         public override string id => "castle";
-        public override int position => 3;
+        public override int position => 4;
     }
 
     public class TownCategory : Category
     {
         public override string id => "town";
-        public override int position => 4;
+        public override int position => 5;
     }
 
     public class AdvTownCategory : Category
     {
         public override string id => "advTown";
         public override string name => "Advanced Town";
-        public override int position => 5;
+        public override int position => 6;
     }
 
     public class FoodCategory : Category
     {
         public override string id => "food";
-        public override int position => 6;
+        public override int position => 7;
     }
 
     public class IndustryCategory : Category
     {
         public override string id => "industry";
-        public override int position => 7;
+        public override int position => 8;
     }
 
     public class MaritimeCategory : Category
     {
         public override string id => "maritime";
-        public override int position => 8;
+        public override int position => 9;
     }
 
     public class CemetaryCategory : Category
     {
         public override string id => "cemetary";
         public override string name => "Cemetaries";
-        public override int position => 9;
+        public override int position => 10;
     }
 
 

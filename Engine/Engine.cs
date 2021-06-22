@@ -11,7 +11,9 @@ namespace ReskinEngine.Engine
 {
     public class Engine
     {
-        public static KCModHelper helper;
+        public static event Action afterSceneLoaded;
+
+        public static KCModHelper helper { get; set; }
         public static bool debug = true;
 
 
@@ -57,6 +59,8 @@ namespace ReskinEngine.Engine
 
         #region Utilities
 
+        public static void Log(object message) => helper.Log(message.ToString());
+
         public static void dLog(object message)
         {
             if(debug)
@@ -83,6 +87,29 @@ namespace ReskinEngine.Engine
         }
 
         /// <summary>
+        /// Returns the mod with priority to bind the skin with the identifier skinIdentifier
+        /// </summary>
+        /// <param name="skinIdentifier"></param>
+        /// <returns></returns>
+        public static Mod GetPriority(string skinIdentifier)
+        {
+            if (Settings.priorityType == Settings.PriorityType.Absolute && ModIndex.Count > 0)
+            {
+                Mod result = null;
+                foreach (Mod mod in ModIndex.Values)
+                    if (mod.Binders.ContainsKey(skinIdentifier))
+                        if (result == null || (result != null && mod.Priority > result.Priority))
+                            result = mod;
+
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Returns a dictionary with skin id's as keys and skin binders as values
         /// </summary>
         /// <returns></returns>
@@ -96,12 +123,11 @@ namespace ReskinEngine.Engine
 
         public static SkinBinder GetRandomBinderFromActive(string identifier)
         {
-            if (!GetActivePool().ContainsKey(identifier))
+            if (GetPriority(identifier) == null || !GetPriority(identifier).Binders.ContainsKey(identifier))
                 return null;
 
-            List<SkinBinder> binders = GetActivePool()[identifier];
+            List<SkinBinder> binders = GetPriority(identifier).Binders[identifier];
 
-            
             return binders.Count > 0 ? binders[SRand.Range(0, binders.Count - 1)] : null;
         }
 
@@ -125,6 +151,9 @@ namespace ReskinEngine.Engine
             ReadSkins();
             SetupMods();
             BindAll();
+            BuildingSkinBinder.BindGameInternalPrefabs();
+
+            afterSceneLoaded?.Invoke();
 
             helper.Log("AfterSceneLoaded complete");
         }
@@ -185,7 +214,7 @@ namespace ReskinEngine.Engine
 
         private static void BindAll()
         {
-            GetActivePool().Values.Do(binders => binders[0].Bind());
+            GetActivePool().Values.Do(binders => binders.Do((binder) => binder.Bind()));
         }
 
         #endregion

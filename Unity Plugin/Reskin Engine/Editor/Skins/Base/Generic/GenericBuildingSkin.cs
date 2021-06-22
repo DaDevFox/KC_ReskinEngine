@@ -12,6 +12,7 @@ namespace ReskinEngine.Editor
 
         [Tooltip("Model will be instantiated under original building model")]
         public GameObject baseModel;
+        
     }
 
     #endregion

@@ -16,30 +16,26 @@ namespace ReskinEngine.Editor
         {
             base.Apply(obj, skin);
 
+            Transform target = obj.transform.GetChild(0).GetChild(0);
+            Collider collider = target.GetComponent<Collider>();
+            if(collider)
+                GameObject.Destroy(collider);
+
             if (skin.baseModel)
             {
-                
-                GameObject original = obj.transform.Find("Offset/" + originalName) != null ? obj.transform.Find("Offset/" + originalName).gameObject : obj.transform.Find("Offset").GetChild(0).gameObject;
-                if (original.name != originalName)
+                target.ClearChildren();
+                target.GetComponent<MeshFilter>().mesh = null;
+                if (target.transform.Find("baseModel"))
                 {
-                    original.name = originalName;
-                    original.SetActive(false);
+                    GameObject.Destroy(target.transform.Find("baseModel").gameObject);
                 }
-
-                GameObject replaced = obj.transform.Find("Offset/" + replacedName) != null ? obj.transform.Find("Offset/" + originalName).gameObject : new GameObject(replacedName);
-                if (replaced.transform.parent != obj.transform.Find("Offset"))
-                {
-                    replaced.transform.SetParent(obj.transform.Find("Offset"), true);
-                    replaced.transform.SetSiblingIndex(1);
-                }
-                replaced.transform.position = Vector3.zero;
-
-
-                replaced.ClearChildren();
-                GameObject.Instantiate(skin.baseModel, xz(skin.bounds/2f), Quaternion.identity, replaced.transform);
+                GameObject model = GameObject.Instantiate(skin.baseModel, target);
+                model.name = "baseModel";
+                //if (obj.transform.Find(skin.colliders) && obj.transform.Find(skin.colliders).GetComponent<Collider>() != collider)
+                //{
+                //    GameObject.DestroyImmediate(collider);
+                //}
             }
-            //else
-                //Reset(obj);
         }
 
         private Vector3 xz(Vector3 original) => new Vector3(original.x, 0f, original.z);

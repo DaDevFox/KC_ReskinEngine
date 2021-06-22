@@ -144,11 +144,16 @@ namespace ReskinEngine.API
 
     }
 
+    public abstract class SkinField : Attribute
+    {
+
+    }
+
     /// <summary>
     /// Represents a material field that can be changed
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, Inherited = true)]
-    public class MaterialAttribute : Attribute
+    public class MaterialAttribute : SkinField
     {
         internal string name;
         internal string description;
@@ -170,7 +175,7 @@ namespace ReskinEngine.API
     /// Signifies a field in a skin that is a model and contains data about its type and description
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, Inherited = true)]
-    public class ModelAttribute : Attribute
+    public class ModelAttribute : SkinField
     {
         public enum Type
         {
@@ -202,7 +207,7 @@ namespace ReskinEngine.API
     /// Represents a Vector3 field that represents a transform's position
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, Inherited = true)]
-    public class AnchorAttribute : Attribute
+    public class AnchorAttribute : SkinField
     {
         public string description;
         public string name;
@@ -213,6 +218,16 @@ namespace ReskinEngine.API
         }
 
         public AnchorAttribute(string description) => this.description = description;
+    }
+
+    /// <summary>
+    /// Representsa string field that represenets the path of a GameObject within a building
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field, Inherited = true)]
+    public class PathAttribute  : SkinField
+    {
+        string description;
+        public PathAttribute(string description) => this.description = description;
     }
 
     /// <summary>
@@ -341,10 +356,26 @@ namespace ReskinEngine.API
         /// <param name="name"></param>
         protected void AppendMaterial(GameObject _base, Material mat, string name)
         {
-            GameObject material = new GameObject(name);
-            material.transform.SetParent(_base.transform);
-            material.AddComponent<MeshFilter>();
-            material.AddComponent<MeshRenderer>().material = mat;
+            GameObject materialObj = new GameObject(name);
+            materialObj.transform.SetParent(_base.transform);
+            materialObj.AddComponent<MeshFilter>();
+            materialObj.AddComponent<MeshRenderer>().material = mat;
+        }
+
+        protected void AppendPath(GameObject _base, string name, string value)
+        {
+            GameObject pathObj = new GameObject($"{name}:{value}");
+            pathObj.transform.SetParent(_base.transform);
+        }
+
+        protected void AppendStringArray(GameObject _base, string name, params string[] array)
+        {
+            string list = "";
+            for (int i = 0; i < array.Length; i++)
+                list += i != array.Length - 1 ? array[i] + ", " : array[i];
+
+            GameObject pathObj = new GameObject($"{name}:{list}");
+            pathObj.transform.SetParent(_base.transform);
         }
 
         #endregion
@@ -376,7 +407,14 @@ namespace ReskinEngine.API
         /// Paths relative to the building root to all the skinned mesh renderers that will be included in the outline effect when selecting the building (each item in list requires SkinnedMeshRenderer component)
         /// </summary>
         public string[] outlineSkinnedMeshes;
-
+        /// <summary>
+        /// Paths to the colliders used for building selection
+        /// </summary>
+        public string[] colliders;
+        /// <summary>
+        /// Renderers that use the building shader; all renderers tagged as such will become involved with game effects targeted at buildings like the happiness overlay, snow, and damage however they will also have their material set to the unimaterial specified in the alpha version of the game (see colorsets and alpha compatability)
+        /// </summary>
+        public string[] renderersWithBuildingShader;
 
         protected override void PackageInternal(Transform dropoff, GameObject _base)
         {
@@ -393,33 +431,18 @@ namespace ReskinEngine.API
                     Vector3 personPosition = personPositions[i];
                     GameObject position = new GameObject($"personPosition{i}");
                     position.transform.SetParent(obj.transform);
-                    position.transform.position = personPosition;
+                    position.transform.localPosition = personPosition;
                 }
             }
 
-            if(outlineMeshes != null && outlineMeshes.Length > 0)
-            {
-                string list = "";
-                foreach (string path in outlineMeshes)
-                    list += path + ",";
-                
-                string name = $"outlineMeshes:{list}";
-
-                GameObject obj = new GameObject(name);
-                obj.transform.SetParent(_base.transform);
-            }
-
+            if (outlineMeshes != null && outlineMeshes.Length > 0)
+                AppendStringArray(_base, "outlineMeshes", outlineMeshes);
             if (outlineSkinnedMeshes != null && outlineSkinnedMeshes.Length > 0)
-            {
-                string list = "";
-                foreach (string path in outlineSkinnedMeshes)
-                    list += path + ",";
-
-                string name = $"outlineSkinnedMeshes:{list}";
-
-                GameObject obj = new GameObject(name);
-                obj.transform.SetParent(_base.transform);
-            }
+                AppendStringArray(_base, "outlineSkinnedMeshes", outlineSkinnedMeshes);
+            if (colliders != null && colliders.Length > 0)
+                AppendStringArray(_base, "colliders", colliders);
+            if (renderersWithBuildingShader != null && renderersWithBuildingShader.Length > 0)
+                AppendStringArray(_base, "renderersWithBuildingShader", renderersWithBuildingShader);
         }
     }
 
@@ -447,6 +470,7 @@ namespace ReskinEngine.API
 
             if (baseModel)
                 GameObject.Instantiate(baseModel, _base.transform).name = "baseModel";
+            //AppendPath(_base, "collider", collider);
 
             //Mod.helper.Log($"packaged generic skin for {UniqueName}");
         }
