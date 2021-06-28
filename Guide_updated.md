@@ -1,6 +1,6 @@
 Kingdoms and Castles Reskin Engine Guide | Kingdoms and Castles Modding
 =
-The KCRE (Kingdoms and Castles Reskin Engine)
+The KCRE (Kingdoms and Castles Reskin Engine) is an engine that simplifies and standardizes the process of changing visual elements of Kingdoms and Castles through mods. One of the main features of the KCRE is its Unity Plugin that allows artists to create mods with absolutely no coding necessary. 
 
 Modding in Kingdoms and Castles currently (as of Summer 2021) requires a significant amount of experience in coding (C#) and knowledge of the Unity Engine, which is the game engine the game uses. This significantly increases barriers to entry into the modding community and steepens the learning curve even with some prior experience. 
 
