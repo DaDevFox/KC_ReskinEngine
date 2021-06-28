@@ -27,53 +27,81 @@ namespace ReskinEngine.Engine
 
         public Material material;
 
-        public override void Read(GameObject obj)
+        public override void Read(GameObject _base)
         {
-            base.Read(obj);
+            base.Read(_base);
 
-            if (obj.transform.Find("Open"))
-                Open = obj.transform.Find("Open").gameObject;
-            if (obj.transform.Find("Closed"))
-                Closed = obj.transform.Find("Closed").gameObject;
-            if (obj.transform.Find("Single"))
-                Single = obj.transform.Find("Single").gameObject;
-            if (obj.transform.Find("Opposite"))
-                Opposite = obj.transform.Find("Opposite").gameObject;
-            if (obj.transform.Find("Adjacent"))
-                Adjacent = obj.transform.Find("Adjacent").gameObject;
-            if (obj.transform.Find("Threeside"))
-                Threeside = obj.transform.Find("Threeside").gameObject;
+            if (_base.transform.Find("Open"))
+                Open = _base.transform.Find("Open").gameObject;
+            if (_base.transform.Find("Closed"))
+                Closed = _base.transform.Find("Closed").gameObject;
+            if (_base.transform.Find("Single"))
+                Single = _base.transform.Find("Single").gameObject;
+            if (_base.transform.Find("Opposite"))
+                Opposite = _base.transform.Find("Opposite").gameObject;
+            if (_base.transform.Find("Adjacent"))
+                Adjacent = _base.transform.Find("Adjacent").gameObject;
+            if (_base.transform.Find("Threeside"))
+                Threeside = _base.transform.Find("Threeside").gameObject;
 
-            if (obj.transform.Find("doorPrefab"))
-                doorPrefab = obj.transform.Find("doorPrefab").gameObject;
+            if (_base.transform.Find("doorPrefab"))
+                doorPrefab = _base.transform.Find("doorPrefab").gameObject;
 
-            ReadMaterial(obj, "material");
+            ReadMaterial(_base, "material");
+
+            Engine.dLog($"loaded: open {Open.GetComponent<MeshFilter>()}, closed {Closed}, single {Single}, opposite {Opposite}, adjacent {Adjacent}, threeside {Threeside}");
         }
 
         public override void BindToBuildingBase(Building building)
         {
-            
-
             CastleBlock block = building.GetComponent<CastleBlock>();
 
-            if(Open)
-                block.Open = Open.transform;
-            if(Closed)
-                block.Closed = Closed.transform;
-            if(Single)
-                block.Single = Single.transform;
-            if(Opposite)
-                block.Opposite = Opposite.transform;
-            if(Adjacent)
-                block.Adjacent = Adjacent.transform;
-            if(Threeside)
-                block.Threeside = Threeside.transform;
+            if (Open && Open.GetComponent<MeshFilter>())
+            {
+                MeshFilter mesh = block.Open.GetComponent<MeshFilter>();;
+                mesh.sharedMesh = Open.GetComponent<MeshFilter>().sharedMesh;
+                block.Open.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+            }
+            if (Closed && Closed.GetComponent<MeshFilter>())
+            {
+                MeshFilter mesh = block.Closed.GetComponent<MeshFilter>(); ;
+                mesh.sharedMesh = Closed.GetComponent<MeshFilter>().sharedMesh;
+                block.Closed.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+            }
+            if (Single && Single.GetComponent<MeshFilter>())
+            {
+                MeshFilter mesh = block.Single.GetComponent<MeshFilter>(); ;
+                mesh.sharedMesh = Single.GetComponent<MeshFilter>().sharedMesh;
+                block.Single.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+            }
+            if (Opposite && Opposite.GetComponent<MeshFilter>())
+            {
+                MeshFilter mesh = block.Opposite.GetComponent<MeshFilter>(); ;
+                mesh.sharedMesh = Opposite.GetComponent<MeshFilter>().sharedMesh;
+                block.Opposite.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+            }
+            if (Adjacent && Adjacent.GetComponent<MeshFilter>())
+            {
+                MeshFilter mesh = block.Adjacent.GetComponent<MeshFilter>(); ;
+                mesh.sharedMesh = Adjacent.GetComponent<MeshFilter>().sharedMesh;
+                block.Adjacent.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+            }
+            if (Threeside && Threeside.GetComponent<MeshFilter>())
+            {
+                MeshFilter mesh = block.Threeside.GetComponent<MeshFilter>(); ;
+                mesh.sharedMesh = Threeside.GetComponent<MeshFilter>().sharedMesh;
+                block.Threeside.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+            }
 
             if(doorPrefab)
                 block.doorPrefab = doorPrefab;
 
-            if (material)
-                block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = material;
+            block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = World.GetUniMaterialFor(building.LandMass());
+
+            //if (material)
+            //    block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = material;
+            //else
+            //    block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = World.GetUniMaterialFor(building.LandMass());
 
             base.BindToBuildingBase(building);
         }

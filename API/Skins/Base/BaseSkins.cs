@@ -48,6 +48,12 @@ namespace ReskinEngine.API
 
     #region Skins
 
+    public class SpecialCategory : Category
+    {
+        public override string id => "special";
+        public override int position => -1;
+    }
+
     public class EnvironmentCategory : Category
     {
         public override string id => "environment";

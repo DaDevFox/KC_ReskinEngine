@@ -515,21 +515,25 @@ namespace ReskinEngine.Engine
             }
         }
 
-        [HarmonyPatch(typeof(GameState), "GetPlaceableByUniqueName")]
-        static class InternalPrefabPatch
-        {
-            static void Postfix(ref Building __result, string UniqueName)
-            {
-                if (Settings.variationType != Settings.VariationType.Prebaked)
-                    return;
+        // Uncomment to implement building variation for AIs in alpha; BROKEN
 
-                if (!originalModels.ContainsKey(UniqueName))
-                    return;
+        //[HarmonyPatch(typeof(GameState), "GetPlaceableByUniqueName")]
+        //static class InternalPrefabPatch
+        //{
+        //    static void Postfix(ref Building __result, string uniqueName)
+        //    {
+        //        if (Settings.variationType != Settings.VariationType.Prebaked)
+        //            return;
 
-                GameObject prefab = originalModels[UniqueName][SRand.Range(0, originalModels[UniqueName].Count)];
-                __result = prefab.GetComponent<Building>();
-            }
-        }
+        //        if (uniqueName == null || !originalModels.ContainsKey(uniqueName))
+        //            return;
+
+        //        List<GameObject> models = originalModels[uniqueName];
+
+        //        GameObject prefab = models[SRand.Range(0, models.Count - 1)];
+        //        __result = prefab.GetComponent<Building>();
+        //    }
+        //}
 
         public static void BindGameInternalPrefabs()
         {

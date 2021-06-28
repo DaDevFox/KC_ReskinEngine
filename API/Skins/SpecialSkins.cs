@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define ALPHA
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,9 +31,9 @@ namespace ReskinEngine.API
     }
 
     [Category("maritime")]
-    public class FishinShipSkin : Skin
+    public class FishingShipSkin : Skin
     {
-        public override string Name => "Fishin Ship";
+        public override string Name => "Fishing Ship";
         internal override string TypeIdentifier => "fishingship";
 
 
@@ -50,4 +51,24 @@ namespace ReskinEngine.API
             AppendMaterial(_base, material, "material");
         }
     }
+
+#if ALPHA
+
+    [Category("special")]
+    public class LiverySkin
+    {
+        public Texture[] banners;
+        public Material[] bannerMaterial;
+        public Color[] bannerColor;
+        public Color[] mapColor;
+        public Material[] uniMaterial;
+        public Material[] buildingMaterial;
+        public Material[] armyMaterial;
+        public Material[] buildUIMaterial;
+        public Material[] flagMaterial;
+        public Material[] uniMaterialCracked;
+    }
+
+#endif
+
 }
