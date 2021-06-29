@@ -1,1 +1,1 @@
-The `Reskin Engine` folder next to this document should be pasted directly in a Unity Project in order to use it to create a mod for the Reskin Engine with no code necessary. 
+The `Reskin Engine` folder next to this document should be downloaded from the GitHub and pasted directly in a Unity Project in order to use it to create a mod for the Reskin Engine with no code necessary. 

@@ -16,13 +16,14 @@ You may notice I said it functions with a *reduced* amount of code, but not none
 
 ![Image](https://i.ibb.co/Kmjd9fC/Layers-Explanation.png)
 
-Essentially the Engine has 3 layers, but only 2 neccessary ones: it has the base layer, the Engine itself, - the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) - and the API, which is a little piece of code that you can put in your own, seperate mod that allows it to communicate with the Engine layer. All mods that run through the engine have some code in them and the API, but there's a tool you can download and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
+Essentially the Engine has 3 layers, but only 2 neccessary ones: it has the base layer, the Engine itself, - the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) - and the API, which is a little piece of code that you can put in your own, seperate mod that allows it to communicate with the Engine layer. 
+All mods that run through the engine have some code in them and the API, but there's a tool you can [download](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Plugin) and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
 
-Of course this tool is optional and modders experienced in C# can just write the code themselves directly in the `Human-Made Code` section of the diagram above utlizing the API. 
+Of course this tool is optional and modders experienced in C# can just write the code themselves directly in the `Human-Made Code` + `Mod Files` section of the diagram above utlizing the API (More on this later). 
 
-This does mean potential users of the Unity Tool have to be familiar with the Unity Editor so those looking to get started should look into it if they are unfamiliar. 
+This does mean potential users of the Unity Tool have to be familiar with the Unity Editor so those looking to get started should look into some tutorials if they are unfamiliar. Note that you only need to learn the interface and none of the scripting aspects of the Editor for this tool (unless you want to of course). 
 
-> If you are looking for tutorials on the Unity Editor I reccomend you read through the [official Unity Docs](https://docs.unity3d.com/520/Documentation/Manual/GettingStarted.html), they're fairly comprehensive in most areas, especially learning the interface of the editor. 
+> If you are looking for tutorials on the Unity Editor I recommend you read through the [official Unity Docs](https://docs.unity3d.com/520/Documentation/Manual/GettingStarted.html); they're fairly comprehensive in most areas, especially learning the interface of the editor. 
 
 ![Image](https://i.ibb.co/mv4zwHQ/editor-previe-edited.png)
 
