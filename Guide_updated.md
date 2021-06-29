@@ -10,15 +10,15 @@ The broad goal of this engine is to make it easier where possible for people of 
 *This wonderful blocky scene was made by TPunko from the Kingdoms and Castles Discord in MagicaVoxel*
 
 # How the Engine works
-The Engine itself is technically a 'mod' in the strict sense of 'a modification to a game' but not in the traditional sense. It has a [listing](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) in the Steam Workshop as a standalone mod that can be subscribed to by any player, however this listing does absolutely nothing by itself. All it does is allow *other* mods to register to it and change visual elements of the game, with a greatly reduced amount of code, research, and thus general headache. Other mods exist like this such as Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) and Slooth's [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API) and [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API), but they all follow a diferent pattern to traditional mods and so I'm using the term 'engine' to describe this rather than 'mod', just for the sake of making a distinction. 
+The Engine itself is technically a 'mod' in the strict sense of 'a modification to a game' but not in the traditional sense. It has a [listing](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) in the Steam Workshop as a standalone mod that can be subscribed to by any player, however this listing does absolutely nothing by itself. All it does is allow *other* mods to register to it and change visual elements of the game, with a greatly reduced amount of code, research, and thus general headache. Other mods exist like this such as Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) and Slooth's [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API) and [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API), but they all follow a different pattern to traditional mods and so I'm using the term 'engine' to describe this rather than 'mod', just for the sake of making a distinction. 
 
 You may notice I said it functions with a *reduced* amount of code, but not none. This might seem to conflict with the main draw of using this engine: 'no coding required', but both are actually true. 
 
 ![Image](https://i.ibb.co/Kmjd9fC/Layers-Explanation.png)
 
-Essentially the Engine has 3 layers, but only 2 neccessary ones: it has the base layer, the Engine itself, - the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) - and the API, which is a little piece of code that you can put in your own, seperate mod that allows it to communicate with the Engine layer. All mods that run through the engine have some code in them and the API, but there's a tool you can [download](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Plugin) and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
+Essentially the Engine has 3 layers, but only 2 necessary ones: it has the base layer, the Engine itself, - the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) - and the API, which is a little piece of code that you can put in your own, separate mod that allows it to communicate with the Engine layer. All mods that run through the engine have some code in them and the API, but there's a tool you can [download](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Plugin) and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
 
-Of course this tool is optional and modders experienced in C# can just write the code themselves directly in the `Human-Made Code` + `Mod Files` section of the diagram above utlizing the API (more on this later). 
+Of course this tool is optional and modders experienced in C# can just write the code themselves directly in the `Human-Made Code` + `Mod Files` section of the diagram above utilizing the API (more on this later). 
 
 This does mean potential users of the Unity Tool have to be familiar with the Unity Editor so those looking to get started should look into some tutorials if they are unfamiliar. Note that you only need to learn the interface and none of the scripting aspects of the Editor for this tool (unless you want to of course). 
 
@@ -39,15 +39,15 @@ If you're thinking, *why in the world would I want to write code when the tool's
 ## The Interfaces vs. The Code
 
 At this point some of the more code-oriented modders might be wondering:
-*So how do the interfaces correspond to the code that is outputed?*
+*So how do the interfaces correspond to the code that is outputted?*
 
-The frame of the mod is built like a traditional mod would be and the skins are pretty much 1:1 transfered from the interface to code as you would expect them to be. Below is an example showing a keep skin's build process from a skin in a collection (in the editor) to a piece of code. 
+The frame of the mod is built like a traditional mod would be and the skins are pretty much 1:1 transferred from the interface to code as you would expect them to be. Below is an example showing a keep skin's build process from a skin in a collection (in the editor) to a piece of code. 
 
 ![Image](https://i.ibb.co/DbDQwvX/keepskinprevie.png)
 ![Image](https://i.ibb.co/5kqGg6L/keepskincodeprevie.png)
 *Both images taken with API & Unity Tool version 0.0.1d*
 
-Any fields of a type that is a subclass of `UnityEngine.Object` will be packed into an `AssetBundle` as AssetBundles can contain anything that is a `UnityEngine.Object`. Other types of fields will only be built into the mod if they are a recognized primitive/special type (inlcuding `string`, `int`, `bool`, `Vector3`, `Color`, and more) or an array of a recognized type. The list of recognized types will likely expand over time. 
+Any fields of a type that is a subclass of `UnityEngine.Object` will be packed into an `AssetBundle` as AssetBundles can contain anything that is a `UnityEngine.Object`. Other types of fields will only be built into the mod if they are a recognized primitive/special type (including `string`, `int`, `bool`, `Vector3`, `Color`, and more) or an array of a recognized type. The list of recognized types will likely expand over time. 
 
 AssetBundles are automatically built into the multi-platform format the game expects and the scene paths of their assets are written - hardcoded - into the mod code so that it can extract them at runtime. 
 
