@@ -25,9 +25,9 @@ namespace ReskinEngine.Examples.VoxelKeep
 
 
 			// keep 
-			GameObject building_keep_keep_keepUpgrade1 = Voxel_Castle_bundle.LoadAsset<GameObject>("Assets/Mod/TPunkoModels/Prefabs/Keeps/Keep-3.prefab");			// keep 
-			GameObject building_keep_keep_keepUpgrade2 = Voxel_Castle_bundle.LoadAsset<GameObject>("Assets/Mod/TPunkoModels/Prefabs/Keeps/Keep-3.prefab");			// keep 
-			GameObject building_keep_keep_keepUpgrade3 = Voxel_Castle_bundle.LoadAsset<GameObject>("Assets/Mod/TPunkoModels/Prefabs/Keeps/Keep-3.prefab");			// keep 
+			GameObject building_keep_keep_keepUpgrade1 = Voxel_Castle_bundle.LoadAsset<GameObject>("Assets/Mod/TPunkoModels/Prefabs/Keeps/Keep-3.prefab"); 
+			GameObject building_keep_keep_keepUpgrade2 = Voxel_Castle_bundle.LoadAsset<GameObject>("Assets/Mod/TPunkoModels/Prefabs/Keeps/Keep-3.prefab");
+			GameObject building_keep_keep_keepUpgrade3 = Voxel_Castle_bundle.LoadAsset<GameObject>("Assets/Mod/TPunkoModels/Prefabs/Keeps/Keep-3.prefab");
 			GameObject building_keep_keep_keepUpgrade4 = Voxel_Castle_bundle.LoadAsset<GameObject>("Assets/Mod/TPunkoModels/Prefabs/Keeps/Keep-3.prefab");
 			KeepSkin keep = new KeepSkin();
 			keep.keepUpgrade1 = building_keep_keep_keepUpgrade1;
