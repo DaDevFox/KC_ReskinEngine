@@ -10,8 +10,14 @@ The broad goal of this engine is to make it easier where possible for people of 
 *This wonderful blocky scene was made by TPunko from the Kingdoms and Castles Discord in MagicaVoxel*
 
 # How the Engine works
-The Engine itself is technically a 'mod' in the sense of a modification to the game but not in the traditional sense. It has a [listing](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) in the Steam Workshop as a standalone mod that can be subscribed to by any player, however this listing does absolutely nothing by itself. All it does is allow *other* mods to register to it and change visual elements of the game, with a greatly reduced amount of code, research, and thus general headache. Other mods exist like this such as Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) and Slooth's [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API) and [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API), but they all follow a diferent pattern to traditional mods and so I'm using the term 'engine' to describe this rather than 'mod', just for the sake of making a distinction. 
+The Engine itself is technically a 'mod' in the strict sense of 'a modification to a game' but not in the traditional sense. It has a [listing](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) in the Steam Workshop as a standalone mod that can be subscribed to by any player, however this listing does absolutely nothing by itself. All it does is allow *other* mods to register to it and change visual elements of the game, with a greatly reduced amount of code, research, and thus general headache. Other mods exist like this such as Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) and Slooth's [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API) and [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API), but they all follow a diferent pattern to traditional mods and so I'm using the term 'engine' to describe this rather than 'mod', just for the sake of making a distinction. 
 
+You may notice I said it functions with a *reduced* amount of code, but not none. This might seem to conflict with the main draw of using this engine, 'no coding required', but both are actually true. 
+
+![Image](https://i.ibb.co/kKgk3bc/Layers-Explanation.png)
+
+
+Essentially the Engine has 3 layers, but 2 neccessary ones; it has the base layer, the Engine itself, this is the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692), and the API which is a little piece of code that you can put in your mod that allows it to communicate with the Engine layer. All mods that run through the engine have some code in them and the API, but there's a tool you can download and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
 
 
 
@@ -25,6 +31,5 @@ Associated Links
 
 
 
-![Image](https://i.ibb.co/kKgk3bc/Layers-Explanation.png)
 
 ![Image](https://i.ibb.co/yY9Xd9h/Layers-Explanation-descriptive.png)
