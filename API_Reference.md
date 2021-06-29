@@ -36,15 +36,15 @@ void MyMethod()
     ReskinProfile profile = new ReskinProfile("MyModName", "MyModIdentifier");
 
     HovelSkin skin1 = new HovelSkin();
-    /* [set all of skin 1's fields] */
+    /* set all of skin 1's fields */
     profile.Add(skin1);
 
     CottageSkin skin2 = new CottageSkin();
-    /* [set all of skin 2's fields] */
+    /* set all of skin 2's fields */
     profile.Add(skin2);
 
     ManorSkin skin3 = new ManorSkin();
-    /* [set all of skin 3's fields] */
+    /* set all of skin 3's fields */
     profile.Add(skin3);
 
     profile.Register();

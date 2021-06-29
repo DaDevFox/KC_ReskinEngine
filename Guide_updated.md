@@ -26,7 +26,13 @@ This does mean potential users of the Unity Tool have to be familiar with the Un
 
 # Ease of Use
 
-In the layers diagram all of the red bubbles are code
+## How much code is necessary?
+
+In the layers diagram all of the red bubbles are code and everything in the Unity layer is done through the UI of the Unity Editor. In the absolute minimalist sense, you don't ever need to even open a code editor. 
+
+The Human-made Code bubble is, of course, optional but if you do want to write code either in addition to the Unity Tool's generated code or just entirely make the mod yourself, I suggest you look through the [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md) and the [KC Mod Tutorial](https://modtutorial.kingdomsandcastles.com/). 
+
+If you're thinking, *why in the world would I want to write code when the tool's already doing it for me?*, the reason is because it gives far more control and allows you to make specific behaviours that the Engine's standardized processes are too generic for. A good example of this that has been published on the workshop is Skusch's [Day-Night Cycle Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042&searchtext=day+night+cycle). It was a very early alpha tester of this Engine and used the API code along with a special script Skusch wrote himself to make the windows and street torches of certian buildings glow at night and shut off in the day. 
 
 ![Image](https://i.ibb.co/mv4zwHQ/editor-previe-edited.png)
 
