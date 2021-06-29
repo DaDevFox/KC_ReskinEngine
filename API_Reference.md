@@ -20,11 +20,41 @@ Models:
 ```
 and the associated `Skin` class is almost always the name of the skin in the Skin-Index with the term 'Skin' added to the end I.E `ChurchSkin`. There are a few exceptions to this rule however they are usually near enough for you to find it I.E. `WoodenCastleBlock` vs `WoodCastleBlock`. 
 
+And sure enough, when you type ChurchSkin into an IDE with Intellisense set up properly, the highlighting shows you that a class exists with that name.
 
+![Image](https://i.ibb.co/9wkk4vp/Churchskincode.png)
 
 ## ReskinProfile
 
-To register any skins 
+To register any skins to the Engine they must be added to a ReskinProfile and the profile must be registered. These can be accomplished by the two corresponding methods in the ReskinProfile class: `ReskinProfile.Add(Skin item)` and `ReskinProfile.Register()`. 
+
+Thereby the full workflow to register multiple skins to the Engine is:
+
+```cs
+void MyMethod()
+{
+    ReskinProfile profile = new ReskinProfile("MyModName", "MyModIdentifier");
+
+    HovelSkin skin1 = new HovelSkin();
+    /* [set all of skin 1's fields] */
+    profile.Add(skin1);
+
+    CottageSkin skin2 = new CottageSkin();
+    /* [set all of skin 2's fields] */
+    profile.Add(skin2);
+
+    ManorSkin skin3 = new ManorSkin();
+    /* [set all of skin 3's fields] */
+    profile.Add(skin3);
+
+    profile.Register();
+}
+```
+
+And this code alone will have your mod received and executed by the Engine. 
+The only prerequisite: `profile.Register()` absolutely **must** be registered before or during `SceneLoaded` no matter what, so in this case `MyMethod` could be called in the `SceneLoaded` method and it would work but any time later and it would not. 
+
+The reason for this is simply that the Engine has to make sure it executes all the mods after they all have been registered so there needs to be some (technically arbitrary) time before which all mods must be registerd.  
 
 ## The BuildingSkin
 Buildings in Kingdoms and Castles are extremely diverse in their implementation which causes a massive amount of research to be necessary for each one and very little generic processes that can apply to all buildings, however they do have some common traits, and as such the skins for buildings will share these common traits. 
