@@ -24,7 +24,7 @@ And sure enough, when you type ChurchSkin into an IDE with Intellisense set up p
 
 ![Image](https://i.ibb.co/9wkk4vp/Churchskincode.png)
 
-## ReskinProfile
+## The `ReskinProfile`
 
 To register any skins to the Engine they must be added to a ReskinProfile and the profile must be registered. These can be accomplished by the two corresponding methods in the ReskinProfile class: `ReskinProfile.Add(Skin item)` and `ReskinProfile.Register()`. 
 
@@ -56,7 +56,7 @@ The only prerequisite: `profile.Register()` absolutely **must** be registered be
 
 The reason for this is simply that the Engine has to make sure it executes all the mods after they all have been registered so there needs to be some (technically arbitrary) time before which all mods must be registerd.  
 
-## The BuildingSkin
+## The `BuildingSkin`
 Buildings in Kingdoms and Castles are extremely diverse in their implementation which causes a massive amount of research to be necessary for each one and very little generic processes that can apply to all buildings, however they do have some common traits, and as such the skins for buildings will share these common traits. 
 Any `Skin` extending from `BuildingSkin` will have the following class members:
 
@@ -100,7 +100,9 @@ string FriendlyName;
 ```
 ---
 
-## Special Patterns
+## Special Subtypes
+### `GenericBuildingSkin`
 
+This type of skin follows the '[instance-generic]()' pattern, coded `ig`. The `ig` pattern is extremely common and used by almost half the buildings in the game. It features a simple building with a single model that is the first child of the first child of the building root (yes you read that right). See also `igm`, a variation of the `ig` pattern that also includes a single modular piece (windmill, cemetary, fishut). 
 
 

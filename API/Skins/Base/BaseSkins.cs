@@ -454,7 +454,6 @@ namespace ReskinEngine.API
 
     //Generic
     /// <summary>
-    /// Don't use as a skin
     /// <para>Type of skin that can be used for most buildings in the game</para>
     /// </summary>
     [Hidden]
