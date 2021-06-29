@@ -73,6 +73,11 @@ AssetBundles are automatically built into the multi-platform format the game exp
     - [Github](https://github.com/DaDevFox/KCReskinEngine)
     - [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md)
     - [Support Spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0)
+- Other Mods
+    - [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu)
+    - [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API)
+    - [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API)
+    - [Day Night Cycle](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042&searchtext=day+night+cycle)
 
 image refs:
 
