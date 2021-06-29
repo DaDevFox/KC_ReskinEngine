@@ -36,18 +36,20 @@ If you're thinking, *why in the world would I want to write code when the tool's
 
 ## UI Summary
 
-## The Interfaces & The Output
+## The Interfaces vs. The Code
 
-So some of the more code-oriented modders might be wondering:
-So how do the interfaces correspond to the code that is outputed?
+At this point some of the more code-oriented modders might be wondering:
+*So how do the interfaces correspond to the code that is outputed?*
 
-The frame of the mod is built like a traditional mod would be and the skins are pretty much 1:1 transfered from the interface to code as you would expect them to be. Below is an example containing a keep
+The frame of the mod is built like a traditional mod would be and the skins are pretty much 1:1 transfered from the interface to code as you would expect them to be. Below is an example showing a keep skin's build process from a skin in a collection (in the editor) to a piece of code. 
 
 ![Image](https://i.ibb.co/DbDQwvX/keepskinprevie.png)
 ![Image](https://i.ibb.co/5kqGg6L/keepskincodeprevie.png)
 *Both images taken with API & Unity Tool version 0.0.1d*
 
-AssetBundles are automatically built into the multi-platform format the game expects and their paths are written - hardcoded - into the mod code so that it can extract them at runtime. 
+Any fields of a type that is a subclass of `UnityEngine.Object` will be packed into an `AssetBundle` as AssetBundles can contain anything that is a `UnityEngine.Object`. Other types of fields will only be built into the mod if they are a recognized primitive/special type (inlcuding `string`, `int`, `bool`, `Vector3`, `Color`, and more) or an array of a recognized type. The list of recognized types will likely expand over time. 
+
+AssetBundles are automatically built into the multi-platform format the game expects and the scene paths of their assets are written - hardcoded - into the mod code so that it can extract them at runtime. 
 
 
 Associated Links
@@ -65,10 +67,17 @@ Associated Links
 
 
 image refs:
+
 https://i.ibb.co/hdG3G5D/Churchskincode.png
+
 https://i.ibb.co/1LpSyMX/code-previe.png
+
 https://i.ibb.co/yfQqMRk/editor-previe.png
+
 https://i.ibb.co/fd21Cdw/editor-previe-edited.png
+
 https://i.ibb.co/xSS4GBQ/tree-Skin-Unity.png
+
 https://i.ibb.co/5kqGg6L/keepskincodeprevie.png
+
 https://i.ibb.co/DbDQwvX/keepskinprevie.png
