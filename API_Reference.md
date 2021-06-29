@@ -6,8 +6,9 @@ Buildings in Kingdoms and Castles are extremely diverse in their implementation 
 Any `Skin` extending from `BuildingSkin` will have the following class members:
 
 
-Optional; the positions peasants stand at while working at the building; directly corresponds to number of jobs a building employs
+```Optional; the positions peasants stand at while working at the building; directly corresponds to number of jobs a building employs
 If left null this field will be set to its default value;
+```
 ```cs
 Vector3[] personPositions;
 ```
