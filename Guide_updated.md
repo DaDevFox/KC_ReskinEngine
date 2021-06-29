@@ -41,7 +41,7 @@ The `Human-Made Code` bubble is, of course, optional but if you do want to write
 
 ## UI Summary
 
-All of the images shown henceforth will be showing the Unity Editor + KCRE Unity Tool so make sure you're familiar with the interface of Unity (see the [previous]() tutorials for further reading).
+All of the images shown henceforth will be showing the Unity Editor + KCRE Unity Tool so make sure you're familiar with the interface of Unity (see the Unity Editor tutorials in the [link appendix](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide_updated.md#tutorials-and-links-appendix) for further reading).
 
 ## The Interfaces vs. The Code
 
@@ -59,19 +59,20 @@ Any fields of a type that is a subclass of `UnityEngine.Object` will be packed i
 AssetBundles are automatically built into the multi-platform format the game expects and the scene paths of their assets are written - hardcoded - into the mod code so that it can extract them at runtime. 
 
 
-Associated Links
-=
-[Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692)
-
-[Github](https://github.com/DaDevFox/KCReskinEngine)
 
 
-
-
-
-
-![Image](https://i.ibb.co/yY9Xd9h/Layers-Explanation-descriptive.png)
-
+## Tutorials and Links Appendix
+- Kingdoms and Castles
+    - [Modding Tutorial](https://modtutorial.kingdomsandcastles.com/)
+- Unity Editor
+    - [Installation and first use](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityBasics.html)
+    - [Structure of the Engine](https://docs.unity3d.com/2018.2/Documentation/Manual/AssetWorkflow.html)
+    - [Editor Interfaces](https://docs.unity3d.com/2018.2/Documentation/Manual/UsingTheEditor.html)
+- KCRE
+    - [Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692)
+    - [Github](https://github.com/DaDevFox/KCReskinEngine)
+    - [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md)
+    - [Support Spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0)
 
 image refs:
 
