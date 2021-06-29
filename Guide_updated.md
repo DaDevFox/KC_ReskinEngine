@@ -10,7 +10,7 @@ The broad goal of this engine is to make it easier where possible for people of 
 *This wonderful blocky scene was made by TPunko from the Kingdoms and Castles Discord in MagicaVoxel*
 
 # How the Engine works
-The Engine itself is technically a 'mod' in the strict sense of 'a modification to a game' but not in the traditional sense. It has a [listing](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) in the Steam Workshop as a standalone mod that can be subscribed to by any player, however this listing does absolutely nothing by itself. All it does is allow *other* mods to register to it and change visual elements of the game, with a greatly reduced amount of code, research, and thus general headache. Other mods exist like this such as Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) and Slooth's [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API) and [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API), but they all follow a different pattern to traditional mods and so I'm using the term 'engine' to describe this rather than 'mod', just for the sake of making a distinction. 
+The Engine itself is technically a 'mod' in the strict sense of 'a modification to a game' but not in the traditional sense. It has a [listing](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) in the Steam Workshop as a standalone mod that can be subscribed to, however this listing does absolutely nothing by itself. All it does is allow *other* mods to register to it and change visual elements of the game, with a greatly reduced amount of code, research, and thus general headache. Other mods exist like this such as Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) and Slooth's [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API) and [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API), but they all follow a different pattern to traditional mods and so I'm using the term 'engine' to describe this rather than 'mod', just for the sake of making a distinction. 
 
 You may notice I said it functions with a *reduced* amount of code, but not none. This might seem to conflict with the main draw of using this engine: 'no coding required', but both are actually true. 
 
@@ -22,7 +22,12 @@ Of course this tool is optional and modders experienced in C# can just write the
 
 This does mean potential users of the Unity Tool have to be familiar with the Unity Editor so those looking to get started should look into some tutorials if they are unfamiliar. Note that you only need to learn the interface and none of the scripting aspects of the Editor for this tool (unless you want to of course). 
 
-> If you are looking for tutorials on the Unity Editor I recommend you read through the [Official Unity Documentation](https://docs.unity3d.com/520/Documentation/Manual/GettingStarted.html); it's fairly comprehensive in most areas, especially learning the interface of the editor. 
+Some helpful tutorials from the Unity Docs:
+- [Installation and first use](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityBasics.html)
+- [Structure of the Engine](https://docs.unity3d.com/2018.2/Documentation/Manual/AssetWorkflow.html)
+- [Editor Interfaces](https://docs.unity3d.com/2018.2/Documentation/Manual/UsingTheEditor.html)
+
+> If you are looking for any kind of tutorials on the Unity Editor I recommend you read through the [Official Unity Documentation](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityOverview.html) for that subject; it's fairly comprehensive in most areas, especially regarding the interface of the editor. 
 
 # Ease of Use
 
@@ -30,11 +35,13 @@ This does mean potential users of the Unity Tool have to be familiar with the Un
 
 In the layers diagram all of the red bubbles are code and everything in the Unity layer is done through the UI of the Unity Editor. The entirety of the Unity layer eventually feeds into one red bubble labelled 'Mod Files'. This is the body of your mod and it is automatically generated and will automatically function when subscribed or locally downloaded; so you don't even need to open it. Therefore in the absolute minimalist sense, you don't ever need to even open a code editor, much less write code. 
 
-> The `Human-Made Code` bubble is, of course, optional but if you do want to write code either in addition to the Unity Tool's generated code or just entirely make the mod by yourself, I suggest you look through the [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md) and the [KC Mod Tutorial](https://modtutorial.kingdomsandcastles.com/). 
+The `Human-Made Code` bubble is, of course, optional but if you do want to write code either in addition to the Unity Tool's generated code or just entirely to make the mod by yourself, I suggest you look through the [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md) and the [KC Mod Tutorial](https://modtutorial.kingdomsandcastles.com/). 
 
-If you're thinking, *why in the world would I want to write code when the tool's already doing it for me?* The reason is because it gives far more control and allows you to make specific behaviours that the Engine's standardized processes are too generic for. A prefect example of this that has been published on the workshop is Skusch's [Day-Night Cycle Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042&searchtext=day+night+cycle). It was a very early alpha tester of this Engine and used the API code along with a special script the creator wrote themself to make the windows and street torches of certain buildings glow at night and shut off during the day. 
+> If you're thinking, *why in the world would I want to write code when the tool's already doing it for me?* The reason is because it gives far more control and allows you to make specific behaviours that the Engine's standardized processes are too generic for. A perfect example of this that has been published on the workshop is Skusch's [Day-Night Cycle Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042&searchtext=day+night+cycle). It was a very early alpha tester of this Engine and used the API code along with a special script the creator wrote themself to make the windows and street torches of certain buildings glow at night and shut off during the day. 
 
 ## UI Summary
+
+All of the images shown henceforth will be showing the Unity Editor + KCRE Unity Tool so make sure you're familiar with the interface of Unity (see the [previous]() tutorials for further reading).
 
 ## The Interfaces vs. The Code
 

@@ -103,6 +103,6 @@ string FriendlyName;
 ## Special Subtypes
 ### `GenericBuildingSkin`
 
-This type of skin follows the '[instance-generic]()' pattern, coded `ig`. The `ig` pattern is extremely common and used by almost half the buildings in the game. It features a simple building with a single model that is the first child of the first child of the building root (yes you read that right). See also `igm`, a variation of the `ig` pattern that also includes a single modular piece (windmill, cemetary, fishut). 
+This type of skin follows the '[instance-generic](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#instance-generic-pattern--ig)' pattern, coded `ig`. The `ig` pattern is extremely common and used by almost half the buildings in the game. It features a simple building with a single model that is the first child of the first child of the building root (yes you read that right). See also [`igm`](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#instance-generic-modular-pattern--igm), a variation of the `ig` pattern that also includes a single modular piece (windmill, cemetary, fishut). 
 
 
