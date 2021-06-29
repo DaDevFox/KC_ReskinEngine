@@ -6,9 +6,8 @@ Buildings in Kingdoms and Castles are extremely diverse in their implementation 
 Any `Skin` extending from `BuildingSkin` will have the following class members:
 
 ---
-```Optional; the positions peasants stand at while working at the building; directly corresponds to number of jobs a building employs
+Optional; the positions peasants stand at while working at the building; directly corresponds to number of jobs a building employs
 If left null this field will be set to its default value;
-```
 ```cs
 Vector3[] personPositions;
 ```
@@ -31,6 +30,18 @@ string[] colliders;
 Renderers that use the building shader; all renderers tagged as such will become involved with game effects targeted at buildings like the happiness overlay, snow, and damage however they will also have their material set to the unimaterial specified in the alpha version of the game (see colorsets and alpha compatability)
 ```cs
 string[] renderersWithBuildingShader;
+```
+---
+(readonly)
+The name the game uses to identify the building associated with this skin
+```cs
+string UniqueName;
+```
+---
+(readonly)
+The name the game uses for the building associated with this skin for menus that the player reads I.E. the build menu
+```cs
+string FriendlyName;
 ```
 ---
 
