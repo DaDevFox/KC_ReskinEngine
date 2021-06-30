@@ -104,9 +104,9 @@ AssetBundles are automatically built into the multi-platform format the game exp
 
 # The Final Product
 
-When your mod is complete it will run through both Steam Workshop or locally, but you **absolutely must** also be subscribed to the [Reskin Engine Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) on the Workshop simultaneously. For this reason I recommend setting the KCRE Workshop Mod to be a prerequisite if you choose to upload your mod to the Workshop. Many mods do this with Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) I mentioned in the beginning such as Mpu's [New Lands](https://steamcommunity.com/sharedfiles/filedetails/?id=1979042514) and Zat's [Minimap](https://steamcommunity.com/sharedfiles/filedetails/?id=2056871463)
+When your mod is complete it will run through both Steam Workshop or locally, but you **absolutely must** also be subscribed to the [Reskin Engine Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) on the Workshop simultaneously. For this reason I recommend setting the KCRE Workshop Mod to be a prerequisite if you choose to upload your mod to the Workshop. Many mods do this with Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) I mentioned in the beginning such as mpu's [New Lands](https://steamcommunity.com/sharedfiles/filedetails/?id=1979042514) and Zat's [Minimap](https://steamcommunity.com/sharedfiles/filedetails/?id=2056871463)
 
-The final result of your mod should be a folder (it should not be zipped) with two folders and one file inside: 
+The final result of your mod should be a folder with two folders and one file inside: 
 
 ```
 - assetbundle 
