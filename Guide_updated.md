@@ -82,6 +82,8 @@ Its interface looks like this:
 
 To add collections to a mod, open the dropdown labelled 'Collections' and set the size to something more than 0. This will open a field for you to drag and drop a collection from somewhere else. You can also click the circle with a dot on the right-hand side of the field to search for a collection by name from all the collections currently in the project. 
 
+In order to generate your mod you click the `Build` button and it will be written to the output path specified. 
+This mod will run if posted to the Steam Workshop and subscribed to or added to the local mod directory, but **only if you also have the [Reskin Engine Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) subscribed**s
 
 ## The Interfaces vs. The Code
 
@@ -100,10 +102,21 @@ Any fields of a type that is a subclass of `UnityEngine.Object` will be packed i
 
 AssetBundles are automatically built into the multi-platform format the game expects and the scene paths of their assets are written - hardcoded - into the mod code so that it can extract them at runtime. 
 
+# The Final Product
 
+When your mod is complete it will run through both Steam Workshop or locally, but you **absolutely must** also be subscribed to the [Reskin Engine Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) on the Workshop simultaneously. For this reason I recommend setting the KCRE Workshop Mod to be a prerequisite if you choose to upload your mod to the Workshop. Many mods do this with Zat's [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) I mentioned in the beginning such as Mpu's [New Lands](https://steamcommunity.com/sharedfiles/filedetails/?id=1979042514) and Zat's [Minimap](https://steamcommunity.com/sharedfiles/filedetails/?id=2056871463)
 
+The final result of your mod should be a folder (it should not be zipped) with two folders and one file inside: 
 
-## Tutorials and Links Appendix
+```
+- assetbundle 
+    - contents of AssetBundle
+- API 
+    - contents of API code (latest version always available at https://github.com/DaDevFox/KCReskinEngine/tree/master/API)
+- Mod.cs 
+```
+
+# Tutorials and Links Appendix
 - Kingdoms and Castles
     - [Modding Tutorial](https://modtutorial.kingdomsandcastles.com/)
 - Unity Editor
@@ -115,24 +128,10 @@ AssetBundles are automatically built into the multi-platform format the game exp
     - [Github](https://github.com/DaDevFox/KCReskinEngine)
     - [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md)
     - [Support Spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0)
-- Other Mods
-    - [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu)
-    - [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API)
-    - [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API)
-    - [Day Night Cycle](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042&searchtext=day+night+cycle)
-
-image refs:
-
-https://i.ibb.co/hdG3G5D/Churchskincode.png
-
-https://i.ibb.co/1LpSyMX/code-previe.png
-
-https://i.ibb.co/yfQqMRk/editor-previe.png
-
-https://i.ibb.co/fd21Cdw/editor-previe-edited.png
-
-https://i.ibb.co/xSS4GBQ/tree-Skin-Unity.png
-
-https://i.ibb.co/5kqGg6L/keepskincodeprevie.png
-
-https://i.ibb.co/DbDQwvX/keepskinprevie.png
+- Mentioned Mods
+    - [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) by Zat/BigMo
+    - [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API) by Slooth
+    - [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API) by Slooth
+    - [Day Night Cycle](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042&searchtext=day+night+cycle) by Skusch
+    - [New Lands](https://steamcommunity.com/sharedfiles/filedetails/?id=1979042514) by mpu/Cedric
+    - [Minimap](https://steamcommunity.com/sharedfiles/filedetails/?id=2056871463) by Zat/BigMo
