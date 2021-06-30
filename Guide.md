@@ -16,7 +16,7 @@ You may notice I said it functions with a *reduced* amount of code, but not none
 
 ![Image](https://i.ibb.co/Kmjd9fC/Layers-Explanation.png)
 
-Essentially the Engine has 3 layers, but only 2 necessary ones: it has the base layer, the Engine itself, - the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) - and the API, which is a little piece of code that you can put in your own, separate mod that allows it to communicate with the Engine layer. All mods that run through the engine have some code in them and the API, but there's a tool you can [download](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Plugin) and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
+Essentially the Engine has 3 layers, but only 2 necessary ones: it has the base layer, the Engine itself, - the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) - and the API, which is a little piece of code that you can put in your own, separate mod that allows it to communicate with the Engine layer. All mods that run through the engine have some code in them and the API, but there's a tool you can [download](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Tool) and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
 
 Of course this tool is optional and modders experienced in C# can just write the code themselves directly in the `Human-Made Code` + `Mod Files` section of the diagram above utilizing the API (more on this later). 
 
@@ -83,7 +83,7 @@ Its interface looks like this:
 To add collections to a mod, open the dropdown labelled 'Collections' and set the size to something more than 0. This will open a field for you to drag and drop a collection from somewhere else. You can also click the circle with a dot on the right-hand side of the field to search for a collection by name from all the collections currently in the project. 
 
 In order to generate your mod you click the `Build` button and it will be written to the output path specified. 
-This mod will run if posted to the Steam Workshop and subscribed to or added to the local mod directory, but **only if you also have the [Reskin Engine Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) subscribed**s
+This mod will run if posted to the Steam Workshop and subscribed to or added to the local mod directory, but **only if you also have the [Reskin Engine Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) subscribed**. 
 
 ## The Interfaces vs. The Code
 
