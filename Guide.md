@@ -45,7 +45,9 @@ Before starting on art for a skin, you must first look up the specifications for
 
 If you want a more comprehensive, in-depth look at skins and how they work, there's a collection of prefabs, materials, textures, and more from the game in the folder `[Tool Root Folder]/Reskin Engine/Resources/Reskin Engine`. The `API` folder and the `version.txt` and `Info.md` files are used internally by the Tool so don't mess with those, but everything else is there for a reference for the artist. 
 
-If you want additional information on how things are injected into the game and the patterns of visual elements and art look into the [Common Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) file;
+Before modelling I highly recommend you look into the  [Common Graphical Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) Document, especially for materials and models. 
+
+If you want additional information on how things are injected into the game and the patterns of visual elements and art look into the advanced section of the [Common Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) file; it contains details on the way buildings of different model formats get their models injected. 
 
 ## UI Summary
 

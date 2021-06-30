@@ -1,5 +1,5 @@
 # Introduction
-This file documents the different patterns that buildings and/or environment in KC use commonly
+This file documents the different patterns that buildings and/or environment in KC commonly use. 
 
 # Material/Shader Patterns
 ## Unimaterial/Livery Material Pattern | `um`/`lm`
