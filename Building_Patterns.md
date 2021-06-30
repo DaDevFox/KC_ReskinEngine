@@ -26,7 +26,7 @@ Most buildings have a list of mesh renderers which all use a special shader call
 
 The building shader has some special shader code on it that allows cool effects like snow, health/happiness/integrity colors and the building scaffolding animation. 
 
-**All** renderers registered in the list that have a material using building shader on them will be automatically updated with all the building animations, placement effects, and other stuff the game does and will have their materials' textures set to a unimaterial or livery material. 
+**All** renderers registered in the list that have a material using the building shader on them will be automatically updated with all the building animations, placement effects, and other stuff the game does and will have their materials' textures set to a unimaterial or livery material. 
 
 ## Outline Mesh Pattern
 

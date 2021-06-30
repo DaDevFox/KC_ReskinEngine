@@ -41,7 +41,47 @@ The `Human-Made Code` bubble is, of course, optional but if you do want to write
 
 ## UI Summary
 
-All of the images shown henceforth will be showing the Unity Editor + KCRE Unity Tool so make sure you're familiar with the interface of Unity (see the Unity Editor tutorials in the [link appendix](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide_updated.md#tutorials-and-links-appendix) for further reading).
+All of the images shown henceforth will be showing the Unity Editor + KCRE Unity Tool so make sure you're familiar with the interface of Unity (see the `Unity Editor` -> `Editor Interfaces` tutorials in the [link appendix](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide_updated.md#tutorials-and-links-appendix) for further reading).
+
+As hinted at in the layers diagram, inside of the Unity Tool there's three main components: `Skins`, `Collections`, and  `Mods`. 
+
+All three exist in the Unity Editor in the form of a `ScriptableObject`, better known as an `Asset`. If you have no idea what these are, I reccommend you read through the Unity Tutorials on the [Asset Workflow](https://docs.unity3d.com/2018.3/Documentation/Manual/AssetWorkflow.html). 
+
+`Collections` and `Mods` can be created through the project context menu (`Right Click` in the `Project` window --> `Create` --> `Reskin Engine` --> `Collection` or `Mod`). 
+
+### Collection and Skins Interface
+
+A `Collection` is a list of skins that are grouped together. Personally, I like to group collections by category or theme, like 'Town Buildings' or 'Halloween-themed`. 
+
+A `Collection`'s interface looks like this by default:
+
+![Image](https://i.ibb.co/BNKQhSw/Collection-Interface-Closed.png)
+
+And like this with all of its menus expanded:
+
+![Image](https://i.ibb.co/h2bxrV5/Collection-Interface-Expanded.png)
+
+The `Import` menu allows you to import skins you have already designed for other collections or that have just been floating around in the project. 
+
+The `Create` menu allows you to create skins for different types of buildings/environmental factors. When selecting a type of skin to create, it shows a relevant snipped from the `Skin-Index` to give you an idea of what its specifications are. Skin names **must** start with a lowercase letter. 
+
+> The Create Menu interface pulls its `Skin-Index` file from `[Tool Parent Folder]/Reskin Engine/Resources/Reskin Engine/Info.txt` so if you change that or add new entries it'll show in the create menu
+
+Do note, the skin-name field is pretty laggy as of right now, this is going to be fixed in the future. 
+
+The `Skins` section is a list of all the skins currently added to the `Collection`. The list has a special feature that allows you to preview what the skin you have selected might look like in the game (though there are rare discrepencies between the preview and the real game). This feature only works if you have the `Reskin Editor` scene open that can be found in `[Tool Parent Folder]/Reskin Engine/Editor/Reskin Editor.unity`
+
+
+### Mod Interface
+
+A `Mod` is a list of collections with some extra data (name, author, output path, etc. ) that has a build button that will turn the Collections and Skins listed in the Mod's menu into actual code and write it to the specified output path. 
+
+Its interface looks like this:
+
+![Image](https://i.ibb.co/HC15xjB/Mod-Inspector-Data.png)
+
+To add collections to a mod, open the dropdown labelled 'Collections' and set the size to something more than 0. This will open a field for you to drag and drop a collection from somewhere else. You can also click the circle with a dot on the right-hand side of the field to search for a collection by name from all the collections currently in the project. 
+
 
 ## The Interfaces vs. The Code
 
@@ -55,6 +95,8 @@ The frame of the mod is built like a traditional mod would be and the skins are 
 *Both images taken with API & Unity Tool version 0.0.1d*
 
 Any fields of a type that is a subclass of `UnityEngine.Object` will be packed into an `AssetBundle` as AssetBundles can contain anything that is a `UnityEngine.Object`. Other types of fields will only be built into the mod if they are a recognized primitive/special type (including `string`, `int`, `bool`, `Vector3`, `Color`, and more) or an array of a recognized type. The list of recognized types will likely expand over time. 
+
+![Image](https://i.ibb.co/zSNv89K/Assetbundle-Load-Code-Keepskin.png)
 
 AssetBundles are automatically built into the multi-platform format the game expects and the scene paths of their assets are written - hardcoded - into the mod code so that it can extract them at runtime. 
 
