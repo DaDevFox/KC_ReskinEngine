@@ -11,9 +11,16 @@ Models must be designed with their UVs in coordination with this material patter
 
 The reason for the distinction between the alpha and stable versions (livery and unimaterial respectively) is because in the alpha this texture will change colors on different landmasses depending on the player/ai's color
 
-## Building Shader Pattern
-(This pattern ties into the [Unimaterial/Livery Material pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#unimateriallivery-material-pattern--umlm))
+If you want to create a model that uses the `um`/`lm` pattern there are reference images extracted from the game in the Unity Tool's files at 
 
+For Alpha: `[Parent Directory for Tool Folder]/Reskin Engine/Resources/Reskin Engine/Materials/Alpha/Liveries/simplified`
+
+For Stable `[Parent Directory for Tool Folder]/Reskin Engine/Resources/Reskin Engine/Materials/Stable/Unimaterials`
+
+## Building Shader Pattern
+(This pattern ties into the [Unimaterial/Livery Material Pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#unimateriallivery-material-pattern--umlm))
+
+Most buildings have a list of mesh renderers which all use a special shader called the Building Shader
 
 
 

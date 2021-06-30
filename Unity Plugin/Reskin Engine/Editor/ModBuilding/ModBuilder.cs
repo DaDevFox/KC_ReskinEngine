@@ -60,6 +60,8 @@ namespace ReskinEngine.Editor
             }
         }
 
+        public static bool hardcodeFields = false;
+
         #endregion
 
 
@@ -106,6 +108,35 @@ namespace ReskinEngine.Editor
 
         #region Collections
 
+        private static string GetStringRepresentation(object value, bool allowAssetBundleReferences = false, string skinTypeId = "", string skinName = "", string fieldName = ""){
+            string text = null;
+            // if it's a UnityEngine.Object, it got packaged into the assetbundle so unpack it from there
+            if (value as UnityEngine.Object != null && allowAssetBundleReferences)
+                text += $"{skinTypeId}_{skinName}_{fieldName}";
+            // strings can be directly transfered
+            else if (value is String)
+                text += $"\"{value}\"";
+            // chars can be directly transfered
+            else if (value is char)
+                text += $"\'{value}\'";
+            // numbers can be directly transfered
+            else if (value is float)
+                text += $"{value.ToString()}f\n";
+            else if (value is int)
+                text += $"{value.ToString()}\n";
+            // booleans can be directly transfered
+            else if (value is bool)
+                text += $"{value.ToString()}\n";
+            else if(value is Color color)
+                text += $"new Color({color.r}, {color.g}, {color.b})";
+            else if(value is Vector3 vector3)
+                text += $"new Vector3({vector3.x}f, {vector3.y}f, {vector3.z}f)";
+            else if (value is Vector2 vector2)
+                text += $"new Vector2({vector2.x}f, {vector2.y}f)";
+
+            return text;
+        }
+
         public static string WriteCollection(Mod mod, Collection collection) {
             string assetBundleName = Util.AssetBundleName($"{mod.name}_{collection.name}");
             string bundleVarName = $"{collection.name}_bundle";
@@ -140,17 +171,31 @@ namespace ReskinEngine.Editor
                 foreach (FieldInfo field in skin.GetType().GetFields())
                 {
                     string fieldType = field.FieldType.Name;
+                    string valueRepresentation = GetStringRepresentation(field.GetValue(skin), true, skin.typeId, skin.name, field.Name);
                     // if it's a UnityEngine.Object, it got packaged into the assetbundle so unpack it from there
-                    if (field.GetValue(skin) as UnityEngine.Object != null)
-                        text += $"{_t}{skinName}.{field.Name} = {skin.typeId}_{skin.name}_{field.Name};\n";
-                    // strings can be directly transfered
-                    if (field.GetValue(skin) is String)
-                        text += $"{_t}{skinName}.{field.Name} = \"{field.GetValue(skin)}\";\n";
+                    if (valueRepresentation != null)
+                        text += $"{_t}{skinName}.{field.Name} = {valueRepresentation};\n";
+                    else if(field.GetValue(skin) is Array){
+                        Array array = field.GetValue(skin) as Array;
+                        if(array.Length == 0){
+                            text += $"{_t}{skinName}.{field.Name} = new {array.GetType().GetElementType().Name}[0];\n";
+                        }else{
+                            text += $"{_t}{skinName}.{field.Name} = new {array.GetType().GetElementType().Name}[] \n{_t}{{\n";
+
+                            indent++;
+                            for (int i = 0; i < array.Length; i++)
+                                if(GetStringRepresentation(array.GetValue(i), true, skin.typeId, skin.name, field.Name) != null)
+                                    text += _t + GetStringRepresentation(array.GetValue(i), true, skin.typeId, skin.name, field.Name) + ((i != array.Length - 1) ? ", \n" : "");
+                            indent--;
+
+                            text += $"\n{_t}}};\n";
+                        }//test
+                    }
                 }
 
 
                 // BuildingSkin only
-                if (skin as BuildingSkin != null)
+                if (skin as BuildingSkin != null && hardcodeFields)
                 {
                     BuildingSkin bSkin = skin as BuildingSkin;
 

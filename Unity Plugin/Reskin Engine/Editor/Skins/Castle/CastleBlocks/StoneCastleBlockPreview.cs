@@ -6,13 +6,13 @@ namespace ReskinEngine.Editor
 
     public class StoneCastleBlockPreview : CastleBlockPreview<StoneCastleBlockSkin>
     {
-        public override string OpenPath => "Assets/Game/KCAssets/Models/GameModels (and some prefabs)/1x1x5.fbx";
-        public override string ClosedPath => "Assets/Game/KCAssets/Models/GameModels (and some prefabs)/1x1x5_fulltop.fbx";
-        public override string SinglePath => "Assets/Game/KCAssets/Models/GameModels (and some prefabs)/1x1x5_onesided.fbx";
-        public override string OppositePath => "Assets/Game/KCAssets/Models/GameModels (and some prefabs)/1x1x5_twosided.fbx";
-        public override string AdjacentPath => "Assets/Game/KCAssets/Models/GameModels (and some prefabs)/1x1x5_corner.fbx";
-        public override string ThreesidePath => "Assets/Game/KCAssets/Models/GameModels (and some prefabs)/1x1x5_threesided.fbx";
-        public override string DoorPath => "Assets/Game/KCAssets/Models/GameModels (and some prefabs)/castlestairs_doorway.fbx";
+        public override string OpenPath => "Reskin Engine/Models/GameModels (and some prefabs)/1x1x5";
+        public override string ClosedPath => "Reskin Engine/Models/GameModels (and some prefabs)/1x1x5_fulltop";
+        public override string SinglePath => "Reskin Engine/Models/GameModels (and some prefabs)/1x1x5_onesided";
+        public override string OppositePath => "Reskin Engine/Models/GameModels (and some prefabs)/1x1x5_twosided";
+        public override string AdjacentPath => "Reskin Engine/Models/GameModels (and some prefabs)/1x1x5_corner";
+        public override string ThreesidePath => "Reskin Engine/Models/GameModels (and some prefabs)/1x1x5_threesided";
+        public override string DoorPath => "Reskin Engine/Models/GameModels (and some prefabs)/castlestairs_doorway";
     }
 
     #endregion

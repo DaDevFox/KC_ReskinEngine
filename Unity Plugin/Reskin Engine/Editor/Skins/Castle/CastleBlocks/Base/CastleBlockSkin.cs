@@ -32,6 +32,8 @@ namespace ReskinEngine.Editor
 
 
         public GameObject doorPrefab;
+
+        public Material material;
     }
 
     #endregion

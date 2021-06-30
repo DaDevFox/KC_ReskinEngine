@@ -32,13 +32,13 @@ namespace ReskinEngine.Editor
             MeshRenderer renderer = obj.transform.Find("Offset/1x1x5_wood").GetComponent<MeshRenderer>();
             Material baseMat;
 
-            Mesh open = skin.Open ? skin.Open.GetComponent<MeshFilter>().sharedMesh : AssetDatabase.LoadAssetAtPath<Mesh>(OpenPath);
-            Mesh closed = skin.Closed ? skin.Closed.GetComponent<MeshFilter>().sharedMesh : AssetDatabase.LoadAssetAtPath<Mesh>(ClosedPath);
-            Mesh single = skin.Single ? skin.Single.GetComponent<MeshFilter>().sharedMesh : AssetDatabase.LoadAssetAtPath<Mesh>(SinglePath);
-            Mesh opposite = skin.Opposite ? skin.Opposite.GetComponent<MeshFilter>().sharedMesh : AssetDatabase.LoadAssetAtPath<Mesh>(OppositePath);
-            Mesh adjacent = skin.Adjacent ? skin.Adjacent.GetComponent<MeshFilter>().sharedMesh : AssetDatabase.LoadAssetAtPath<Mesh>(AdjacentPath);
-            Mesh threeside = skin.Threeside ? skin.Threeside.GetComponent<MeshFilter>().sharedMesh : AssetDatabase.LoadAssetAtPath<Mesh>(ThreesidePath);
-            GameObject door = skin.doorPrefab ? skin.doorPrefab : AssetDatabase.LoadAssetAtPath<GameObject>(DoorPath);
+            Mesh open = skin.Open ? skin.Open.GetComponent<MeshFilter>().sharedMesh : Resources.Load<Mesh>(OpenPath);
+            Mesh closed = skin.Closed ? skin.Closed.GetComponent<MeshFilter>().sharedMesh : Resources.Load<Mesh>(ClosedPath);
+            Mesh single = skin.Single ? skin.Single.GetComponent<MeshFilter>().sharedMesh : Resources.Load<Mesh>(SinglePath);
+            Mesh opposite = skin.Opposite ? skin.Opposite.GetComponent<MeshFilter>().sharedMesh : Resources.Load<Mesh>(OppositePath);
+            Mesh adjacent = skin.Adjacent ? skin.Adjacent.GetComponent<MeshFilter>().sharedMesh : Resources.Load<Mesh>(AdjacentPath);
+            Mesh threeside = skin.Threeside ? skin.Threeside.GetComponent<MeshFilter>().sharedMesh : Resources.Load<Mesh>(ThreesidePath);
+            GameObject door = skin.doorPrefab ? skin.doorPrefab : Resources.Load<GameObject>(DoorPath);
 
             switch (_selected)
             {
@@ -76,7 +76,7 @@ namespace ReskinEngine.Editor
         {
             base.UI();
 
-            _selected = (CastleBlockType)EditorGUILayout.IntSlider($"Block Type: {_selected.ToString()}", (int)_selected, 1, (int)CastleBlockType.NumTypes - 1);
+            _selected = (CastleBlockType)EditorGUILayout.IntSlider($"Block Type: {_selected.ToString()}", (int)_selected, 0, (int)CastleBlockType.NumTypes - 1);
         }
     }
 
