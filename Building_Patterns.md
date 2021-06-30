@@ -12,7 +12,9 @@ Models must be designed with their UVs in coordination with this material patter
 The reason for the distinction between the alpha and stable versions (livery and unimaterial respectively) is because in the alpha this texture will change colors on different landmasses depending on the player/ai's color
 
 ## Building Shader Pattern
-(This pattern ties into the [Unimaterial/Livery Material pattern]())
+(This pattern ties into the [Unimaterial/Livery Material pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#unimateriallivery-material-pattern--umlm))
+
+
 
 
 
@@ -25,7 +27,7 @@ The reason for the distinction between the alpha and stable versions (livery and
 
 - **Only the mesh on the root object of the GameObject will be used; not the mesh renderer's material nor the other components**
 
-> Some modular pattern implementations may offer an option for you to provide a material, however if it is not offered or you leave the field blank, the majority of modular models will use a game-filled [unimaterial or livery material]() (for the stable and alpha branch respectively)
+> Some modular pattern implementations may offer an option for you to provide a material, however if it is not offered or you leave the field blank, the majority of modular models will use a game-filled [unimaterial or livery material](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#unimateriallivery-material-pattern--umlm) (for the stable and alpha branch respectively)
 
 The modular pattern is a special pattern some game systems use to display a model in the game's 3D world. 
 
@@ -52,7 +54,7 @@ It is often used in buildings with a changing model like a castleblock, road, br
 
 When filling a modular field, it will ask for a `GameObject` but only the `sharedMesh` field of the `MeshFilter` component attached to the root of the `GameObject` will ever be used. 
 
-The modular pattern alone is rarely used (except by game systems with a single mesh) as most things that involve a modular pattern model system require multiple meshes and so use a form of the [Modular-Numerical]() or `mx` pattern.  
+The modular pattern alone is rarely used (except by game systems with a single mesh) as most things that involve a modular pattern model system require multiple meshes and so use a form of the [Modular-Numerical](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#modular-numerical-pattern--mx) or `mx` pattern.  
 
 ## Instance Pattern | `i`
 ## Instance-Generic Pattern | `ig`
