@@ -17,15 +17,23 @@ For Alpha: `[Parent Directory for Tool Folder]/Reskin Engine/Resources/Reskin En
 
 For Stable `[Parent Directory for Tool Folder]/Reskin Engine/Resources/Reskin Engine/Materials/Stable/Unimaterials`
 
+For the stable branch `Unimaterial 0` is most commonly used for buildings
+
 ## Building Shader Pattern
 (This pattern ties into the [Unimaterial/Livery Material Pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#unimateriallivery-material-pattern--umlm))
 
-Most buildings have a list of mesh renderers which all use a special shader called the Building Shader
+Most buildings have a list of mesh renderers which all use a special shader called the Building Shader. (This list is [`BuildingSkin`](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md#the-buildingskin)`.renderersWithBuildingShader`)
+
+The building shader has some special shader code on it that allows cool effects like snow, health/happiness/integrity colors and the building scaffolding animation. 
+
+**All** renderers registered in the list that have a material using building shader on them will be automatically updated with all the building animations, placement effects, and other stuff the game does and will have their materials' textures set to a unimaterial or livery material. 
+
+## Outline Mesh Pattern
+
+Similar to the [Building Shader Pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#building-shader-pattern), there's a list for meshes that will be registered to the outline effect that shows when a building is highlighted or selected. (This list is [`BuildingSkin`](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md#the-buildingskin)`.outlineMeshes` and there's a seperate list for skinnedMeshes; [`BuildingSkin`](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md#the-buildingskin)`.outlineSkinnedMeshes`)
 
 
-
-
-# Model Patterns
+# Modelling Patterns
 ## Modular Pattern | `m`
 
 *Pattern specifications*: 
