@@ -3,7 +3,7 @@
 
 The following reference and tutorial assumes a basic knowledge of C# and modding in Kingdoms and Castles; if you do not have knowledge in either, see further [tutorials](https://modtutorial.kingdomsandcastles.com/) or use the Unity Tool as a simplified version that can accomplish a similar process as writing a mod directly. 
 
-> See [here](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide_updated.md#how-the-engine-works) for a description of the Unity Tool and [here](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Plugin) to download it. 
+> See [here](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide.md#how-the-engine-works) for a description of the Unity Tool and [here](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Plugin) to download it. 
 
 ---
 The KCRE Scripting API consists of a main class, `ReskinProfile` that will contain all of your modifications to the game, and many many classes that all extend from the base class `Skin`. Different types of skins will have different fields that you can modify and almost all will have a corresponding entry in the **Skin-Index**. The main reason they would not have an entry is due to version discrepencies or not having been implemented yet. 

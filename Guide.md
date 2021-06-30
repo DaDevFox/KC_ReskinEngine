@@ -41,7 +41,7 @@ The `Human-Made Code` bubble is, of course, optional but if you do want to write
 
 ## UI Summary
 
-All of the images shown henceforth will be showing the Unity Editor + KCRE Unity Tool so make sure you're familiar with the interface of Unity (see the `Unity Editor` -> `Editor Interfaces` tutorials in the [link appendix](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide_updated.md#tutorials-and-links-appendix) for further reading).
+All of the images shown henceforth will be showing the Unity Editor + KCRE Unity Tool so make sure you're familiar with the interface of Unity (see the `Unity Editor` -> `Editor Interfaces` tutorials in the [link appendix](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide.md#tutorials-and-links-appendix) for further reading).
 
 As hinted at in the layers diagram, inside of the Unity Tool there's three main components: `Skins`, `Collections`, and  `Mods`. 
 
