@@ -1,5 +1,6 @@
 KCRE Guide | Kingdoms and Castles Modding
 =
+---
 The KCRE (Kingdoms and Castles Reskin Engine) is an engine that simplifies and standardizes the process of changing visual elements of Kingdoms and Castles through mods. One of the main features of the KCRE is its Unity Tool/Plugin that allows artists to create mods with absolutely no coding necessary. 
 
 Modding in Kingdoms and Castles currently - as of Summer 2021 - requires a significant amount of experience in coding (C#) and knowledge of the Unity Engine, which is the game engine the game uses. This significantly increases barriers to entry into the modding community and steepens the learning curve even with some prior experience. 
@@ -47,7 +48,7 @@ If you want a more comprehensive, in-depth look at skins and how they work, ther
 
 Before modelling I highly recommend you look into the  [Common Graphical Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) Document, especially for materials and models. 
 
-If you want additional information on how things are injected into the game and the patterns of visual elements and art look into the advanced section of the [Common Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) file; it contains details on the way buildings of different model formats get their models injected. 
+> If you want additional information on how things are injected into the game and the patterns of visual elements and art look into the advanced section of the [Common Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) file; it contains details on the way buildings of different model formats get their models injected. 
 
 ## UI Summary
 
@@ -91,6 +92,8 @@ Its interface looks like this:
 ![Image](https://i.ibb.co/HC15xjB/Mod-Inspector-Data.png)
 
 To add collections to a mod, open the dropdown labelled 'Collections' and set the size to something more than 0. This will open a field for you to drag and drop a collection from somewhere else. You can also click the circle with a dot on the right-hand side of the field to search for a collection by name from all the collections currently in the project. 
+
+The interface will show you the comparison of the Tool's version (as '`Editor Version`') and the API's version (as '`API Version`'). These should match and if they do not or seem to be behind the official version, you can download the latest verseion of the Tool - which should come with the latest version of the API as well baked into it - [here](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Tool). 
 
 In order to generate your mod you click the `Build` button and it will be written to the output path specified. 
 This mod will run if posted to the Steam Workshop and subscribed to or added to the local mod directory, but **only if you also have the [Reskin Engine Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) subscribed**. 
