@@ -39,6 +39,14 @@ The `Human-Made Code` bubble is, of course, optional but if you do want to write
 
 > If you're thinking, *why in the world would I want to write code when the tool's already doing it for me?* The reason is because it gives far more control and allows you to make specific behaviours that the Engine's standardized processes are too generic for. A perfect example of this that has been published on the workshop is Skusch's [Day-Night Cycle Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042&searchtext=day+night+cycle). It was a very early alpha tester of this Engine and used the API code along with a special script the creator wrote themself to make the windows and street torches of certain buildings glow at night and shut off during the day. 
 
+## Preparing Models
+
+Before starting on art for a skin, you must first look up the specifications for that skin in the `Skin-Index` so that you know hov to make the art. In the past, this has been the main, solid option to understanding how to make the art for a skin without full-on code diving research, but now there's an actively changing [spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0) you can use to track the official progress on the support and type of support for each of the different types of skins. Note using the spreadsheet is more unstable and subject to change, but gives you an insight into the most recent changes to the Engine's structure. 
+
+If you want a more comprehensive, in-depth look at skins and how they work, there's a collection of prefabs, materials, textures, and more from the game in the folder `[Tool Root Folder]/Reskin Engine/Resources/Reskin Engine`. The `API` folder and the `version.txt` and `Info.md` files are used internally by the Tool so don't mess with those, but everything else is there for a reference for the artist. 
+
+If you want additional information on how things are injected into the game and the patterns of visual elements and art look into the [Common Patterns]() file;
+
 ## UI Summary
 
 All of the images shown henceforth will be showing the Unity Editor + KCRE Unity Tool so make sure you're familiar with the interface of Unity (see the `Unity Editor` -> `Editor Interfaces` tutorials in the [link appendix](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide.md#tutorials-and-links-appendix) for further reading).
@@ -127,7 +135,7 @@ The final result of your mod should be a folder with two folders and one file in
     - [Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692)
     - [Github](https://github.com/DaDevFox/KCReskinEngine)
     - [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md)
-    - [Support Spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0)
+    - [Skin Support Spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0)
 - Mentioned Mods
     - [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) by Zat/BigMo
     - [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API) by Slooth
