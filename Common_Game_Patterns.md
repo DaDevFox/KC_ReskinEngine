@@ -161,6 +161,13 @@ Similar to the [Two-Piece-Modular Pattern](https://github.com/DaDevFox/KCReskinE
 Nine-piece instance pattern, only notably used by the ballista due to its animated pieces for the bowstring draw animation. 
 
 
-// add colliders pattern
+# Unsupported Patterns
+Patterns that are known but as of yet unsupported by the Engine
 
-// add person positions pattern
+## Particles
+Particles like smoke, build effects, etc. 
+
+## Stacks/ResourceStacks
+The locations/arrrangement of the visual stacks of resources that fill up as the building's storage fills
+
+
