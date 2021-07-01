@@ -11,7 +11,7 @@ namespace ReskinEngine.Editor
 
     public abstract class GatePreview<T> : BuildingPreview<T> where T : GateSkin
     {
-        public override string path { get; } = "Reskin Engine/Buildings/WoodCastleBlock";
+        public override string path { get; } = $"{buildingsRoot}/WoodCastleBlock";
 
         public GameObject defaultGateMesh;
         public GameObject defaultPorticulusMesh;

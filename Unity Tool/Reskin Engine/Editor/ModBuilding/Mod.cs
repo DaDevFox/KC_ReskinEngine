@@ -4,7 +4,7 @@
 
 namespace ReskinEngine.Editor
 {
-    [CreateAssetMenu(menuName = "Skin/Mod")]
+    [CreateAssetMenu(menuName = "Reskin Engine/Mod")]
     public class Mod : ScriptableObject
     {
         [Tooltip("Name of the mod")]

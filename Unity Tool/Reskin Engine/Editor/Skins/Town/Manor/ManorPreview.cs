@@ -11,7 +11,7 @@ namespace ReskinEngine.Editor
 {
     public class ManorPreview : GenericBuildingPreview<ManorSkin>
     {
-        public override string path => "Reskin Engine/Buildings/ManorHouse";
+        public override string path => $"{buildingsRoot}/ManorHouse";
     }
 }
 

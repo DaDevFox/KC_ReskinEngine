@@ -6,7 +6,6 @@ using UnityEngine;
 namespace ReskinEngine.Editor
 {
     
-    [CreateAssetMenu(menuName = "Skin/Keep")]
     [Serializable]
     public class KeepSkin : BuildingSkin
     {

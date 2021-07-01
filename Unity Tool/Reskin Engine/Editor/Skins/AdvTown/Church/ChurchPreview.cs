@@ -12,7 +12,7 @@ namespace ReskinEngine.Editor
 
     public class ChurchPreview : GenericBuildingPreview<ChurchSkin>
     {
-        public override string path => "Reskin Engine/Buildings/Church";
+        public override string path => $"{buildingsRoot}/Church";
     }
 
     #endregion

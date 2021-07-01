@@ -20,7 +20,7 @@ namespace ReskinEngine.Editor
 
         public Direction direction;
 
-        public override string path => "Reskin Engine/Buildings/CastleStairs";
+        public override string path => $"{buildingsRoot}/CastleStairs";
 
         public override void Apply(GameObject obj, CastleStairsSkin skin)
         {

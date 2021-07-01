@@ -148,6 +148,8 @@ namespace ReskinEngine.Editor
             // iterate skins
             foreach (Skin skin in collection.skins)
             {
+                text += $"\n{ _t}// {skin.name}";
+
                 // import assets
                 foreach(FieldInfo field in skin.GetType().GetFields())
                 {
@@ -155,7 +157,7 @@ namespace ReskinEngine.Editor
                     if (field.GetValue(skin) as UnityEngine.Object != null)
                     {
                         UnityEngine.Object value = field.GetValue(skin) as UnityEngine.Object;
-                        text += $"\n{_t}// {skin.name} \n{_t}{fieldType} {skin.typeId}_{skin.name}_{field.Name} = {bundleVarName}.LoadAsset<{fieldType}>(\"{AssetDatabase.GetAssetPath(value)}\");";
+                        text += $"\n{_t}{fieldType} {skin.typeId}_{skin.name}_{field.Name} = {bundleVarName}.LoadAsset<{fieldType}>(\"{AssetDatabase.GetAssetPath(value)}\");";
                     }
                 }
 

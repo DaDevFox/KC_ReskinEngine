@@ -10,7 +10,7 @@ namespace ReskinEngine.Editor
 
     public class KeepPreview : BuildingPreview<KeepSkin>
     {
-        public override string path => "Reskin Engine/Buildings/Keep";
+        public override string path => $"{buildingsRoot}/Keep";
         private int upgrade;
         private bool refresh = false;
 

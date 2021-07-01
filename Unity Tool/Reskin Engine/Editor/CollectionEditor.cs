@@ -122,7 +122,7 @@ namespace ReskinEngine.Editor
                 selectedSkinId = EditorGUILayout.Popup("Skin to Create", selectedSkinId, skinNameOptions);
 
                 skinName = GetUnusedSkinName();
-                skinName = ValidSkinName(EditorGUILayout.TextField("Skin Name", skinName));
+                skinName = ValidSkinName(EditorGUILayout.DelayedTextField("Skin Name", skinName));
 
                 if (GUILayout.Button("Create"))
                     CreateSkin();

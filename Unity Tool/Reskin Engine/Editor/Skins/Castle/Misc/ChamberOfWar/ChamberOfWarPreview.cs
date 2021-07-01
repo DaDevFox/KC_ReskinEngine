@@ -6,7 +6,7 @@ namespace ReskinEngine.Editor
 
     public class ChamberOfWarPreview : GenericBuildingPreview<ChamberOfWarSkin>
     {
-        public override string path => "Reskin Engine/Buildings/ChamberOfWar";
+        public override string path => $"{buildingsRoot}/ChamberOfWar";
     }
 
     #endregion

@@ -10,7 +10,7 @@ using UnityEditor;
 
 namespace ReskinEngine.Editor
 {
-    [CreateAssetMenu(menuName = "Skin/Collection")]
+    [CreateAssetMenu(menuName = "Reskin Engine/Collection")]
     public class Collection : ScriptableObject
     {
         // test

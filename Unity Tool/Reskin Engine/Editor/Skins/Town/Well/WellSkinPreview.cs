@@ -11,7 +11,7 @@ namespace ReskinEngine.Editor
 {
     public class WellSkinPreview : GenericBuildingPreview<WellSkin>
     {
-        public override string path => "Reskin Engine/Buildings/Well";
+        public override string path => $"{buildingsRoot}/Well";
     }
 }
 

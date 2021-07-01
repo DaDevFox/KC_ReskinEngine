@@ -11,8 +11,8 @@ namespace ReskinEngine.Editor
 {
     public class TreePreview : SkinPreview<TreeSkin>
     {
-        public static string treeModel = "Reskin Engine/Environment/treetop";
-        public static string treeMaterial = "Reskin Engine/Environment/TreeTop";
+        public static string treeModel = $"{environmentRoot}/treetop";
+        public static string treeMaterial = $"{environmentRoot}/TreeTop";
 
         public override GameObject Create()
         {

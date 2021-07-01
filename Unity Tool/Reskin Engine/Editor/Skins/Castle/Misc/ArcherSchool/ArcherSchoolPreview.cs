@@ -6,7 +6,7 @@ namespace ReskinEngine.Editor
 
     public class ArcherSchoolPreview : GenericBuildingPreview<ArcherSchoolSkin>
     {
-        public override string path => "Reskin Engine/Buildings/ArcherSchool";
+        public override string path => $"{buildingsRoot}/ArcherSchool";
     }
 
     #endregion

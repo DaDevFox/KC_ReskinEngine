@@ -6,7 +6,7 @@ namespace ReskinEngine.Editor
 
     public class GreatHallPreview : GenericBuildingPreview<GreatHallSkin>
     {
-        public override string path => "Reskin Engine/Buildings/GreatHall";
+        public override string path => $"{buildingsRoot}/GreatHall";
     }
 
     #endregion

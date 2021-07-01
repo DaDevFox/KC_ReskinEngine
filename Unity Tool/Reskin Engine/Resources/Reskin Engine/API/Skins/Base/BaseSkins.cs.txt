@@ -48,6 +48,12 @@ namespace ReskinEngine.API
 
     #region Skins
 
+    public class SpecialCategory : Category
+    {
+        public override string id => "special";
+        public override int position => -1;
+    }
+
     public class EnvironmentCategory : Category
     {
         public override string id => "environment";
@@ -448,7 +454,6 @@ namespace ReskinEngine.API
 
     //Generic
     /// <summary>
-    /// Don't use as a skin
     /// <para>Type of skin that can be used for most buildings in the game</para>
     /// </summary>
     [Hidden]

@@ -6,7 +6,7 @@ namespace ReskinEngine.Editor
 
     public class StoneGatePreview : GatePreview<StoneGateSkin>
     {
-        public override string path => "Reskin Engine/Buildings/Gate";
+        public override string path => $"{buildingsRoot}/Gate";
     }
 
     #endregion

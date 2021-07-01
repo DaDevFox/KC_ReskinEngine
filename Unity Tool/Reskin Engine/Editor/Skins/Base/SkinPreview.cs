@@ -41,6 +41,11 @@ namespace ReskinEngine.Editor
     {
         public override Type SkinType { get; } = typeof(T);
 
+        public static string KCAssetsRoot { get; } = "Reskin Engine/KCAssets";
+
+        public static string modelsRoot { get; } = $"{KCAssetsRoot}/Models/GameModels (and some prefabs)";
+        public static string environmentRoot { get; } = $"{KCAssetsRoot}/Environment";
+
         public override void Apply(GameObject obj, Skin skin)
         {
             base.Apply(obj, skin);
@@ -96,7 +101,9 @@ namespace ReskinEngine.Editor
 
     public abstract class BuildingPreview<T> : PrefabPreview<T> where T : BuildingSkin
     {
-        public static string personPreviewPath = "Reskin Engine/Environment/Person 1";
+        public static string personPreviewPath = $"{environmentRoot}/Person 1";
+
+        public static string buildingsRoot { get; } = "Reskin Engine/KCAssets/Buildings";
 
         public abstract override string path { get; }
 

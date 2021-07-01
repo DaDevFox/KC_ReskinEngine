@@ -4,7 +4,7 @@ namespace ReskinEngine.Editor
 {
     public class BarracksPreview : GenericBuildingPreview<BarracksSkin>
     {
-        public override string path => "Reskin Engine/Buildings/Barracks";
+        public override string path => $"{buildingsRoot}/Barracks";
     }
 
 }

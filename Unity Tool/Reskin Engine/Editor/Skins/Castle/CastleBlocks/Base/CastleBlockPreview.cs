@@ -10,7 +10,7 @@ namespace ReskinEngine.Editor
 
     public abstract class CastleBlockPreview<T> : BuildingPreview<T> where T : CastleBlockSkin
     {
-        public sealed override string path { get; } = "Reskin Engine/Buildings/WoodCastleBlock";
+        public sealed override string path { get; } = $"{buildingsRoot}/WoodCastleBlock";
 
         private CastleBlockType _selected = CastleBlockType.Open;
 

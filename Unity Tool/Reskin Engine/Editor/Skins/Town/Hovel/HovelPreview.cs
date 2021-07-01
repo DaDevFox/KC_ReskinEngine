@@ -6,7 +6,7 @@ namespace ReskinEngine.Editor
 
     public class HovelPreview : GenericBuildingPreview<HovelSkin>
     {
-        public override string path => "Reskin Engine/Buildings/House";
+        public override string path => $"{buildingsRoot}/House";
     }
 
     #endregion

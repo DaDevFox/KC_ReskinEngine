@@ -17,7 +17,7 @@ You may notice I said it functions with a *reduced* amount of code, but not none
 
 ![Image](https://i.ibb.co/Kmjd9fC/Layers-Explanation.png)
 
-Essentially the Engine has 3 layers, but only 2 necessary ones: it has the base layer, the Engine itself, - the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) - and the API, which is a little piece of code that you can put in your own, separate mod that allows it to communicate with the Engine layer. All mods that run through the engine have some code in them and the API, but there's a tool you can [download](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Tool) and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
+Essentially the Engine has 3 layers, but only 2 necessary ones: it has the base layer, the Engine itself, - the mod with the steam listing [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2524492692) - and the API, which is a little piece of code that you can put in your own, separate mod that allows it to communicate with the Engine. All mods that run through the engine have some code in them and the API, but there's a tool you can [download](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Tool) and use with the Unity Editor that automatically writes the code for you, so you don't have to. Instead of code, it allows you to build your mod through the interfaces, settings, and UI of the Unity Editor.  
 
 Of course this tool is optional and modders experienced in C# can just write the code themselves directly in the `Human-Made Code` + `Mod Files` section of the diagram above utilizing the API (more on this later). 
 
@@ -28,13 +28,15 @@ Some helpful tutorials from the Unity Docs:
 - [Structure of the Engine](https://docs.unity3d.com/2018.2/Documentation/Manual/AssetWorkflow.html)
 - [Editor Interfaces](https://docs.unity3d.com/2018.2/Documentation/Manual/UsingTheEditor.html)
 
-> If you are looking for any kind of tutorials on the Unity Editor I recommend you read through the [Official Unity Documentation](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityOverview.html) for that subject; it's fairly comprehensive in most areas, especially regarding the interface of the editor. 
+**(If you have never heard of the Untiy Editor or have heard of it but have no idea what it is, I very strongly reccommend you at least glance over all three)**
+
+> Also, if you are looking for any kind of tutorials on anything about the Unity Editor I recommend you read through the [Official Unity Documentation](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityOverview.html) for that subject; it's fairly comprehensive in most areas, especially regarding the interface of the editor. 
 
 # Ease of Use
 
 ## How much code is necessary?
 
-In the layers diagram all of the red bubbles are code and everything in the Unity layer is done through the UI of the Unity Editor. The entirety of the Unity layer eventually feeds into one red bubble labelled 'Mod Files'. This is the body of your mod and it is automatically generated and will automatically function when subscribed or locally downloaded; so you don't even need to open it. Therefore in the absolute minimalist sense, you don't ever need to even open a code editor, much less write code. 
+In the layers diagram all of the red bubbles are code and everything in the Unity layer is done through the UI of the Unity Editor. The entirety of the Unity layer eventually feeds into one red bubble labelled 'Mod Files'. This is the body of your mod and it is automatically generated and will automatically function when subscribed to via Steam or locally downloaded; so you don't even need to open it. Therefore in the absolute minimalist sense, you don't ever need to even open a code editor, much less write code. 
 
 The `Human-Made Code` bubble is, of course, optional but if you do want to write code either in addition to the Unity Tool's generated code or just entirely to make the mod by yourself, I suggest you look through the [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md) and the [KC Mod Tutorial](https://modtutorial.kingdomsandcastles.com/). 
 
@@ -42,13 +44,15 @@ The `Human-Made Code` bubble is, of course, optional but if you do want to write
 
 ## Preparing Models
 
-Before starting on art for a skin, you must first look up the specifications for that skin in the `Skin-Index` so that you know hov to make the art. In the past, this has been the main, solid option to understanding how to make the art for a skin without full-on code diving research, but now there's an actively changing [spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0) you can use to track the official progress on the support and type of support for each of the different types of skins. Note using the spreadsheet is more unstable and subject to change, but gives you an insight into the most recent changes to the Engine's structure. 
+Before starting on art for a skin, you must first look up the specifications for that skin in the `Skin-Index` so that you know how to make the art. In the past, this has been the main, solid option to understanding how to make the art for a skin without full-on code diving research, but now there's an actively changing [spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0) you can use to track the official progress on the level and type of support for each of the different types of skins. Note using the spreadsheet is more unstable and subject to change, but gives you an insight into the most recent changes to the Engine's structure. 
 
-If you want a more comprehensive, in-depth look at skins and how they work, there's a collection of prefabs, materials, textures, and more from the game in the folder `[Tool Root Folder]/Reskin Engine/Resources/Reskin Engine`. The `API` folder and the `version.txt` and `Info.md` files are used internally by the Tool so don't mess with those, but everything else is there for a reference for the artist. 
+If you want a more comprehensive, in-depth look at skins and how they work, there's a collection of prefabs, materials, textures, and more from the game in the folder `[Tool Root Folder]/Reskin Engine/Resources/Reskin Engine`. The `API` folder and the `version.txt` and `Info.md` files are used internally by the Tool so don't mess with those, but everything else is there for a reference for artists. 
+
+All of these prefabs, materials, and other assets, with the exception of a few I updated personally, come directly from the KC Toolkit, a public GitHub repository of a lot of assets the game uses.  
 
 Before modelling I highly recommend you look into the  [Common Graphical Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) Document, especially for materials and models. 
 
-> If you want additional information on how things are injected into the game and the patterns of visual elements and art look into the advanced section of the [Common Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) file; it contains details on the way buildings of different model formats get their models injected. 
+> If you want additional information on how things are injected into the game and the patterns of visual elements and art look into the advanced section of the [Common Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) file; it contains details on the way buildings of different model formats get their models injected. [Not written yet :p]
 
 ## UI Summary
 

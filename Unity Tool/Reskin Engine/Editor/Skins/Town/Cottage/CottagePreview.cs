@@ -6,7 +6,7 @@ namespace ReskinEngine.Editor
 
     public class CottagePreview : GenericBuildingPreview<CottageSkin>
     {
-        public override string path => "Reskin Engine/Buildings/LargeHouse";
+        public override string path => $"{buildingsRoot}/LargeHouse";
     }
 
     #endregion

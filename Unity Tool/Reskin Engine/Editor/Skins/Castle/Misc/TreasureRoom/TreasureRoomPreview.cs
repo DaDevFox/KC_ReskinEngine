@@ -6,7 +6,7 @@ namespace ReskinEngine.Editor
 
     public class TreasureRoomPreview : GenericBuildingPreview<TreasureRoomSkin>
     {
-        public override string path => "Reskin Engine/Buildings/ThroneRoom";
+        public override string path => $"{buildingsRoot}/ThroneRoom";
     }
 
     #endregion

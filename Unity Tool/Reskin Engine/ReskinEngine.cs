@@ -14,6 +14,11 @@ namespace ReskinEngine.Editor
 {
     public class ReskinEngine
     {
+        public static string APIVersionMajor;
+        public static string APIVersionMinor;
+        public static string ToolVersionMajor;
+        public static string ToolVersionMinor;
+
         public static Type[] skinTypes { get; private set; }
         public static Skin[] skins { get; private set; }
 

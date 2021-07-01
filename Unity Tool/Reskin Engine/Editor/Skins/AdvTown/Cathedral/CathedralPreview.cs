@@ -10,7 +10,7 @@ namespace ReskinEngine.Editor
 {
     public class CathedralPreview : GenericBuildingPreview<CathedralSkin>
     {
-        public override string path => "Reskin Engine/Buildings/Cathedral";
+        public override string path => $"{buildingsRoot}/Cathedral";
     }
 }
 
