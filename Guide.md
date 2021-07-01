@@ -62,7 +62,7 @@ All three exist in the Unity Editor in the form of a `ScriptableObject`, better 
 
 ### Collection and Skins Interface
 
-A `Collection` is a list of skins that are grouped together. Personally, I like to group collections by category or theme, like 'Town Buildings' or 'Halloween-themed`. 
+A `Collection` is a list of skins that are grouped together. Personally I like to group collections by category or theme, such as 'Town-Buildings' or 'Halloween-themed`. 
 
 A `Collection`'s interface looks like this by default:
 
