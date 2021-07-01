@@ -142,9 +142,9 @@ The final result of your mod should be a folder with two folders and one file in
     - [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md)
     - [Skin Support Spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0)
 - Mentioned Mods
-    - [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182&searchtext=ModMenu) by Zat/BigMo
-    - [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742&searchtext=API) by Slooth
-    - [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946&searchtext=API) by Slooth
-    - [Day Night Cycle](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042&searchtext=day+night+cycle) by Skusch
+    - [ModMenu](https://steamcommunity.com/sharedfiles/filedetails/?id=2071244182) by Zat/BigMo
+    - [Custom Research API](https://steamcommunity.com/sharedfiles/filedetails/?id=2264448742) by Slooth
+    - [Custom Spells API](https://steamcommunity.com/sharedfiles/filedetails/?id=2256480946) by Slooth
+    - [Day Night Cycle](https://steamcommunity.com/sharedfiles/filedetails/?id=2013600042) by Skusch
     - [New Lands](https://steamcommunity.com/sharedfiles/filedetails/?id=1979042514) by mpu/Cedric
     - [Minimap](https://steamcommunity.com/sharedfiles/filedetails/?id=2056871463) by Zat/BigMo
