@@ -105,4 +105,9 @@ string FriendlyName;
 
 This type of skin follows the '[instance-generic](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md#instance-generic-pattern--ig)' pattern, coded `ig`. The `ig` pattern is extremely common and used by almost half the buildings in the game. It features a simple building with a single model that is the first child of the first child of the building root (yes you read that right). See also [`igm`](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md#instance-generic-modular-pattern--igm), a variation of the `ig` pattern that also includes a single modular piece (windmill, cemetary, fishut). 
 
-
+---
+An [instance](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md#instance-pattern--i) Mesh field that represents the main model of the building
+```cs
+GameObject baseModel;
+```
+---
