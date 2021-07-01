@@ -46,9 +46,9 @@ The `Human-Made Code` bubble is, of course, optional but if you do want to write
 
 Before starting on art for a skin, you must first look up the specifications for that skin in the `Skin-Index` so that you know how to make the art. In the past, this has been the main, solid option to understanding how to make the art for a skin without full-on code diving research, but now there's an actively changing [spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0) you can use to track the official progress on the level and type of support for each of the different types of skins. Note using the spreadsheet is more unstable and subject to change, but gives you an insight into the most recent changes to the Engine's structure. 
 
-If you want a more comprehensive, in-depth look at skins and how they work, there's a collection of prefabs, materials, textures, and more from the game in the folder `[Tool Root Folder]/Reskin Engine/Resources/Reskin Engine`. The `API` folder and the `version.txt` and `Info.md` files are used internally by the Tool so don't mess with those, but everything else is there for a reference for artists. 
+If you want a more comprehensive, in-depth look at game assets, particularly buildings, and how they work, there's a collection of prefabs, materials, textures, and more from the game in the folder `[Tool Root Folder]/Reskin Engine/Resources/Reskin Engine/KCAssets`. All assets, with the exception of a few I updated personally, come directly from the KC Toolkit, a public GitHub repository of a good selection of the assets the game uses internally.  
 
-All of these prefabs, materials, and other assets, with the exception of a few I updated personally, come directly from the KC Toolkit, a public GitHub repository of a lot of assets the game uses.  
+I have annotated the buildings, at least the ones I've worked on so far, with comments and annotations showing where the game scripts would be in their tree structure because the KC Toolkit does not contain user-made scripts, only core Unity ones and a couple important shaders. 
 
 Before modelling I highly recommend you look into the  [Common Graphical Patterns](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md) Document, especially for materials and models. 
 
