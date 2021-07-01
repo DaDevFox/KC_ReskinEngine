@@ -1,8 +1,15 @@
 # Introduction
 This file documents the different patterns that buildings and/or environment in KC commonly use. 
 
-# Material/Shader Patterns
-## Unimaterial/Livery Material Pattern | `um`/`lm`
+Many of the patterns have a short code usually 1-3 letters long to use in spreadsheets such as the [KCRE Skin Support Spreadsheet](https://docs.google.com/spreadsheets/d/1ow1hWDYpN2fDug6KnrOqCa8hPSPgnouY06qliUtIWpA/edit#gid=0) 
+
+# Building-Specific Patterns
+
+## Material/Shader Patterns
+
+Patterns relating to the building shaders and materials that all of the base game's buildings follow. Implementing all of these patterns in a building reskin will complete all the steps to make the building indistinguishable as it follows the process vanilla buildings do.  
+
+### Unimaterial/Livery Material Pattern | `um`/`lm`
 This is a general term involving a unimaterial (in stable branch) or livery material (in alpha), although they are essentially the same thing. 
 
 A unimaterial/livery material is a material with a texture that holds all the colors the buildings and environment in the game use. 
@@ -19,7 +26,7 @@ For Stable `[Parent Directory for Tool Folder]/Reskin Engine/Resources/Reskin En
 
 For the stable branch `Unimaterial 0` is most commonly used for buildings
 
-## Building Shader Pattern
+### Building Shader Pattern
 (This pattern ties into the [Unimaterial/Livery Material Pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Building_Patterns.md#unimateriallivery-material-pattern--umlm))
 
 Most buildings have a list of mesh renderers which all use a special shader called the Building Shader. (This list is [`BuildingSkin`](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md#the-buildingskin)`.renderersWithBuildingShader`)
@@ -28,9 +35,25 @@ The building shader has some special shader code on it that allows cool effects 
 
 **All** renderers registered in the list that have a material using the building shader on them will be automatically updated with all the building animations, placement effects, and other stuff the game does and will have their materials' textures set to a unimaterial or livery material. 
 
-## Outline Mesh Pattern
+### Outline Mesh Pattern
 
 Similar to the [Building Shader Pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md#building-shader-pattern), there's a list for meshes that will be registered to the outline effect that shows when a building is highlighted or selected. (This list is [`BuildingSkin`](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md#the-buildingskin)`.outlineMeshes` and there's a seperate list for skinnedMeshes; [`BuildingSkin`](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md#the-buildingskin)`.outlineSkinnedMeshes`)
+
+## Misc Patterns
+
+Patterns relating less to the visuals and more to syncing the visuals with the functionality of the building
+
+### Collider Pattern
+
+All buildings have some kind of collider or multiple colliders somewhere in their `GameObject` structure that the game uses to select the shape of the building through primary clicks. 
+
+> Setting the list of colliders in a Skin through the Unity Tool or through the API will override the vanilla buidling's colliders but leaving it blank/null/size 0 will use the vanilla building's colliders 
+
+### Person Positions Pattern
+
+Person Positions is the game's name for the list of positions peasants will stand at while working in the building (if the building has jobs). The Person Positions list should be the same size as the amount of jobs the building has.   
+
+
 
 
 # Modelling Patterns
@@ -135,7 +158,7 @@ Similar to the [Two-Piece-Modular Pattern](https://github.com/DaDevFox/KCReskinE
 
 ### `i9`
 
-
+Nine-piece instance pattern, only notably used by the ballista due to its animated pieces for the bowstring draw animation. 
 
 
 // add colliders pattern
