@@ -90,6 +90,10 @@ This pattern allows the object to be translated almost perfectly from Unity to i
  
 ## Instance-Generic Pattern | `ig`
 
+*Pattern specifications*: 
+
+- **A building where the first child of the first child of the building root is the base model**
+
 A common pattern many buildings follow where the building follows a certain structure that includes a single model that makes up the visuals of the building. Every building in the game has a first child called `Offset` and in an instance-generic pattern abforming building that `GameObject`'s first child is the main model fo the building.
 
 More succinctly, if the first child of the first child of the building's root is the base model of the building, it follows the instance-generic pattern. 
@@ -97,14 +101,43 @@ More succinctly, if the first child of the first child of the building's root is
 > This is by far the most common building pattern. Most buildings without any special characteristics like moving pieces or parts that appear over time will follow this pattern. 
 
 ## Instance-Generic-Modular Pattern | `igm`
+
+Simply an [Instance-Generic Pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md#instance-generic-pattern--ig) with a single modular piece added on, like the blades of an otherwise mundane windmill, or the waterwheel of a noria. Sometimes those pieces will be modular however sometimes they can be instanced, in which case this actually follows the `i2`, or [Two-Piece-Instance Pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md#i2).  
+
 ## Modular-Numerical Pattern | `mx`
+
+Represents a form of a [modular](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md#modular-pattern--m) pattern with multiple modular pieces, usually to be swapped out with each other
+
 ### `m2`
+
+A two-piece modular pattern, usually used for mass-use models that come in pairs, like a troop model + a sword, or an archer + a bow. 
+
+Notably used in units and Viking raiders. 
+
 ### `m4`
+
+A four-piece modular pattern, used for permutable pieces that can only change on the X and Z axes, as that makes 4 total possible unique combinations. 
+
+Notably used in roads and bridges. 
+
 ### `m6`
+
+A six-piece modular pattern, only notably used for castle blocks, as they require 2 extra models due to the Y-dimension as well as X and Z (one block for the top of a tower and one for the tower middle). 
+
 ### `m8`
+
+An eight-piece modular pattern, only notably used for the garden as it has 4 permutable pieces for normal usage and a special  fancy set for use when irrigated as well. 
+
 ## Instance-Numerical Pattern | `ix`
 ### `i2`
+
+Similar to the [Two-Piece-Modular Pattern](https://github.com/DaDevFox/KCReskinEngine/blob/master/Common_Game_Patterns.md#m2) except using instance models. 
+
 ### `i9`
 
+
+
+
 // add colliders pattern
+
 // add person positions pattern
