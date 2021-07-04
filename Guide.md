@@ -10,17 +10,23 @@ The broad goal of this engine is to make it easier where possible for people of 
 ![Image](https://media.discordapp.net/attachments/294162953337307138/704799796325515315/Sky_Over_View.png "Amazing Models by TPunko")
 *This wonderful blocky scene was made by TPunko from the Kingdoms and Castles Discord in MagicaVoxel*
 
+### Key Terminology:
+
+**UI** - User Interface; Visual controls like buttons, panels, displays etc. 
+
+**Unity** - Game Engine that the game uses; it has an editor called the [**Unity Editor**]() that is free and allows users to create games or other types of media (we use it here to create mods using the Unity Tool)
+
 # Ease of Use
 
 ## How much code is necessary?
 
 Normally, a modder would have to write code to create a mod, and upload the files containing the code and its associated assets (models, images, etc. ) to the Steam Workshop. 
 
-This Engine has a special tool you can download called the KCRE [Unity Tool](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Tool). The Unity Tool lets you create your mod using through the Unity Editor, using UI instead of code (buttons, text fields, settings, essentially visual things instead of lines of code), and automatically generates the files you can upload to the Steam Workshop. Therefore in the absolute minimalist sense, you don't ever need to even open a code editor, much less write code. 
+This Engine has a special tool you can download called the KCRE [Unity Tool](https://github.com/DaDevFox/KCReskinEngine/tree/master/Unity%20Tool). The Unity Tool lets you create your mod through the Unity Editor, using UI instead of code (buttons, text fields, settings, essentially visual things instead of lines of code), and automatically generates the files you can upload to the Steam Workshop. Therefore in the absolute minimalist sense, you don't ever need to even open a code editor, much less write code. 
 
 ![Image](https://i.ibb.co/Kmjd9fC/Layers-Explanation.png)
 
-In the layers diagram, all the red bubbles are code and everything in the Unity layer is done entirely through UI. Since everything in the Unity Layer eventually feeds into a single red bubble called `Mod Files` and that bubble is automatically generated, the rest of the diagram doesn't even need to be considered by someone using the Unity Tool. 
+In the diagram above, all the red bubbles are code and everything in the Unity layer is done entirely through UI. Since everything in the Unity Layer eventually feeds into a single red bubble called `Mod Files` and that bubble is automatically generated, the rest of the diagram doesn't even need to be considered by someone using the Unity Tool. 
 
 The `Human-Made Code` bubble is, of course, optional but if you do want to write code either in addition to the Unity Tool's generated code or just entirely to make the mod by yourself, I suggest you look through the [API Reference](https://github.com/DaDevFox/KCReskinEngine/blob/master/API_Reference.md) and the [KC Mod Tutorial](https://modtutorial.kingdomsandcastles.com/). 
 
@@ -41,14 +47,9 @@ Before modelling I highly recommend you look into the  [Common Graphical Pattern
 ## Unity Tool Installation
 
 A prerequisite of this tool is the Unity Editor; it's a free, widely used Game Engine that Kingdoms and Castles uses. 
-The game prefers the 2018.1 - 2018.4 versions, anything outside that range might mess with how the game reads your mod as the mod code will be using a newer version of Unity than the game itself does. 
+The game prefers the 2018.1 - 2018.3 versions, anything outside that range might mess with how the game reads your mod as the mod code will be using a newer version of Unity than the game itself does. 
 
-Some helpful tutorials from the Unity Docs:
-- [Installation and first use of the Unity Editor](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityBasics.html)
-- [Structure of the Unity Editor's Asset system](https://docs.unity3d.com/2018.2/Documentation/Manual/AssetWorkflow.html)
-- [UI of the Unity Editor](https://docs.unity3d.com/2018.2/Documentation/Manual/UsingTheEditor.html)
-
-**(If you have never heard of the Untiy Editor or have heard of it but have no idea what it is, I very strongly recommend you at least glance over all three)**
+Have no idea what Unity is or want to read more? [Click here](). 
 
 > Also, if you are looking for any kind of tutorials on anything about the Unity Editor I recommend you read through the [Official Unity Documentation](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityOverview.html) for that subject; it's fairly comprehensive in most areas, especially regarding the interface of the editor. 
 
@@ -144,6 +145,23 @@ The final result of your mod should be a folder with two folders and one file in
     - contents of API code (latest version always available at https://github.com/DaDevFox/KCReskinEngine/tree/master/API)
 - Mod.cs 
 ```
+
+# Background
+
+## Unity Editor
+
+the Unity Editor is a free, widely used Game Engine that Kingdoms and Castles uses. 
+
+The game uses veresion 2018.2. 
+
+Some helpful tutorials from the Unity Docs:
+- [Installation and first use of the Unity Editor](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityBasics.html)
+- [Structure of the Unity Editor's Asset system](https://docs.unity3d.com/2018.2/Documentation/Manual/AssetWorkflow.html)
+- [UI of the Unity Editor](https://docs.unity3d.com/2018.2/Documentation/Manual/UsingTheEditor.html)
+
+If this is your first time hearing of the Unity Editor or don't understand it, I very strongly recommend reading through all three of the above tutorials. 
+
+If you wish to use the Unity Tool to make mods without the use of code you will do so through the Unity Editor - hence the name **Unity** Tool - so you should be familiar with the editor or familiarize yourself with the above tutorials. 
 
 # Tutorials and Links Appendix
 - Kingdoms and Castles
