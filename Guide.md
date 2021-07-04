@@ -14,7 +14,7 @@ The broad goal of this engine is to make it easier where possible for people of 
 
 **UI** - User Interface; Visual controls like buttons, panels, displays etc. 
 
-**Unity** - Game Engine that the game uses; it has an editor called the [**Unity Editor**]() that is free and allows users to create games or other types of media (we use it here to create mods using the Unity Tool)
+**Unity** - Game Engine that the game uses; it has an editor called the [**Unity Editor**](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide.md#unity-editor) that is free and allows users to create games or other types of media (we use it here to create mods using the Unity Tool)
 
 # Ease of Use
 
@@ -49,7 +49,7 @@ Before modelling I highly recommend you look into the  [Common Graphical Pattern
 A prerequisite of this tool is the Unity Editor; it's a free, widely used Game Engine that Kingdoms and Castles uses. 
 The game prefers the 2018.1 - 2018.3 versions, anything outside that range might mess with how the game reads your mod as the mod code will be using a newer version of Unity than the game itself does. 
 
-Have no idea what Unity is or want to read more? [Click here](). 
+Have no idea what Unity is or want to read more? [Click here](https://github.com/DaDevFox/KCReskinEngine/blob/master/Guide.md#unity-editor). 
 
 > Also, if you are looking for any kind of tutorials on anything about the Unity Editor I recommend you read through the [Official Unity Documentation](https://docs.unity3d.com/2018.2/Documentation/Manual/UnityOverview.html) for that subject; it's fairly comprehensive in most areas, especially regarding the interface of the editor. 
 

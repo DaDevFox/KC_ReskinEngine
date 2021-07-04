@@ -148,6 +148,9 @@ namespace ReskinEngine.Editor
             // iterate skins
             foreach (Skin skin in collection.skins)
             {
+                string skinAPIEquivalent = skin.GetType().Name;
+                string skinName = Util.SnakeCase(skin.name).Replace(' ', '_');
+
                 text += $"\n{ _t}// {skin.name}";
 
                 // import assets
@@ -157,14 +160,11 @@ namespace ReskinEngine.Editor
                     if (field.GetValue(skin) as UnityEngine.Object != null)
                     {
                         UnityEngine.Object value = field.GetValue(skin) as UnityEngine.Object;
-                        text += $"\n{_t}{fieldType} {skin.typeId}_{skin.name}_{field.Name} = {bundleVarName}.LoadAsset<{fieldType}>(\"{AssetDatabase.GetAssetPath(value)}\");";
+                        text += $"\n{_t}{fieldType} {skin.typeId}_{skinName}_{field.Name} = {bundleVarName}.LoadAsset<{fieldType}>(\"{AssetDatabase.GetAssetPath(value)}\");";
                     }
                 }
 
                 // TODO: protection against naming a skin a type name eg KeepSkin as name of a KeepSkin
-
-                string skinAPIEquivalent = skin.GetType().Name;
-                string skinName = Util.SnakeCase(skin.name);
 
                 // create skin
                 text += $"\n{_t}{skinAPIEquivalent} {skinName} = new {skinAPIEquivalent}();\n";
@@ -173,7 +173,7 @@ namespace ReskinEngine.Editor
                 foreach (FieldInfo field in skin.GetType().GetFields())
                 {
                     string fieldType = field.FieldType.Name;
-                    string valueRepresentation = GetStringRepresentation(field.GetValue(skin), true, skin.typeId, skin.name, field.Name);
+                    string valueRepresentation = GetStringRepresentation(field.GetValue(skin), true, skin.typeId, skinName, field.Name);
                     // if it's a UnityEngine.Object, it got packaged into the assetbundle so unpack it from there
                     if (valueRepresentation != null)
                         text += $"{_t}{skinName}.{field.Name} = {valueRepresentation};\n";
@@ -186,8 +186,8 @@ namespace ReskinEngine.Editor
 
                             indent++;
                             for (int i = 0; i < array.Length; i++)
-                                if(GetStringRepresentation(array.GetValue(i), true, skin.typeId, skin.name, field.Name) != null)
-                                    text += _t + GetStringRepresentation(array.GetValue(i), true, skin.typeId, skin.name, field.Name) + ((i != array.Length - 1) ? ", \n" : "");
+                                if(GetStringRepresentation(array.GetValue(i), true, skin.typeId, skinName, field.Name) != null)
+                                    text += _t + GetStringRepresentation(array.GetValue(i), true, skin.typeId, skinName, field.Name) + ((i != array.Length - 1) ? ", \n" : "");
                             indent--;
 
                             text += $"\n{_t}}};\n";

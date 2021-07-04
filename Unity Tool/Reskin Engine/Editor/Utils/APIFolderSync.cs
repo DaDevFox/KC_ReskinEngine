@@ -1,3 +1,5 @@
+// #define DEV_MODE
+
 using System;
 using UnityEngine;
 using System.IO;
@@ -13,10 +15,12 @@ namespace ReskinEngine.Editor.Utils
     {
         private static TextAsset versionFile = null;
 
-        public static bool devMode { get; set; } = true;
+        public static bool devMode { get; set; } = false;
 
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
+
+#if DEV_MODE
 
         [MenuItem("Reskin Engine/Parse API Folder to Text")]
         public static void ParseAPIFolderToText(){
@@ -40,8 +44,9 @@ namespace ReskinEngine.Editor.Utils
         }
 
 
+#endif
 
-        #endif
+#endif
 
 
 

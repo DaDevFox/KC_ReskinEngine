@@ -23,6 +23,10 @@ namespace ReskinEngine.Editor
         }
 
         public virtual SkinPreview preview { get; }
+
+        public virtual GameVersion version { get; } = Versioning.common;
+
+        public virtual bool supportsVariations { get; } = true;
     }
 
 

@@ -283,8 +283,8 @@ namespace ReskinEngine.API
     {
         public ReskinProfile ReskinProfile { get; internal set; }
         public int Identifier { get; internal set; }
-        internal virtual string TypeIdentifier { get; }
-        public abstract string Name { get; }
+        internal abstract string TypeIdentifier { get; }
+        public virtual string Name { get; }
 
         /// <summary>
         /// Adds GameObject children to the target with specifications per skin as a method of communication between the client API and the Engine
@@ -372,6 +372,29 @@ namespace ReskinEngine.API
         {
             GameObject pathObj = new GameObject($"{name}:{value}");
             pathObj.transform.SetParent(_base.transform);
+        }
+
+        protected void AppendPosition(GameObject _base, Vector3 position, string name)
+        {
+            GameObject positionObj = new GameObject(name);
+            positionObj.transform.SetParent(_base.transform);
+
+            positionObj.transform.localPosition = position;
+        }
+
+        protected void AppendTransform(GameObject _base, string name, Vector3 position, Quaternion rotation)
+        {
+            AppendTransform(_base, name, position, rotation, Vector3.one);
+        }
+
+        protected void AppendTransform(GameObject _base, string name, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            Transform transform = new GameObject(name).transform;
+            transform.SetParent(_base.transform);
+
+            transform.localPosition = position;
+            transform.localRotation = rotation;
+            transform.localScale = scale;
         }
 
         protected void AppendStringArray(GameObject _base, string name, params string[] array)

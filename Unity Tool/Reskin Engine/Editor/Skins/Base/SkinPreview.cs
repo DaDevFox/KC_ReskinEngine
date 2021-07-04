@@ -13,6 +13,11 @@ namespace ReskinEngine.Editor
 {
     public abstract class SkinPreview
     {
+        public static string KCAssetsRoot { get; } = "Reskin Engine/KCAssets";
+        public static string modelsRoot { get; } = $"{KCAssetsRoot}/Models/GameModels (and some prefabs)";
+        public static string environmentRoot { get; } = $"{KCAssetsRoot}/Environment";
+        public static string spritesRoot { get; } = $"{KCAssetsRoot}/Sprites";
+
         public abstract Type SkinType { get; }
 
         /// <summary>
@@ -41,10 +46,6 @@ namespace ReskinEngine.Editor
     {
         public override Type SkinType { get; } = typeof(T);
 
-        public static string KCAssetsRoot { get; } = "Reskin Engine/KCAssets";
-
-        public static string modelsRoot { get; } = $"{KCAssetsRoot}/Models/GameModels (and some prefabs)";
-        public static string environmentRoot { get; } = $"{KCAssetsRoot}/Environment";
 
         public override void Apply(GameObject obj, Skin skin)
         {

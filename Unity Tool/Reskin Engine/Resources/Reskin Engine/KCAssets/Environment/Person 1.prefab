@@ -4941,7 +4941,7 @@ GameObject:
   - component: {fileID: 432640}
   - component: {fileID: 65193991006797752}
   m_Layer: 0
-  m_Name: Person
+  m_Name: Person 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4955,7 +4955,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.079279, y: -10.665464, z: 58.133816}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.287581, y: 1.287581, z: 1.287581}
   m_Children:
   - {fileID: 4003323480452130}

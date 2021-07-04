@@ -13,6 +13,9 @@ namespace ReskinEngine.Editor
     {
         public override string typeId => "livery";
 
+        public override GameVersion version => GameVersion.ALPHA;
+        public override bool supportsVariations => false;
+
         public Texture[] banners;
         public Material[] bannerMaterial;
         public Color[] bannerColor;

@@ -12,6 +12,7 @@ namespace ReskinEngine.Editor
     public class TreeSkin : Skin
     {
         public override string typeId => "tree";
+        public override bool supportsVariations => false;
 
         public GameObject baseModel;
         public Material material;

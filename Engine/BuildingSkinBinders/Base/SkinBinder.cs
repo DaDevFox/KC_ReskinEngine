@@ -30,6 +30,23 @@ namespace ReskinEngine.Engine
     /// </summary>
     public abstract class SkinBinder
     {
+        public const string hiddenCacheName = "HiddenSkinCache";
+
+        private static GameObject hiddenCache = null;
+        public static GameObject HiddenCache
+        {
+            get
+            {
+                if (hiddenCache == null)
+                {
+                    hiddenCache = new GameObject("ReskinnedBuildingCache");
+                    hiddenCache.SetActive(false);
+                }
+
+                return hiddenCache;
+            }
+        }
+
         /// <summary>
         /// The index of the skin within its mod
         /// </summary>
@@ -47,7 +64,7 @@ namespace ReskinEngine.Engine
         /// <summary>
         /// String that the engine uses to identify this binder
         /// </summary>
-        public virtual string TypeIdentifier { get; }
+        public abstract string TypeIdentifier { get; }
 
         /// <summary>
         /// Creates a SkinBinder from the GameObject based on the information provided by the GameObject's name and returns it. 
@@ -59,6 +76,8 @@ namespace ReskinEngine.Engine
             if (obj == null)
                 throw new ArgumentNullException("obj");
 
+            Engine.dLog(obj.name);
+
             string[] info = obj.name.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
             string compatabilityIdentifier = info[0];
@@ -69,7 +88,7 @@ namespace ReskinEngine.Engine
 
             SkinBinder original = Engine.GetOriginalBinder(skinType);
 
-            if(original == null)
+            if (original == null)
             {
                 Engine.dLog($"No skin binder found for type identifier {skinType}");
                 return null;
@@ -79,7 +98,7 @@ namespace ReskinEngine.Engine
             SkinBinder instance = Activator.CreateInstance(original.GetType()) as SkinBinder;
 
             instance.Read(obj);
-            
+
             instance.CompatabilityIdentifier = compatabilityIdentifier;
             instance.ModName = mod;
             instance.Identifier = skinIdentifier;
@@ -106,7 +125,7 @@ namespace ReskinEngine.Engine
         protected void ReadModels(GameObject _base, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance, params string[] models)
         {
             foreach (string model in models)
-                ReadModel( _base, model, flags);
+                ReadModel(_base, model, flags);
         }
 
         /// <summary>
@@ -124,6 +143,7 @@ namespace ReskinEngine.Engine
                     GetType().GetField(modelName, flags).SetValue(this, _base.transform.Find(modelName).gameObject);
         }
 
+        [Obsolete]
         protected bool ReadMaterialFlag(GameObject _base, string materialName) => _base.transform.Find($"{materialName}Flag");
 
         protected void ReadMaterial(GameObject _base, string materialName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
@@ -131,6 +151,64 @@ namespace ReskinEngine.Engine
             if (_base.transform.Find(materialName))
                 if (GetType().GetField(materialName) != null)
                     GetType().GetField(materialName, flags).SetValue(this, _base.transform.Find(materialName).GetComponent<MeshRenderer>().material);
+        }
+
+
+        protected void ReadString(GameObject _base, string fieldName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
+        {
+            GameObject info = null;
+            for (int i = 0; i < _base.transform.childCount; i++)
+                if (_base.transform.GetChild(i).name.Contains(fieldName))
+                    info = _base.transform.GetChild(i).gameObject;
+
+            string value = "";
+            if (info != null)
+                value = info.name.Split(':')[1];
+
+            if (GetType().GetField(fieldName) != null)
+                GetType().GetField(fieldName, flags).SetValue(this, value);
+        }
+
+        protected void ReadStringArray(GameObject _base, string fieldName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
+        {
+            string[] array;
+            GameObject info = null;
+            for (int i = 0; i < _base.transform.childCount; i++)
+                if (_base.transform.GetChild(i).name.Contains(fieldName))
+                    info = _base.transform.GetChild(i).gameObject;
+            if (info)
+            {
+                string[] name = info.name.Split(':');
+                string[] list = name[1].Split(',');
+                array = list;
+            }
+            else
+                array = new string[0];
+
+            if (GetType().GetField(fieldName) != null)
+                GetType().GetField(fieldName, flags).SetValue(this, array);
+        }
+
+
+        protected Tuple<Vector3, Quaternion, Vector3> ReadTransformValues(GameObject _base, string transformName)
+        {
+            if (_base.transform.Find(transformName))
+            {
+                Engine.dLog("Found Transform " + transformName);
+
+                Transform transform = _base.transform.Find(transformName);
+                Tuple<Vector3, Quaternion, Vector3> result = new Tuple<Vector3, Quaternion, Vector3>(transform.localPosition, transform.localRotation, transform.localScale);
+
+                return result;
+            }
+            return null;
+        }
+
+        protected void ReadTransform(GameObject _base, string transformName)
+        {
+
+
+
         }
     }
 
@@ -140,8 +218,6 @@ namespace ReskinEngine.Engine
     public abstract class BuildingSkinBinder : SkinBinder
     {
         public static Dictionary<string, List<GameObject>> originalModels { get; private set; } = new Dictionary<string, List<GameObject>>();
-
-        public static GameObject hiddenCache = null;
 
         /// <summary>
         /// Do not override for BuildingSkinBindres
@@ -170,19 +246,18 @@ namespace ReskinEngine.Engine
             if (UniqueName != "unregistered" && UniqueName != "hidden")
             {
                 // FOR VARIATION TYPE PREBAKED; NOT ON-INSTANCE
+                if (Settings.variationType == Settings.VariationType.OnPlace)
+                    return;
 
-                if (hiddenCache == null)
-                {
-                    hiddenCache = new GameObject("ReskinnedBuildingCache");
-                    hiddenCache.SetActive(false);
-                }
+
+                
 
                 Engine.dLog($"Binding {UniqueName}");
                 if (!originalModels.ContainsKey(UniqueName))
                     originalModels.Add(UniqueName, new List<GameObject>());
 
                 int index = originalModels[UniqueName].Count;
-                GameObject instance = GameObject.Instantiate(GameState.inst.GetPlaceableByUniqueName(UniqueName).gameObject, hiddenCache.transform);
+                GameObject instance = GameObject.Instantiate(GameState.inst.GetPlaceableByUniqueName(UniqueName).gameObject, HiddenCache.transform);
 
                 originalModels[UniqueName].Add(instance);
                 BindToBuildingBase(originalModels[UniqueName][index].GetComponent<Building>());
@@ -412,41 +487,6 @@ namespace ReskinEngine.Engine
 
             building.UpdateShaderHeight();
             Engine.dLog($"bound {count} building shader renderers");
-        }
-
-        protected void ReadString(GameObject _base, string fieldName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
-        {
-            GameObject info = null;
-            for (int i = 0; i < _base.transform.childCount; i++)
-                if (_base.transform.GetChild(i).name.Contains(fieldName))
-                    info = _base.transform.GetChild(i).gameObject;
-
-            string value = "";
-            if (info != null)
-                value = info.name.Split(':')[1];
-
-            if (GetType().GetField(fieldName) != null)
-                GetType().GetField(fieldName, flags).SetValue(this, value);
-        }
-
-        protected void ReadStringArray(GameObject _base, string fieldName, BindingFlags flags = BindingFlags.Public | BindingFlags.Instance)
-        {
-            string[] array;
-            GameObject info = null;
-            for (int i = 0; i < _base.transform.childCount; i++)
-                if (_base.transform.GetChild(i).name.Contains(fieldName))
-                    info = _base.transform.GetChild(i).gameObject;
-            if (info)
-            {
-                string[] name = info.name.Split(':');
-                string[] list = name[1].Split(',');
-                array = list;
-            }
-            else
-                array = new string[0];
-
-            if (GetType().GetField(fieldName) != null)
-                GetType().GetField(fieldName, flags).SetValue(this, array);
         }
 
         #endregion

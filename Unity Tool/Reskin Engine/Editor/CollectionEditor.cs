@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 using System.IO;
 using ReskinEngine.Utils;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 
@@ -17,6 +18,8 @@ namespace ReskinEngine.Editor
     [CustomEditor(typeof(Collection))]
     public class CollectionEditor : UnityEditor.Editor
     {
+        public static Texture disabledImage = null;
+
         #region Import Skin Menu
 
 
@@ -60,6 +63,8 @@ namespace ReskinEngine.Editor
         public override void OnInspectorGUI()
         {
             Collection collection = (Collection)target;
+
+            GUILayout.Label($"Version: {Settings.version.ToString()}");
 
             #region Import Skins
 
@@ -119,16 +124,75 @@ namespace ReskinEngine.Editor
 
                 UpdateSkinIdOptions();
 
-                selectedSkinId = EditorGUILayout.Popup("Skin to Create", selectedSkinId, skinNameOptions);
+
+                if (disabledImage == null)
+                    disabledImage = Resources.Load<Texture>($"{SkinPreview.spritesRoot}/abort_small");
+
+                bool[] active = new bool[skinNameOptions.Length];
+                GUIContent[] content = new GUIContent[skinNameOptions.Length];
+
+                for (int i = 0; i < skinNameOptions.Length; i++)
+                {
+                    active[i] = (((ReskinEngine.skins[i].version) & Settings.version) == Settings.version);
+                    content[i] = new GUIContent(skinNameOptions[i], !active[i] ? disabledImage : null, !active[i] ? "not available in selected game version" : "");
+                }
+
+
+
+                if (Settings.preferredOptionType == Settings.PreferredOptionType.SelectionGrid)
+                {
+                    GUILayout.Label("Skin to Create");
+                    selectedSkinId = GUILayout.SelectionGrid(selectedSkinId, content, 4);
+                }
+                else if (Settings.preferredOptionType == Settings.PreferredOptionType.List)
+                    selectedSkinId = EditorGUILayout.Popup("Skin to Create", selectedSkinId, skinNameOptions);
 
                 skinName = GetUnusedSkinName();
                 skinName = ValidSkinName(EditorGUILayout.DelayedTextField("Skin Name", skinName));
 
-                if (GUILayout.Button("Create"))
-                    CreateSkin();
+                bool available = ValidateSkin(collection, selectedSkinId);
+                
+                // if (collection.Contains(ReskinEngine.skins[selectedSkinId].typeId))
+                // {
+                //     if (!ReskinEngine.skins[selectedSkinId].supportsVariations)
+                //     {
+                //         available = false;
+                //         GUILayout.Label("<color=red>Skin does not support variations and skin instance already exists in collection</color>", new GUIStyle(){
+                //             richText = true,
+                //             wordWrap = true
+                //         });
+                //     }
+                //     else
+                //     {
+                //         available = true;
+                //         GUILayout.Label("<color=blue>Adding this skin while another skin of the same type exists in the collection will create multiple variations of the skin that will be randomly selected in game</color>", new GUIStyle()
+                //         {
+                //             richText = true,
+                //             wordWrap = true
+                //         });
+                //     }
+                // }
+                // if (!((((Activator.CreateInstance(Collection.GetType(skinNameOptions[selectedSkinId])) as Skin).version) & Settings.version) == Settings.version))
+                // {
+                //     available = false;
+                //     GUILayout.Label("<color=red>Skin not available in selected game version</color>", new GUIStyle()
+                //     {
+                //         richText = true,
+                //         wordWrap = true
+                //     });
+                // }
 
-                string description = GetDescription(skinNameOptions[selectedSkinId]);
-                GUILayout.Label(description);
+                if (available)
+                {
+                    if(GUILayout.Button("Create"))
+                        CreateSkin();
+
+                    string description = available ? GetDescription(skinNameOptions[selectedSkinId]) : "";
+                    GUILayout.Label(description, new GUIStyle()
+                    {
+                        richText = true
+                    });
+                }
 
                 GUILayout.Space(10);
             }
@@ -164,6 +228,8 @@ namespace ReskinEngine.Editor
                                 collection.skins[i] = EditorGUILayout.ObjectField(skin, skin.GetType()) as Skin;
                                 skin = collection.skins[i];
 
+
+                                EditorGUILayout.LabelField($"Available in: {skin.version}");
 
                                 UnityEditor.Editor editor = CreateEditor(skin);
                                 if (editor != null)
@@ -234,6 +300,42 @@ namespace ReskinEngine.Editor
             #endregion
         }
 
+        private bool ValidateSkin(Collection collection, int selectedSkinId){
+            bool available = true;
+
+            if (collection.Contains(ReskinEngine.skins[selectedSkinId].typeId))
+            {
+                if (!ReskinEngine.skins[selectedSkinId].supportsVariations)
+                {
+                    available = false;
+                    GUILayout.Label("<color=red>Skin does not support variations and skin instance already exists in collection</color>", new GUIStyle()
+                    {
+                        richText = true,
+                        wordWrap = true
+                    });
+                }
+                else
+                {
+                    GUILayout.Label("<color=blue>Adding this skin while other skins of the same type exist in the collection will create multiple variations of the skin that will be randomly selected in game</color>", new GUIStyle()
+                    {
+                        richText = true,
+                        wordWrap = true
+                    });
+                }
+            }
+            if (!((((Activator.CreateInstance(Collection.GetType(skinNameOptions[selectedSkinId])) as Skin).version) & Settings.version) == Settings.version))
+            {
+                available = false;
+                GUILayout.Label("<color=red>Skin not available in selected game version</color>", new GUIStyle()
+                {
+                    richText = true,
+                    wordWrap = true
+                });
+            }
+
+            return available;
+        }
+
         private SkinPreview GetPreview(Skin @for)
         {
             Type[] types = AppDomain.CurrentDomain.FindAllOfType<SkinPreview>();
@@ -259,7 +361,6 @@ namespace ReskinEngine.Editor
             foreach (Skin s in ReskinEngine.skins)
                 skinIdOptions.Add(s.friendlyName);
 
-            skinIdOptions.Sort();
             this.skinNameOptions = skinIdOptions.ToArray();
         }
 

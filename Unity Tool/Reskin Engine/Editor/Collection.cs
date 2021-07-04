@@ -13,7 +13,6 @@ namespace ReskinEngine.Editor
     [CreateAssetMenu(menuName = "Reskin Engine/Collection")]
     public class Collection : ScriptableObject
     {
-        // test
         public Skin[] skins = new Skin[0];
 
         public void Add(Skin skin){
@@ -43,7 +42,21 @@ namespace ReskinEngine.Editor
             return -1;
         }
 
+        public int Find(string skinId)
+        {
+            for (int i = 0; i < skins.Length; i++)
+            {
+                if (skins[i].typeId == skinId)
+                    return i;
+            }
+            return -1;
+        }
+
         public bool Contains(Skin skin) => Find(skin) != -1;
+
+        public bool Contains(string skinId) => Find(skinId) != -1;
+
+        public static Type GetType(string name) => ReskinEngine.skins.First(s => s.friendlyName == name).GetType();
 
         public Skin Create(string name)
         {
