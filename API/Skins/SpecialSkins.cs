@@ -1,5 +1,4 @@
-﻿#define ALPHA
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,6 +51,8 @@ namespace ReskinEngine.API
         }
     }
 
+    [Category("environment")]
+    [Version(VersionAttribute.GameVersion.STABLE)]
     public class PeasantSkin : Skin
     {
         [Model(ModelAttribute.Type.Instance)]
@@ -98,9 +99,11 @@ namespace ReskinEngine.API
         }
     }
 
-#if ALPHA
-
+    /// <summary>
+    /// ALPHA only skin
+    /// </summary>
     [Category("special")]
+    [Version(VersionAttribute.GameVersion.ALPHA)]
     public class LiverySkin
     {
         public Texture[] banners;
@@ -115,6 +118,5 @@ namespace ReskinEngine.API
         public Material[] uniMaterialCracked;
     }
 
-#endif
 
 }

@@ -1,6 +1,6 @@
-﻿#define ALPHA
+﻿//#define ALPHA
 //#define STABLE
-#define COMMON
+//#define COMMON
 
 using System;
 using System.Collections.Generic;

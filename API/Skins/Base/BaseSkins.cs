@@ -150,6 +150,23 @@ namespace ReskinEngine.API
 
     }
 
+    /// <summary>
+    /// Signifies the version a skin is registered in, if not specified will assume compatability in both versions (STABLE and ALPHA)
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class, Inherited = true)]
+    public class VersionAttribute : Attribute
+    {
+        public enum GameVersion
+        {
+            STABLE,
+            ALPHA
+        }
+
+        public GameVersion version;
+
+        public VersionAttribute(GameVersion version) => this.version = version;
+    }
+
     public abstract class SkinField : Attribute
     {
 

@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 408940}
+  - component: {fileID: 6860007454226153714}
+  - component: {fileID: 3814963813024262429}
   m_Layer: 8
   m_Name: Tavern
   m_TagString: Tavern
@@ -31,6 +33,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6860007454226153714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dddd02345c19ab42a9b63a4ecb5fd47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3814963813024262429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72adfac5198840c4da8fa4deac9770e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptName: Tavern
 --- !u!1 &173384
 GameObject:
   m_ObjectHideFlags: 0
@@ -9396,6 +9423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4764154461095400}
   - component: {fileID: 65450058190417142}
+  - component: {fileID: 2918161433129093723}
   m_Layer: 0
   m_Name: collider2
   m_TagString: Untagged
@@ -9430,6 +9458,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.13, y: 1.08, z: 1.16}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2918161433129093723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527523104010564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aff1ab82fa6bff47bdbad5eeafec18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1533632463944776
 GameObject:
   m_ObjectHideFlags: 0
@@ -9502,6 +9542,7 @@ GameObject:
   - component: {fileID: 33614188649572026}
   - component: {fileID: 23680349952458252}
   - component: {fileID: 65685897500495020}
+  - component: {fileID: 3843224652689897167}
   m_Layer: 0
   m_Name: Tavern
   m_TagString: Untagged
@@ -9582,6 +9623,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0300183, y: 0.1, z: 1.3294487}
   m_Center: {x: -0.27342287, y: 0.06, z: 0.10115337}
+--- !u!114 &3843224652689897167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841411572093834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aff1ab82fa6bff47bdbad5eeafec18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1947602240854180
 GameObject:
   m_ObjectHideFlags: 0

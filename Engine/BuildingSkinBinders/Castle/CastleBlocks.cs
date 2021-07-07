@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define STABLE
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,54 +51,61 @@ namespace ReskinEngine.Engine
 
             ReadMaterial(_base, "material");
 
-            Engine.dLog($"loaded: open {Open.GetComponent<MeshFilter>()}, closed {Closed}, single {Single}, opposite {Opposite}, adjacent {Adjacent}, threeside {Threeside}");
+            Engine.dLog($"loaded: open {Open.GetComponent<MeshFilter>()}, closed {Closed}, single {Single}, opposite {Opposite}, adjacent {Adjacent}, threeside {Threeside}, material {material}");
         }
 
         public override void BindToBuildingBase(Building building)
         {
             CastleBlock block = building.GetComponent<CastleBlock>();
+            Material unimaterial =
+#if STABLE
+                World.GetUniMaterialFor(building.LandMass() < World.inst.NumLandMasses && building.LandMass() >= 0 ? building.LandMass() : 0);
+#else
+                (World.GetLandmassOwner(building.LandMass()) != null && World.GetLandmassOwner(building.LandMass()).BuildingMaterial != null) ? World.GetLandmassOwner(building.LandMass()).BuildingMaterial : World.inst.uniMaterialNoFog;
+#endif
+
 
             if (Open && Open.GetComponent<MeshFilter>())
             {
                 MeshFilter mesh = block.Open.GetComponent<MeshFilter>();;
                 mesh.sharedMesh = Open.GetComponent<MeshFilter>().sharedMesh;
-                block.Open.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+                block.Open.GetComponent<MeshRenderer>().material = material ?? unimaterial;
             }
             if (Closed && Closed.GetComponent<MeshFilter>())
             {
                 MeshFilter mesh = block.Closed.GetComponent<MeshFilter>(); ;
                 mesh.sharedMesh = Closed.GetComponent<MeshFilter>().sharedMesh;
-                block.Closed.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+                block.Closed.GetComponent<MeshRenderer>().material = material ?? unimaterial;
             }
             if (Single && Single.GetComponent<MeshFilter>())
             {
                 MeshFilter mesh = block.Single.GetComponent<MeshFilter>(); ;
                 mesh.sharedMesh = Single.GetComponent<MeshFilter>().sharedMesh;
-                block.Single.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+                block.Single.GetComponent<MeshRenderer>().material = material ?? unimaterial;
             }
             if (Opposite && Opposite.GetComponent<MeshFilter>())
             {
                 MeshFilter mesh = block.Opposite.GetComponent<MeshFilter>(); ;
                 mesh.sharedMesh = Opposite.GetComponent<MeshFilter>().sharedMesh;
-                block.Opposite.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+                block.Opposite.GetComponent<MeshRenderer>().material = material ?? unimaterial;
             }
             if (Adjacent && Adjacent.GetComponent<MeshFilter>())
             {
                 MeshFilter mesh = block.Adjacent.GetComponent<MeshFilter>(); ;
                 mesh.sharedMesh = Adjacent.GetComponent<MeshFilter>().sharedMesh;
-                block.Adjacent.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+                block.Adjacent.GetComponent<MeshRenderer>().material = material ?? unimaterial;
             }
             if (Threeside && Threeside.GetComponent<MeshFilter>())
             {
                 MeshFilter mesh = block.Threeside.GetComponent<MeshFilter>(); ;
                 mesh.sharedMesh = Threeside.GetComponent<MeshFilter>().sharedMesh;
-                block.Threeside.GetComponent<MeshRenderer>().material = material ?? World.GetUniMaterialFor(building.LandMass());
+                block.Threeside.GetComponent<MeshRenderer>().material = material ?? unimaterial;
             }
 
             if(doorPrefab)
                 block.doorPrefab = doorPrefab;
 
-            block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = World.GetUniMaterialFor(building.LandMass());
+            block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = unimaterial;
 
             //if (material)
             //    block.transform.Find("Offset").GetChild(0).GetComponent<MeshRenderer>().material = material;
@@ -124,9 +133,9 @@ namespace ReskinEngine.Engine
         public override string UniqueName => "woodcastleblock";
     }
 
-    #endregion
+#endregion
 
-    #region Castle Stairs
+#region Castle Stairs
     
     public class CastleStairsSkinBinder : BuildingSkinBinder
     {
@@ -174,9 +183,9 @@ namespace ReskinEngine.Engine
 
     }
 
-    #endregion
+#endregion
 
-    #region Gates
+#region Gates
 
     // Base
     [Unregistered]
@@ -236,6 +245,6 @@ namespace ReskinEngine.Engine
     }
 
 
-    #endregion
+#endregion
 
 }

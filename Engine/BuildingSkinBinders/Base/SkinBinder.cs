@@ -437,7 +437,8 @@ namespace ReskinEngine.Engine
 
             // Delete pre-existing BuildingColliders
             foreach (BuildingCollider collider in Util.ComponentsInNodeAndAllDescendants<BuildingCollider>(building.gameObject))
-                collider.EnableColliders(false);
+                if(collider.Collider != null)
+                    collider.EnableColliders(false);
 
             Engine.dLog($"bound {count} colliders");
         }

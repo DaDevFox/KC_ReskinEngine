@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define STABLE
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +33,11 @@ namespace ReskinEngine.Engine
         }
     }
 
+#if STABLE
+
+    /// <summary>
+    /// Stable ONLY
+    /// </summary>
     public class PeasantSkinBinder : SkinBinder
     {
         public static List<Villager> models = new List<Villager>();
@@ -187,7 +194,12 @@ namespace ReskinEngine.Engine
                 }
                 else
                 {
-                    pooledObject = UnityEngine.Object.Instantiate<PooledObject>(models[SRand.Range(0, models.Count)]);
+                    if(models.Count > 1)
+                        pooledObject = UnityEngine.Object.Instantiate<PooledObject>(models[SRand.Range(0, models.Count)]);
+                    else if(models.Count == 1)
+                        pooledObject = UnityEngine.Object.Instantiate<PooledObject>(models[0]);
+                    else
+                        pooledObject = UnityEngine.Object.Instantiate<PooledObject>(World.inst.personModel);
                     pooledObject.transform.position = position;
                     if (rotation != Quaternion.identity)
                     {
@@ -232,4 +244,7 @@ namespace ReskinEngine.Engine
 
 
     }
+
+#endif
+
 }
